@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<Payments>
+  <Payment>
+    <lmscode>1010207</lmscode>
+    <xerocode>1010101</xerocode>
+    <xeroname>Unionbank - payment channel</xeroname>
+  </Payment>
+</Payments>

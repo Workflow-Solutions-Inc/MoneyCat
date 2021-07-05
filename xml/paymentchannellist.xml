@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<Loans>
+  <Loan>
+    <lmscode>1010104</lmscode>
+    <xerocode/>
+    <xeroname>Cash- Dragonpay</xeroname>
+  </Loan>
+  <Loan>
+    <lmscode>001</lmscode>
+    <xerocode>1010101</xerocode>
+    <xeroname>Petty Cash Funds</xeroname>
+  </Loan>
+  <Loan>
+    <lmscode>1010207</lmscode>
+    <xerocode>1010101</xerocode>
+    <xeroname>Unionbank - payment channel</xeroname>
+  </Loan>
+</Loans>

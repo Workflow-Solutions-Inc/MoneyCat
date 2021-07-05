@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<Accounts>
+  <Account>
+    <accounttype>1</accounttype>
+    <accountcode>4010202</accountcode>
+    <accountname>Late payment Fee</accountname>
+    <taxrate>Tax Exempt</taxrate>
+    <accountdescription>Late payment fees</accountdescription>
+  </Account>
+  <Account>
+    <accounttype>1</accounttype>
+    <accountcode>4010101</accountcode>
+    <accountname>Interest</accountname>
+    <taxrate>Tax Exempt</taxrate>
+    <accountdescription>Interest income</accountdescription>
+  </Account>
+  <Account>
+    <accounttype>1</accounttype>
+    <accountcode>4010201</accountcode>
+    <accountname>Management Fee</accountname>
+    <taxrate>Tax Exempt</taxrate>
+    <accountdescription>Processing fees</accountdescription>
+  </Account>
+  <Account>
+    <accounttype>1</accounttype>
+    <accountcode>4010211</accountcode>
+    <accountname>Document package fee</accountname>
+    <taxrate>Tax Exempt</taxrate>
+    <accountdescription>Document package fee</accountdescription>
+  </Account>
+  <Account>
+    <accounttype>1</accounttype>
+    <accountcode>4010203</accountcode>
+    <accountname>Prolongation Fee</accountname>
+    <taxrate>Tax Exempt</taxrate>
+    <accountdescription>Prolongation fees</accountdescription>
+  </Account>
+  <Account>
+    <accounttype>1</accounttype>
+    <accountcode>4010204</accountcode>
+    <accountname>Overdue Interest</accountname>
+    <taxrate>Tax Exempt</taxrate>
+    <accountdescription>Overdue Interest</accountdescription>
+  </Account>
+  <Account>
+    <accounttype>1</accounttype>
+    <accountcode>4010205</accountcode>
+    <accountname>Fast Disbursement Fee</accountname>
+    <taxrate>Tax Exempt</taxrate>
+    <accountdescription>Fast Disbursement Fees</accountdescription>
+  </Account>
+  <Account>
+    <accounttype>1</accounttype>
+    <accountcode>4010212</accountcode>
+    <accountname>Consulting Fee</accountname>
+    <taxrate>Tax Exempt</taxrate>
+    <accountdescription>Consulting Fees</accountdescription>
+  </Account>
+  <Account>
+    <accounttype>1</accounttype>
+    <accountcode>2010103</accountcode>
+    <accountname>Overpayment</accountname>
+    <taxrate>Tax Exempt</taxrate>
+    <accountdescription>Refund payable</accountdescription>
+  </Account>
+  <Account>
+    <accounttype>1</accounttype>
+    <accountcode>4010206</accountcode>
+    <accountname>Early Repayment Fee</accountname>
+    <taxrate>Tax Exempt</taxrate>
+    <accountdescription>Early Repayment Fees</accountdescription>
+  </Account>
+  <Account>
+    <accounttype>1</accounttype>
+    <accountcode>2010103</accountcode>
+    <accountname>Overpayment</accountname>
+    <taxrate>Tax Exempt</taxrate>
+    <accountdescription>Refund payable</accountdescription>
+  </Account>
+  <Account>
+    <accounttype>1</accounttype>
+    <accountcode>4010207</accountcode>
+    <accountname>FLFF</accountname>
+    <taxrate>Tax Exempt</taxrate>
+    <accountdescription>FLFF</accountdescription>
+  </Account>
+  <Account>
+    <accounttype>1</accounttype>
+    <accountcode>4010214</accountcode>
+    <accountname>Grace Period Fee</accountname>
+    <taxrate>Tax Exempt</taxrate>
+    <accountdescription>Grace Period Fee</accountdescription>
+  </Account>
+  <Account>
+    <accounttype>1</accounttype>
+    <accountcode>2010325</accountcode>
+    <accountname>Future payment</accountname>
+    <taxrate>Tax Exempt</taxrate>
+    <accountdescription>AP-Future payment</accountdescription>
+  </Account>
+  <Account>
+    <accounttype>1</accounttype>
+    <accountcode>4010215</accountcode>
+    <accountname>Insurance fee</accountname>
+    <taxrate>Tax Exempt</taxrate>
+    <accountdescription>Insurance fee</accountdescription>
+  </Account>
+  <Account>
+    <accounttype>1</accounttype>
+    <accountcode>4010216</accountcode>
+    <accountname>Restructure fee</accountname>
+    <taxrate>Tax Exempt</taxrate>
+    <accountdescription>Restructure fee</accountdescription>
+  </Account>
+  <Account>
+    <accounttype>2</accounttype>
+    <accountcode>1010301</accountcode>
+    <accountname>Principal</accountname>
+    <taxrate>Tax Exempt</taxrate>
+    <accountdescription>Loans receivable-current</accountdescription>
+  </Account>
+  <Account>
+    <accounttype>1</accounttype>
+    <accountcode>7015001</accountcode>
+    <accountname>interest expense</accountname>
+    <taxrate>Tax Exempt</taxrate>
+    <accountdescription>Interest expense</accountdescription>
+  </Account>
+  <Account>
+    <accounttype>1</accounttype>
+    <accountcode>6010105</accountcode>
+    <accountname>Holiday Pay</accountname>
+    <taxrate>Tax Exempt</taxrate>
+    <accountdescription>Holiday pay</accountdescription>
+  </Account>
+</Accounts>

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<Invoices>
+  <Invoice>
+    <id></id>
+    <contact></contact>
+    <amounttype></amounttype>
+    <account></account>
+    <date></date>
+    <amount></amount>
+  </Invoice>
+</Invoices>

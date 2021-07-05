@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<taxrates>
+  <taxrate>
+    <taxname>Tax Exempt</taxname>
+    <taxvalue>0</taxvalue>
+    <taxtype>NONE</taxtype>
+  </taxrate>
+</taxrates>

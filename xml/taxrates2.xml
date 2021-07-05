@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<taxrates>
+  <taxrate>
+    <taxname>Non-Tax</taxname>
+    <taxvalue>0</taxvalue>
+    <taxtype>TAX001</taxtype>
+  </taxrate>
+</taxrates>
