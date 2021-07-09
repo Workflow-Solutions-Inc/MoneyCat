@@ -1,8 +1,8 @@
 <?php
   ini_set('display_errors', 'On');
-  //require __DIR__ . '/vendor/autoload.php';
+  require __DIR__ . '/vendor/autoload.php';
   require_once('config/xeroconfig.php');
-  require_once('C:\Users\SysDev - PC3\vendor\autoload.php');
+  //require_once('C:\Users\SysDev - PC3\vendor\autoload.php');
   require_once('storage.php');
   include("config/dbconn.php");
 
