@@ -29,9 +29,9 @@ $dbname="paysys2019_newsoftdev5";*/
 $host="156.67.217.132";
 $port=3306;
 $socket="";
-$user="wfsiadmin";
-$password="wfsi2021admin";
-$dbname="eyetax_dev";
+$user="moneycat";
+$password="moneycat2021";
+$dbname="eyetax_test";
 
 // $host="newsoftcloud-t3medium-asia-hk.cxhly8drtukq.ap-east-1.rds.amazonaws.com";
 // $port=3306;
