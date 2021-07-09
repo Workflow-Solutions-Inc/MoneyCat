@@ -2,7 +2,7 @@
 session_start();
 ini_set('display_errors', 'On');
 require_once('controllers/config/xeroconfig.php');
-require_once('C:\Users\SysDev - PC3\vendor\autoload.php');
+require_once('vendor/autoload.php');
 require_once('controllers/storage.php');
 use XeroAPI\XeroPHP\AccountingObjectSerializer;
 
