@@ -194,6 +194,7 @@ function insertLoan($clientid, $clientsecret, $callback, $agreement_number, $loa
 				$btrans->setLineItems($arr_lineitems);
 				$btrans->setReference("DM");
 				$btrans->setLineAmountTypes('Inclusive');
+				$btrans->setDate($Date_of_loanarray[$i]);
 				$btrans -> setBankAccount($bankacc->setCode($_SESSION['bankaccount']));
 				//echo $btrans;
 				array_push($btranslines, $btrans);
