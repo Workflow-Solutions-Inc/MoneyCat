@@ -1,6 +1,6 @@
 <?php
 
-	$base_path = "http://localhost/moneycat/";
+	$base_path = "https://test-moneycat-uploader.sypro-it.com/";
 	
 	//$base_path = "";
 
