@@ -1,9 +1,9 @@
 <?php
   ini_set('display_errors', 'On');
   require __DIR__ . '/vendor/autoload.php';
-  //require_once('C:\Users\SysDev - PC3\vendor\autoload.php');
+  require_once('config/xeroconfig.php');
   require_once('storage.php');
-  include('config/xeroconfig.php');
+  include("config/dbconn.php");
   // Storage Classe uses sessions for storing token > extend to your DB of choice
   $storage = new StorageClass();  
 
