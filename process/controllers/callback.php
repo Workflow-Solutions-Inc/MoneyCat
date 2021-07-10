@@ -3,7 +3,7 @@
   require __DIR__ . '/vendor/autoload.php';
   //require_once('C:\Users\SysDev - PC3\vendor\autoload.php');
   require_once('storage.php');
-  require_once('config/xeroconfig.php');
+  include('config/xeroconfig.php');
   // Storage Classe uses sessions for storing token > extend to your DB of choice
   $storage = new StorageClass();  
 
