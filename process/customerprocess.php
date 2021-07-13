@@ -78,14 +78,14 @@ function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $c
       new GuzzleHttp\Client(),
       $config
   );
-
+  $messagealert = "";
   try
   {
 
     
     $contact_array = new \XeroAPI\XeroPHP\Models\Accounting\Contacts;
     $contactlines = [];
-    $messagealert = "";
+    
     $custidarray = explode("|",$_POST['custId']);
     $custnamearray = explode("|",$custName);
     $custEmailarray = explode("|",$custEmail);
@@ -153,7 +153,7 @@ function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $c
       );
       $message = "ApiException - " . $error->getElements()[0]["validation_errors"][0]["message"];
       //$messagealert .= '</div><br><div><h5 style="color:red;">ID: '.$custidarray[$i].' '. $message.'</h5></div>';
-      //echo $messagealert;
+      echo $messagealert;
   }
 }
 
