@@ -71,24 +71,15 @@ include("process/controllers/config/dbconn.php");
                     </div>
                 </div>
 
-                <div class="col-md-12">
+                <div class="col-md-12" style="display: none;">
                     <div class="card" >
-                        <div class="header" >
+                        <div class="header">
                             <div><h5 id="currentcount">1</h5> out of <h5 id="totalitem">Select your json file</h5></div>
                         </div>
                         <br>
+                    </div>
                 </div>
 
-                <!-- <div class="col-md-12">
-                    <div class="card" >
-                        <div class="header" >
-                            <h4 class="title">Upload Logs</h4>
-                        </div>
-                        <br>
-                         <div style="overflow-y: scroll; height: 400px;" id="uploadresult">
-                        </div>
-                    </div>
-                </div> -->
                 <div class="col-md-12">
                     <div class="card">
                         <div class="header">
@@ -98,7 +89,7 @@ include("process/controllers/config/dbconn.php");
                         </pre>
                     </div>
                 </div>
-         </div>
+         
     </div>
 </div>
 
