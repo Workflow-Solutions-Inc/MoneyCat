@@ -18,7 +18,7 @@ fileToRead.addEventListener("change", function(event) {
             formatted = JSON.stringify(result, null, 2);
             document.getElementById('result').innerHTML = formatted;
             
-            document.getElementById('totalitem').innerHTML = result.length;
+            document.getElementById('totaljsondata').innerHTML = result.length;
           }
           
           fr.readAsText(files.item(0));
@@ -26,15 +26,7 @@ fileToRead.addEventListener("change", function(event) {
 
 }, false);
 
-function jsoncounter(formattedjson){
-    var total = 0;
-    for (var i = 0; i < formattedjson.length; i++) {
-      total += formattedjson[i][1];
-    }
 
-    //alert(total);
-    document.getElementById('totalitem').innerHTML = total;
-}
 
 var timerdate = new Date();
 var counter = 1;
@@ -62,8 +54,8 @@ function splitJson(jsonParams)
         phonetype += res[prop].phone_type+ "|";
         phone_number += res[prop].phone_number+ "|";
         count++;
-        if(count % 200 == 0){
-            looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
+        if(count % 1000 == 0){
+            looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count);
             console.log(timerdate.getDate());
             custName = "";
             custId = "";
@@ -79,13 +71,13 @@ function splitJson(jsonParams)
 
     if(custName != "")
     {
-        looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
+        looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count);
         console.log(timerdate.getDate());
     }
     
 }
 
-function looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number){
+function looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, curcount){
     var action = "postdata";
             $.ajax({
                         type: 'POST',
@@ -105,28 +97,17 @@ function looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonet
                             document.getElementById("btnupload").disabled = false;
                             document.getElementById("btnupload").innerHTML = "Upload";
                             document.getElementById("uploadresult").innerHTML +="<div style='margin-left:20px;color:grey'>"+data+"</div><hr>";
+                            document.getElementById('currentjsonupload').innerHTML = curcount;
                             //document.getElementById("uploadresult").innerHTML +="<div style='margin-left:20px;color:red'>Name Already Exist in Xero!</div><hr>";  
                             
-                            totalnouploaded += 1000;
-                            document.getElementById('currentcount').innerHTML = totalnouploaded;
+                            
                             
                          }
                         
                 });
 }
 
-/*function resultsetter(mydata,custId){
-    if(mydata==1){
-        errormessage = "<h5 style ='color:green'>SUCCESS</h5></div>";
-    }else if(mydata==2){
-        errormessage = "<h5 style ='color:grey'>LMS ID ALREADY EXIST</h5></div>";
-    }else{
-        errormessage = "<h5 style ='color:red'>CONTACT ALREADY EXIST IN XERO</h5></div>";
-    }
-    document.getElementById("btnupload").innerHTML = "Upload";
-    document.getElementById("uploadresult").innerHTML +="<div style='margin-left:20px;'>Line No: "+counter+" <div>Status: "+errormessage+"</div><hr>"; 
-    counter++;
-}*/
+
 
 function upload(){
 	if(formatted == ""){
