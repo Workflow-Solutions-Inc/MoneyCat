@@ -122,8 +122,8 @@ function splitJson(jsonParams)
                         success: function(data){
                             
                             //alert("done");
-                            document.getElementById("btnupload").disabled = false;
-                            document.getElementById("btnupload").innerHTML = "Upload";
+                            document.getElementById("btnupload").disabled = true;
+                            //document.getElementById("btnupload").innerHTML = "Loading";
                             document.getElementById("uploadresult").innerHTML +="<div style='margin-left:20px;color:grey;'>"+data+"</div><hr>";
                             currentcount+=1;
 
