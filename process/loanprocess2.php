@@ -199,9 +199,9 @@ function insertLoan($clientid, $clientsecret, $callback, $agreement_number, $loa
 				//echo $btrans;
 				array_push($btranslines, $btrans);
         		$btrans_array ->setBankTransactions($btranslines);
-				$messagealert .= '<div>ID: '.$agreement_numberarray[$i].'</div><br><div><h5 style="color:green;">LOAN SUCCESSFULLY UPLOADED</h5></div>';
+				$messagealert .= '<div>ID: '.$agreement_numberarray[$i].' <h5 style="color:green;">LOAN SUCCESSFULLY UPLOADED</h5></div><hr>';
 			}else{
-			    $messagealert .= '<div>ID: '.$agreement_numberarray[$i].'</div><br><div><h5 style="color:red;">LOAN FAILED TO UPLOADED</h5></div>';
+			    $messagealert .= '<div>ID: '.$agreement_numberarray[$i].' <h5 style="color:red;">'.validateAll($contact_Idarray[$i], $bankaccountarray[$i]).'</h5></div><hr>';
 			}
 
 		}
@@ -216,7 +216,7 @@ function insertLoan($clientid, $clientsecret, $callback, $agreement_number, $loa
         []
     );
     $message = "ApiException - " . $error->getElements()[0]["validation_errors"][0]["message"];
-    $messagealert.= '<div>ID: '.$agreement_numberarray[$i].'</div><div><h5 style="color:red;">'.$message.'</h5></div>';
+    $messagealert.= '<div>ID: '.$agreement_numberarray[$i].' <h5 style="color:red;">'.$message.'</h5></div><hr>';
     echo $messagealert;
   }
 	
