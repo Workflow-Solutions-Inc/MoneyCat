@@ -59,38 +59,7 @@ function splitJson(jsonParams)
                           date_of_payment:date_of_payment,
                           amount_type:amount_type
                         },
-                        /*beforeSend:function(){
 
-                            document.getElementById("btnupload").innerHTML = "Loading..";
-                        },
-                        success: function(data){
-                            //alert(data);
-                            document.getElementById("btnupload").innerHTML = "Upload";
-                            console.log(data);
-                            if(data==1){
-                                errormessage = "<h5 style ='color:green'>SUCCESS</h5></div>";
-                                document.getElementById("btnupload").innerHTML = "Upload";
-                                document.getElementById("uploadresult").innerHTML +="<div style='margin-left:20px;'>Line No: "+currentcount+" <div>Status: "+errormessage+"</div><hr>";
-                            }else if(data == 2){
-                                 errormessage = "<h5 style ='color:red'>PLEASE REVIEW YOUR PAYMENT SETUP</h5></div>";
-                                 document.getElementById("btnupload").innerHTML = "Upload";
-                                document.getElementById("uploadresult").innerHTML +="<div style='margin-left:20px;'>Line No: "+currentcount+" <div>Status: "+errormessage+"</div><hr>";
-                            }else if(data==5){
-                                errormessage = "<h5 style ='color:green'>SUCCESS</h5></div>";
-                                document.getElementById("btnupload").innerHTML = "Upload";
-                                document.getElementById("uploadresult").innerHTML +="<div style='margin-left:20px;'>Line No: "+currentcount+" <div>Status: "+errormessage+"</div><hr>";
-                            }else{
-                                errormessage = "<h5 style ='color:red'>INVALID PAYMENT DATA</h5></div>";
-                                document.getElementById("btnupload").innerHTML = "Upload";
-                                document.getElementById("uploadresult").innerHTML +="<div style='margin-left:20px;'>Line No: "+currentcount+" <div>Status: "+errormessage+"</div><hr>";
-                            }
-                            
-                            //alert("done");
-                            
-                            currentcount+=1;
-
-                          
-                         }*/
                          beforeSend:function(){
 
                             document.getElementById("btnupload").disabled = true;
@@ -144,34 +113,6 @@ function splitJson(jsonParams)
 
                             document.getElementById("btnupload").innerHTML = "Loading..";
                         },
-                        /*success: function(data){
-                            //alert(data);
-                            document.getElementById("btnupload").innerHTML = "Upload";
-                            console.log(data);
-                            if(data==1){
-                                errormessage = "<h5 style ='color:green'>SUCCESS</h5></div>";
-                                document.getElementById("btnupload").innerHTML = "Upload";
-                                document.getElementById("uploadresult").innerHTML +="<div style='margin-left:20px;'>ID: "+currentcount+" <div>Status: "+errormessage+"</div><hr>";
-                            }else if(data == 2){
-                                 errormessage = "<h5 style ='color:red'>PLEASE REVIEW YOUR PAYMENT SETUP</h5></div>";
-                                 document.getElementById("btnupload").innerHTML = "Upload";
-                                document.getElementById("uploadresult").innerHTML +="<div style='margin-left:20px;'>ID: "+currentcount+" <div>Status: "+errormessage+"</div><hr>";
-                            }else if(data==5){
-                                errormessage = "<h5 style ='color:green'>SUCCESS</h5></div>";
-                                document.getElementById("btnupload").innerHTML = "Upload";
-                                document.getElementById("uploadresult").innerHTML +="<div style='margin-left:20px;'>Line No: "+currentcount+" <div>Status: "+errormessage+"</div><hr>";
-                            }else{
-                                errormessage = "<h5 style ='color:red'>INVALID PAYMENT DATA</h5></div>";
-                                document.getElementById("btnupload").innerHTML = "Upload";
-                                document.getElementById("uploadresult").innerHTML +="<div style='margin-left:20px;'>ID: "+currentcount+" <div>Status: "+errormessage+"</div><hr>";
-                            }
-                            
-                            //alert("done");
-                            
-                            currentcount+=1;
-
-                          
-                         }*/
 
                          beforeSend:function(){
 
