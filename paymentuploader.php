@@ -86,8 +86,8 @@ include("process/controllers/config/dbconn.php");
                             <h4 class="title">Upload Result</h4>
                         </div>
                         <br>
-                         <div style="overflow-y: scroll; height: 400px;" id="uploadresult">
-                        </div>
+                         <pre style="overflow-y: scroll; height: 400px;" id="uploadresult">
+                        </pre>
                     </div>
                 </div>
                 </div>
@@ -101,7 +101,6 @@ include("process/controllers/config/dbconn.php");
 
     </div>
 </div>
-<?php include("inc/footer.php"); ?>
 
 </body>
 
@@ -120,7 +119,7 @@ include("process/controllers/config/dbconn.php");
 
     <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
     <script src="assets/js/demo.js"></script>
-    <script type="text/javascript" src="script/payment.js" ></script>
+    <script type="text/javascript" src="script/paymentold.js" ></script>
 
 
 
