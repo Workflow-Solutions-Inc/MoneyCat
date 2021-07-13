@@ -83,7 +83,9 @@ include("process/controllers/config/dbconn.php");
                     <div class="col-md-12">
                     <div class="card">
                         <div class="header">
-                            <h4 class="title">Upload Result</h4>
+                            <h4 class="title">Upload Logs</h4>
+                            <hr>
+                            <h5 class="title">uploaded <b id="currentjsonupload">1</b> out of <b id="totaljsondata">1</b></h5>
                         </div>
                         <br>
                          <pre style="overflow-y: scroll; height: 400px;" id="uploadresult">
