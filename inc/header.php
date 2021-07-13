@@ -51,9 +51,9 @@ if(isset($_SESSION["organisationID"])){
                               </ul>
                         </li>
                         <li>
-                            <a href="<?php echo $base_path; ?>login.php">
+                            <!-- <a href="<?php echo $base_path; ?>login.php">
                                 <p><i class="pe-7s-back-2"></i> Log Out</p>
-                            </a>
+                            </a> -->
                         </li>
                         <li class="separator hidden-lg hidden-md"></li>
                     </ul>
