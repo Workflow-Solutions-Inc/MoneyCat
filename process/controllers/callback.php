@@ -57,7 +57,7 @@
       exit();
      
     } catch (\League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
-      echo "Callback failed";
+      echo "Callback Error";
       exit();
     }
   }
