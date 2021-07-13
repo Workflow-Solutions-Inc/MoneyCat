@@ -17,6 +17,7 @@ fileToRead.addEventListener("change", function(event) {
             var result = JSON.parse(e.target.result);
             formatted = JSON.stringify(result, null, 2);
             document.getElementById('result').innerHTML = formatted;
+            document.getElementById('totaljsondata').innerHTML = result.length;
             //alert(formatted);
           }
           
@@ -68,10 +69,13 @@ function splitJson(jsonParams)
                         success: function(data){
                             
                             //alert("done");
-                            document.getElementById("btnupload").disabled = false;
-                            document.getElementById("btnupload").innerHTML = "Upload";
+                            document.getElementById("btnupload").disabled = true;
+                            //document.getElementById("btnupload").innerHTML = "Upload";
                             document.getElementById("uploadresult").innerHTML +="<div style='margin-left:20px;color:grey;'>"+data+"</div><hr>";
+                            currentcountjson(currentcount);
                             currentcount+=1;
+                            
+
 
                           
                          }
@@ -125,7 +129,9 @@ function splitJson(jsonParams)
                             document.getElementById("btnupload").disabled = true;
                             //document.getElementById("btnupload").innerHTML = "Loading";
                             document.getElementById("uploadresult").innerHTML +="<div style='margin-left:20px;color:grey;'>"+data+"</div><hr>";
+                            currentcountjson(currentcount);
                             currentcount+=1;
+                            
 
                           
                          }
@@ -136,6 +142,10 @@ function splitJson(jsonParams)
         }
 }
 
+function currentcountjson(count){
+   document.getElementById('currentjsonupload').innerHTML = count;
+}
+
 function upload(){
 	if(formatted == ""){
 		alert("no file chosen");
@@ -143,9 +153,11 @@ function upload(){
         clearjson()
         document.getElementById("uploadresult").innerHTML = "";
 		splitJson(formatted);
+
         //alert("Done");
         setTimeout(function(){
         getLines();
+        document.getElementById("btnupload").disabled = false;
         //alert("Done");
         },3000);
         
