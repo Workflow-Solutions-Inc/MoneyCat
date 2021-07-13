@@ -86,10 +86,12 @@ include("process/controllers/config/dbconn.php");
                     <div class="card">
                         <div class="header">
                             <h4 class="title">Upload Result</h4>
+                            <hr>
+                            <h5 class="title">uploaded <b id="currentjsonupload">1</b> out of <b id="totaljsondata">1</b></h5>
                         </div>
                         <br>
-                         <div class="content table-responsive table-full-width" id="uploadresult">
-                        </div>
+                         <pre style="overflow-y: scroll; height: 400px;" id="uploadresult">
+                        </pre>
                     </div>
                 </div>
                 </div>
@@ -103,7 +105,6 @@ include("process/controllers/config/dbconn.php");
 
     </div>
 </div>
-<?php include("inc/footer.php"); ?>
 
 </body>
 
