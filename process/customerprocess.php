@@ -151,9 +151,9 @@ function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $c
           '\XeroAPI\XeroPHP\Models\Accounting\Error',
           []
       );
-      echo $message = "ApiException - " . $error->getElements()[0]["validation_errors"][0]["message"];
-      $messagealert .= '</div><br><div><h5 style="color:red;">ID: '.$custidarray[$i].' '. $message.'</h5></div>';
-      echo $messagealert;
+      $message = "ApiException - " . $error->getElements()[0]["validation_errors"][0]["message"];
+      //$messagealert .= '</div><br><div><h5 style="color:red;">ID: '.$custidarray[$i].' '. $message.'</h5></div>';
+      //echo $messagealert;
   }
 }
 
