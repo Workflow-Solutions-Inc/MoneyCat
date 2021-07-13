@@ -195,8 +195,8 @@ function processCategory1($clientid, $clientsecret, $callback, $contact_Id, $agr
 		{
 			$amounttype = "Inclusive";
 		}
-		$newdate = explode('.', $date_of_payment);
-		$date_of_payment = $newdate[2].'-'.$newdate[1].'-'.$newdate[0];
+		//$newdate = explode('.', $date_of_payment);
+		//$date_of_payment = $newdate[2].'-'.$newdate[1].'-'.$newdate[0];
 		$queryheader = "CALL `insert_agreement_header`('$agreement_number', '".$_SESSION['contactid']."', '$amounttype', '$date_of_payment', '".$_SESSION['paymentbankaccount']."', 'receive', '$account', '$loan_amount', '".$_SESSION['taxrate']."', '$loan_description');";
 		if(mysqli_query($conn,$queryheader))
 		{
@@ -214,8 +214,8 @@ function processCategory1($clientid, $clientsecret, $callback, $contact_Id, $agr
 		try
 		{
 			$lastinvoice = "";
-			$newdate = explode('.', $date_of_payment);
-			$date_of_payment = $newdate[2].'-'.$newdate[1].'-'.$newdate[0];
+			//$newdate = explode('.', $date_of_payment);
+			//$date_of_payment = $newdate[2].'-'.$newdate[1].'-'.$newdate[0];
 			$apiResponse = $apiInstance->getInvoices($xeroTenantId, $if_modified_since = null, $where = null, $order = 'Date', $i_ds = null, $invoice_numbers = null, $contact_i_ds = $_SESSION['contactid'], $statuses = null, $page = null, $include_archived = null, $created_by_my_app = null, $unitdp = null);
 			$cnt =  count($apiResponse->getInvoices());
 			$arr  = (json_decode($apiResponse, true));
@@ -329,8 +329,8 @@ function processCategory2($clientid, $clientsecret, $callback, $contact_Id, $agr
 		$amounttype = "Inclusive";
 	}
 	// -> Invoice
-	$newdate = explode('.', $date_of_payment);
-	$date_of_payment = $newdate[2].'-'.$newdate[1].'-'.$newdate[0];
+	//$newdate = explode('.', $date_of_payment);
+	//$date_of_payment = $newdate[2].'-'.$newdate[1].'-'.$newdate[0];
 	$queryheader = "CALL `insert_agreement_header`('$agreement_number', '".$_SESSION['contactid']."', '$amounttype', '$date_of_payment', '".$_SESSION['paymentbankaccount']."', 'invoice', '$account', '$loan_amount', '".$_SESSION['taxrate']."','$loan_description');";
 	if(mysqli_query($conn,$queryheader))
 	{
@@ -386,8 +386,8 @@ function processCategory3($clientid, $clientsecret, $callback, $contact_Id, $agr
 	try
 	{
 		$lastinvoice = "";
-			$newdate = explode('.', $date_of_payment);
-			$date_of_payment = $newdate[2].'-'.$newdate[1].'-'.$newdate[0];
+			//$newdate = explode('.', $date_of_payment);
+			//$date_of_payment = $newdate[2].'-'.$newdate[1].'-'.$newdate[0];
 		$apiResponse = $apiInstance->getInvoices($xeroTenantId, $if_modified_since = null, $where = null, $order = 'Date', $i_ds = null, $invoice_numbers = null, $contact_i_ds = $_SESSION['contactid'], $statuses = null, $page = null, $include_archived = null, $created_by_my_app = null, $unitdp = null);
 		$cnt =  count($apiResponse->getInvoices());
 
