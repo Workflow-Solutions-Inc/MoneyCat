@@ -81,7 +81,7 @@ include("process/controllers/config/dbconn.php");
                         </div>
                     </div>
                     <div class="col-md-12">
-                    <div class="card" style="display: none;">
+                    <div class="card">
                         <div class="header">
                             <h4 class="title">Upload Result</h4>
                         </div>
