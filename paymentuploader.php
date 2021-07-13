@@ -119,7 +119,7 @@ include("process/controllers/config/dbconn.php");
 
     <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
     <script src="assets/js/demo.js"></script>
-    <script type="text/javascript" src="script/paymentold.js" ></script>
+    <script type="text/javascript" src="script/payment.js" ></script>
 
 
 
