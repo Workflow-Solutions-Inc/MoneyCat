@@ -71,20 +71,15 @@ include("process/controllers/config/dbconn.php");
                     </div>
                 </div>
 
-                <div class="col-md-12" style="display: none;">
-                    <div class="card" >
-                        <div class="header">
-                            <div><h5 id="currentcount">1</h5> out of <h5 id="totalitem">Select your json file</h5></div>
-                        </div>
-                        <br>
-                    </div>
-                </div>
 
                 <div class="col-md-12">
                     <div class="card">
                         <div class="header">
                             <h4 class="title">Upload Logs</h4>
+                            <hr>
+                            <h5 class="title">uploaded <b id="currentjsonupload">1</b> out of <b id="totaljsondata">1</b></h5>
                         </div>
+                         <br>
                          <pre style="overflow-y: scroll; height: 400px;" id="uploadresult">
                         </pre>
                     </div>
