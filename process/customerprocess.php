@@ -115,10 +115,10 @@ function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $c
       if(validateContactId($custidarray[$i]) != 1){
         array_push($contactlines, $contact);
         $contact_array ->setContacts($contactlines);
-        $messagealert .= 'ID: '.$custidarray[$i].' Successfully uploaded!';
+        $messagealert .= '</div><br><div><h5 style="color:green;">ID: '.$custidarray[$i].' Successfully uploaded!</h5></div>'; 
         syncContacts($custnamearray[$i], $custidarray[$i]);
       }else{
-        $messagealert .= 'ID: '.$custidarray[$i].' ID Already Exist!';
+        $messagealert .= '</div><br><div><h5 style="color:red;">ID: '.$custidarray[$i].' Already exist!</h5></div>';
       }
       
       
@@ -152,6 +152,7 @@ function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $c
           []
       );
       echo $message = "ApiException - " . $error->getElements()[0]["validation_errors"][0]["message"];
+      $messagealert .= '</div><br><div><h5 style="color:red;">ID: '.$custidarray[$i].' '. $message.'</h5></div>';
       echo $messagealert;
   }
 }
