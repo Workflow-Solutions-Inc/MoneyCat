@@ -11,7 +11,7 @@ include("process/controllers/config/dbconn.php");
     <link rel="icon" type="image/png" href="assets/img/favicon.png">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-    <title>Payments - Upload your payment to xero</title>
+    <title>Loans - Upload your loans to xero</title>
 
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -45,7 +45,7 @@ include("process/controllers/config/dbconn.php");
                       <div class="col-md-12">
                             <div class="card">
                                 <div class="header">
-                                    <h4 class="title">Payments</h4>
+                                    <h4 class="title">Loan</h4>
                                     <p class="category">Note: Please select a json file extension</p>
                                 </div>
                                 <div class="content">
@@ -74,16 +74,18 @@ include("process/controllers/config/dbconn.php");
                       <div class="col-md-12">
                         <div class="card">
                             <div class="header">
-                                <h4 class="title">Json Preview</h4>
+                                <h4 class="title">Loans Json</h4>
                             </div>
-                                <pre style="overflow-y: scroll; height: 400px;" id="result">
-                                </pre>
+                             <pre  style="overflow-y: scroll; height: 400px;" id="result">
+                                
+
+                            </pre>
                         </div>
                     </div>
                     <div class="col-md-12">
                     <div class="card">
                         <div class="header">
-                            <h4 class="title">Upload Logs</h4>
+                            <h4 class="title">Upload Result</h4>
                             <hr>
                             <h5 class="title">uploaded <b id="currentjsonupload">1</b> out of <b id="totaljsondata">1</b></h5>
                         </div>
@@ -121,7 +123,7 @@ include("process/controllers/config/dbconn.php");
 
     <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
     <script src="assets/js/demo.js"></script>
-    <script type="text/javascript" src="script/paymentold.js" ></script>
+    <script type="text/javascript" src="script/loans.js" ></script>
 
 
 
