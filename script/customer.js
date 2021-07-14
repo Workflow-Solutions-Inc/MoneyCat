@@ -18,6 +18,22 @@ $(function () {
     //showPleaseWait();
 });
 
+$(function () {
+    var pleaseWait = $('#pleasereconnectmodal'); 
+    
+    showPleaseWait2 = function() {
+        $('#pleasereconnectmodal').modal({backdrop: 'static', keyboard: false}) 
+        pleaseWait.modal('show');
+
+    };
+        
+    hidePleaseWait2 = function () {
+        pleaseWait.modal('hide');
+    };
+    
+    //showPleaseWait();
+});
+
 fileToRead.addEventListener("change", function(event) {
     var files = fileToRead.files;
     if (files.length) {
@@ -50,6 +66,10 @@ var counter = 1;
 var totalnouploaded = 0;
 function splitJson(jsonParams)
 {
+    if(validateconnectiontoapi() == ""){
+        showPleaseWait2();
+        return;
+    }
     document.getElementById('progresslabel').innerHTML = "Processing..";
     showPleaseWait();
     console.log(timerdate.getDate());
@@ -74,8 +94,7 @@ function splitJson(jsonParams)
         phone_number += res[prop].phone_number+ "|";
         count++;
         if(count % 1000 == 0){
-            looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count);
-            console.log(timerdate.getDate());
+            looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
             custName = "";
             custId = "";
             custEmail = "";
@@ -89,8 +108,7 @@ function splitJson(jsonParams)
 
     if(custName != "")
     {
-        looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count);
-        console.log(timerdate.getDate());
+        looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
         
     }
 
@@ -98,7 +116,7 @@ function splitJson(jsonParams)
     
 }
 
-function looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, curcount){
+function looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number){
     var action = "postdata";
             $.ajax({
                         type: 'POST',
@@ -109,8 +127,9 @@ function looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonet
                             
                         },
                         success: function(data){
-                            document.getElementById("uploadresult").innerHTML +="<div style='margin-left:20px;color:grey'>"+data+"</div><hr>";
-                            document.getElementById('currentjsonupload').innerHTML = curcount;
+                            console.log(data);
+
+                            //document.getElementById("uploadresult").innerHTML +="<div style='margin-left:20px;color:grey'>"+data+"</div><hr>";
                             document.getElementById('progresslabel').innerHTML = "Finalizing..";
                          }
                         
@@ -123,8 +142,8 @@ function upload(){
 	if(formatted == ""){
 		alert("no file chosen");
 	}else{
+        validateconnectiontoapi(formatted);
         document.getElementById("uploadresult").innerHTML = "";
-		splitJson(formatted);
         
 	}
 	
@@ -132,19 +151,36 @@ function upload(){
 
 function synccustomer(){
     $.ajax({
-                        type: 'POST',
-                        url: 'process/customersyncher.php',
-                        data:{},
-                        beforeSend:function(){        
+        type: 'POST',
+        url: 'process/customersyncher.php',
+        data:{},
+        beforeSend:function(){        
 
-                        },
-                        success: function(data){
+        },
+        success: function(data){
+            hidePleaseWait();
+         }
+        
+    });
+}
 
-                            hidePleaseWait();
-                            //alert("DONE");
-                         }
-                        
-                });
+function validateconnectiontoapi(formatted){
+    $.ajax({
+        type: 'GET',
+        url: 'process/checkconnection.php',
+        data:{},
+        beforeSend:function(){        
+
+        },
+        success: function(data){
+            if(data==1){
+                splitJson(formatted);
+            }else{
+                showPleaseWait2();
+            }   
+        }
+        
+    });
 }
 
 
