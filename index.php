@@ -97,11 +97,11 @@
                                 <li><a href="process/controllers/authorization.php" onclick="">Connect To Xero</a></li>
                               </ul>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="login.php">
                                 <p><i class="pe-7s-back-2"></i> Log Out</p>
                             </a>
-                        </li>
+                        </li> -->
             <li class="separator hidden-lg hidden-md"></li>
                     </ul>
                 </div>
