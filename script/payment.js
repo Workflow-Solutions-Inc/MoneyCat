@@ -78,7 +78,6 @@ function splitJson(jsonParams)
 
             if(category == 2){
                 uploadpayments(contact_Id,agreement_number,loan_description,loan_amount,account,category,date_of_payment,amount_type);
-                getLines();
             }
      
         }
@@ -97,8 +96,7 @@ function splitJson(jsonParams)
             amount_type = json[i].amount_type;
 
             if(category != 2){
-                uploadpayments(contact_Id,agreement_number,loan_description,loan_amount,account,category,date_of_payment,amount_type);  
-                getLines();          
+                uploadpayments(contact_Id,agreement_number,loan_description,loan_amount,account,category,date_of_payment,amount_type);       
             }
      
         }
@@ -124,7 +122,7 @@ function uploadpayments(contact_Id,agreement_number,loan_description,loan_amount
                  beforeSend:function(){
                 },
                 success: function(data){
-                    // document.getElementById("uploadresult").innerHTML +="<div style='margin-left:20px;color:grey;'>"+data+"</div><hr>";
+                     document.getElementById("uploadresult").innerHTML +="<div style='margin-left:20px;color:grey;'>"+data+"</div><hr>";
                  }
                 
         });
@@ -141,6 +139,10 @@ function upload(){
         clearjson()
         document.getElementById("uploadresult").innerHTML = "";
 		validateconnectiontoapi(formatted);
+        setTimeout(function(){
+        getLines();
+        //alert("Done");
+        },3000);
 	}
 	
 }
@@ -169,7 +171,7 @@ function getLines(){
             beforeSend:function(){
             },
             success: function(data){
-                console.log(data);
+                //console.log(data);
                 hidePleaseWait();
                 //document.getElementById("uploadresult").innerHTML += data;
              }
