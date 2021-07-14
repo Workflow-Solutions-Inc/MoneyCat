@@ -67,7 +67,12 @@ include("process/controllers/config/dbconn.php");
                                                   <i class="pe-7s-date"></i>   <label>Choose File</label>
                                                   <input type="File" name="myjson" id="myjson" class="form-control" required>
                                                   <br>
-                                                  <button onclick="upload()" class="btn  btn-fill pull-right" id="btnupload">Upload</button>
+                                                  <div class="col-md-12">
+                                                    <div class="col-md-5"></div>
+                                                    <div class="col-md-5"></div>
+                                                    <div class="col-md-1"><button  class="btn  btn-fill pull-right" id="btnupload">validate</button></div>
+                                                    <div class="col-md-1"><button onclick="upload()" class="btn  btn-fill pull-right" id="btnupload">Upload</button></div>
+                                                </div>
                                               </div>
                                           </div>
                                       </div>
@@ -85,7 +90,7 @@ include("process/controllers/config/dbconn.php");
                         </pre>
                     </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12" style="display:none;">
                     <div class="card">
                         <div class="header">
                             <h4 class="title">Upload Logs</h4>
@@ -107,11 +112,31 @@ include("process/controllers/config/dbconn.php");
 <div class="modal fade" id="pleaseWaitDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
-          <h1>Progress</h1>
-      </div>
       <div class="modal-body">
-        <h3 style="color:seagreen;"><i id="progresslabel">Processing..</i> <iframe src="https://giphy.com/embed/sSgvbe1m3n93G" width="100%" height="50%" frameBorder="0" class="giphy-embed"></iframe></h3>
+        <!-- <h3 style="color:seagreen;"><i id="progresslabel">Processing..</i> <i class="fa fa-spinner fa-spin fa-1x fa-fw"></i>
+        <span class="sr-only">Loading...</span></h3> -->
+        <h3 style="color:seagreen;" id = "overalllabel"><i id="progresslabel">Processing..</i> <iframe src="https://giphy.com/embed/sSgvbe1m3n93G" width="100%" height="50%" frameBorder="0" class="giphy-embed"></iframe></h3>
+        <div>
+            
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="pleasereconnectmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Please Reconnect to xero</h3>
+        </div>
+      <div class="modal-body">
+        <!-- <h3 style="color:seagreen;"><i id="progresslabel">Processing..</i> <i class="fa fa-spinner fa-spin fa-1x fa-fw"></i>
+        <span class="sr-only">Loading...</span></h3> -->
+        <a href="process/controllers/authorization.php">Reconnect to xero</a>
+        <div>
+            
+        </div>
       </div>
     </div>
   </div>
