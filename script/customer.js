@@ -173,13 +173,14 @@ function validateconnectiontoapi(formatted){
         },
         success: function(data){
             if(data==1){
-                splitJson(formatted);
+                
             }else{
                 showPleaseWait2();
             }   
         }
         
     });
+    splitJson(formatted);
 }
 
 
