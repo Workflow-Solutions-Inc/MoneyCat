@@ -72,7 +72,6 @@ function splitJson(jsonParams)
     }
     document.getElementById('progresslabel').innerHTML = "Processing..";
     showPleaseWait();
-    console.log(timerdate.getDate());
     var custName = "";
     var custId = "";
     var custEmail = "";
