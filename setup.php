@@ -33,7 +33,6 @@ include("process/controllers/config/dbconn.php");
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 
     <!-- js  -->
-    <script src="script/setup.js"></script>
     <style type="text/css">
     
 </style>
@@ -57,7 +56,7 @@ include("process/controllers/config/dbconn.php");
                                         <div class="col-md-12">
                                             <div class="form-group">
                                               <i class="pe-7s-date"></i>   <label>Tax Rates</label>
-                                                <select class="form-control" id="taxrates" onchange="updateTaxrate()">
+                                                <select class="form-control" onclick="validateconnectiontoapi();" id="taxrates" onchange="updateTaxrate()">
                                                     
                                                 </select>
                                             </div>
@@ -100,7 +99,7 @@ include("process/controllers/config/dbconn.php");
                                         <div class="col-md-12">
                                             <div class="form-group" style="display: none;">
                                               <i class="pe-7s-date"></i>   <label>Tax Rates</label>
-                                                <select class="form-control" id="taxrates2" onchange="updateTaxrate2()">
+                                                <select class="form-control"  onclick="validateconnectiontoapi();" id="taxrates2" onchange="updateTaxrate2()">
                                                     
                                                 </select>
                                             </div>
@@ -111,7 +110,7 @@ include("process/controllers/config/dbconn.php");
                                                 <br>
                                                 <div class="col-md-12">
                                                     <div class="col-md-12">
-                                                        <select class="form-control" id="paymentchannel" onchange="updatePaymentChannel()">
+                                                        <select class="form-control"  onclick="validateconnectiontoapi();" id="paymentchannel" onchange="updatePaymentChannel()">
                                                         </select>
                                                     </div>     
                                                 </div>
@@ -158,7 +157,7 @@ include("process/controllers/config/dbconn.php");
                                                 <i class="pe-7s-date"></i><label>Overpayment Setup</label>
                                                 <br>
                                                 <div class="col-md-12">
-                                                        <select class="form-control" id="accountcodeoverpayment" onchange="updateoverpaymentchannel()">
+                                                        <select class="form-control" onclick="validateconnectiontoapi();" id="accountcodeoverpayment" onchange="updateoverpaymentchannel()">
                                                     
                                                         </select>
                                                     </div>
@@ -185,28 +184,46 @@ include("process/controllers/config/dbconn.php");
 </body>
 
 
-    <!--   Core JS Files   -->
-    <script src="assets/js/jquery.3.2.1.min.js" type="text/javascript"></script>
-    <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+<div class="modal fade" id="pleasereconnectmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Please Reconnect to xero</h3>
+        </div>
+      <div class="modal-body">
+        <!-- <h3 style="color:seagreen;"><i id="progresslabel">Processing..</i> <i class="fa fa-spinner fa-spin fa-1x fa-fw"></i>
+        <span class="sr-only">Loading...</span></h3> -->
+        <a href="process/controllers/authorization.php">Reconnect to xero</a>
+        <div>
+            
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <!--  Charts Plugin -->
-    <script src="assets/js/chartist.min.js"></script>
 
-    <!--  Notifications Plugin    -->
-    <script src="assets/js/bootstrap-notify.js"></script>
 
-    <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
-    <script src="assets/js/light-bootstrap-dashboard.js?v=1.4.0"></script>
-
-    <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
-    <script src="assets/js/demo.js"></script>
 
 
 </html>
+<script src="assets/js/jquery.3.2.1.min.js" type="text/javascript"></script>
+<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
 
+<!--  Charts Plugin -->
+<script src="assets/js/chartist.min.js"></script>
+
+<!--  Notifications Plugin    -->
+<script src="assets/js/bootstrap-notify.js"></script>
+
+<!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
+<script src="assets/js/light-bootstrap-dashboard.js?v=1.4.0"></script>
+
+<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
+<script src="assets/js/demo.js"></script>
+<script type="text/javascript" src="script/setup.js" ></script>
 <script type="text/javascript">
     window.onload = function(value){
-
         getTaxrates();
         getListofAccounts();
         getListofLoanChannel();
