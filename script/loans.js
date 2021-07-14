@@ -26,10 +26,44 @@ fileToRead.addEventListener("change", function(event) {
 
 }, false);
 
+$(function () {
+    var pleaseWait = $('#pleaseWaitDialog'); 
+    
+    showPleaseWait = function() {
+        $('#pleaseWaitDialog').modal({backdrop: 'static', keyboard: false}) 
+        pleaseWait.modal('show');
+
+    };
+        
+    hidePleaseWait = function () {
+        pleaseWait.modal('hide');
+    };
+    
+    //showPleaseWait();
+});
+
+
+$(function () {
+    var pleaseWait = $('#pleasereconnectmodal'); 
+    
+    showPleaseWait2 = function() {
+        $('#pleasereconnectmodal').modal({backdrop: 'static', keyboard: false}) 
+        pleaseWait.modal('show');
+
+    };
+        
+    hidePleaseWait2 = function () {
+        pleaseWait.modal('hide');
+    };
+    
+    //showPleaseWait();
+});
+
 
 
 function splitJson(jsonParams)
 {
+    document.getElementById('progresslabel').innerHTML = "Processing..";
     var contact_Id = "";
     var agreement_number = "";
     var loan_description = "";
@@ -58,42 +92,10 @@ function splitJson(jsonParams)
             Date_of_loan += json[i].date_disbursed+ "|";
             Due_Date_of_loan += json[i].due_date_of_loan+ "|";
             amount_type += json[i].amount_type+ "|";
-
+            showPleaseWait();
             count++;
             if(count % 1000 == 0){
-            var action = "postdata";
-            $.ajax({
-                        type: 'POST',
-                        url: 'process/loanprocess2.php',
-                        data:{action:action, 
-                          contact_Id:contact_Id,
-                          agreement_number:agreement_number,
-                          loan_description:loan_description,
-                          loan_amount:loan_amount,
-                          account:account,
-                          bankaccount:bankaccount,  
-                          Date_of_loan:Date_of_loan,
-                          Due_Date_of_loan:Due_Date_of_loan,
-                          category:category,
-                          amount_type:amount_type
-                        },
-                        beforeSend:function(){
-
-                            document.getElementById("btnupload").disabled = true;
-                            document.getElementById("btnupload").innerHTML = '<i class="fa fa-spinner fa-spin" aria-hidden="true"></i> Loading';
-                        },
-                        success: function(data){
-                            
-                            //alert("done");
-                            document.getElementById("btnupload").disabled = false;
-                            document.getElementById("btnupload").innerHTML = "Upload";
-                            document.getElementById("uploadresult").innerHTML +="<div style='margin-left:20px;color:grey;'>"+data+"</div><hr>";
-                            document.getElementById('currentjsonupload').innerHTML = count;
-
-                          
-                         }
-                        
-                });
+            uploadloans(contact_Id,agreement_number,loan_description,loan_amount,account,bankaccount,Date_of_loan,Due_Date_of_loan,category,amount_type);
             contact_Id = "";
             agreement_number = "";
             loan_description = "";
@@ -110,47 +112,68 @@ function splitJson(jsonParams)
         //alert("Done");
     if(contact_Id != "")
     {
-        var action = "postdata";
-            $.ajax({
-                        type: 'POST',
-                        url: 'process/loanprocess2.php',
-                        data:{action:action, 
-                          contact_Id:contact_Id,
-                          agreement_number:agreement_number,
-                          loan_description:loan_description,
-                          loan_amount:loan_amount,
-                          account:account,
-                          bankaccount:bankaccount,  
-                          Date_of_loan:Date_of_loan,
-                          Due_Date_of_loan:Due_Date_of_loan,
-                          category:category,
-                          amount_type:amount_type
-                        },
-                        beforeSend:function(){
-
-                            document.getElementById("btnupload").disabled = true;
-                            document.getElementById("btnupload").innerHTML = '<i class="fa fa-spinner fa-spin" aria-hidden="true"></i> Loading';
-                        },
-                        success: function(data){
-                            
-                            //alert("done");
-                            document.getElementById("btnupload").disabled = false;
-                            document.getElementById("btnupload").innerHTML = "Upload";
-                            document.getElementById("uploadresult").innerHTML +="<div style='margin-left:20px;color:grey;'>"+data+"</div><hr>";
-                            document.getElementById('currentjsonupload').innerHTML = count;
-                          
-                         }
-                        
-                });
+            uploadloans(contact_Id,agreement_number,loan_description,loan_amount,account,bankaccount,Date_of_loan,Due_Date_of_loan,category,amount_type);
     }
+}
+
+
+function uploadloans(contact_Id,agreement_number,loan_description,loan_amount,account,bankaccount,Date_of_loan,Due_Date_of_loan,category,amount_type){
+    var action = "postdata";
+    $.ajax({
+                type: 'POST',
+                url: 'process/loanprocess2.php',
+                data:{action:action, 
+                  contact_Id:contact_Id,
+                  agreement_number:agreement_number,
+                  loan_description:loan_description,
+                  loan_amount:loan_amount,
+                  account:account,
+                  bankaccount:bankaccount,  
+                  Date_of_loan:Date_of_loan,
+                  Due_Date_of_loan:Due_Date_of_loan,
+                  category:category,
+                  amount_type:amount_type
+                },
+                beforeSend:function(){
+
+                },
+                success: function(data){
+                    
+                    document.getElementById("uploadresult").innerHTML +="<div style='margin-left:20px;color:grey;'>"+data+"</div><hr>";  
+                    document.getElementById('progresslabel').innerHTML = "Finalizing..";
+                    hidePleaseWait();         
+                 }
+                
+        });
 }
 
 function upload(){
     if(formatted == ""){
         alert("no file chosen");
     }else{
+        validateconnectiontoapi(formatted);
         document.getElementById("uploadresult").innerHTML = "";
-        splitJson(formatted);
+        
     }
     
+}
+
+function validateconnectiontoapi(formatted){
+    $.ajax({
+        type: 'GET',
+        url: 'process/checkconnection.php',
+        data:{},
+        beforeSend:function(){        
+
+        },
+        success: function(data){
+            if(data==1){
+                splitJson(formatted);
+            }else{
+                showPleaseWait2();
+            }   
+        }
+        
+    });
+
 }
