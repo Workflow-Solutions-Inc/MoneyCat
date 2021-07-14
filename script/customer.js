@@ -1,6 +1,23 @@
  var fileToRead = document.getElementById("myjson");
  var formatted = "";
 
+
+$(function () {
+    var pleaseWait = $('#pleaseWaitDialog'); 
+    
+    showPleaseWait = function() {
+        $('#pleaseWaitDialog').modal({backdrop: 'static', keyboard: false}) 
+        pleaseWait.modal('show');
+
+    };
+        
+    hidePleaseWait = function () {
+        pleaseWait.modal('hide');
+    };
+    
+    //showPleaseWait();
+});
+
 fileToRead.addEventListener("change", function(event) {
     var files = fileToRead.files;
     if (files.length) {
@@ -33,6 +50,10 @@ var counter = 1;
 var totalnouploaded = 0;
 function splitJson(jsonParams)
 {
+    document.getElementById("btnupload").disabled = true;
+    document.getElementById("btnupload").innerHTML = '<i class="fa fa-spinner fa-spin" aria-hidden="true"></i> Loading';
+    document.getElementById('progresslabel').innerHTML = "Processing..";
+    showPleaseWait();
     console.log(timerdate.getDate());
     var custName = "";
     var custId = "";
@@ -65,7 +86,6 @@ function splitJson(jsonParams)
             phonetype = "";
             phone_number = "";
         }
-       // looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
         
     }
 
@@ -73,7 +93,10 @@ function splitJson(jsonParams)
     {
         looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count);
         console.log(timerdate.getDate());
+        
     }
+
+    synccustomer();
     
 }
 
@@ -85,23 +108,12 @@ function looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonet
                         data:{action:action, custName:custName,custEmail:custEmail,
                             AddressLine:AddressLine,custTaxNum:custTaxNum, custId:custId, phonetype:phonetype, phone_number:phone_number},
                         beforeSend:function(){
-
-                            //document.getElementById("btnupload").innerHTML = "Loading..";
-                            document.getElementById("btnupload").disabled = true;
-                            document.getElementById("btnupload").innerHTML = '<i class="fa fa-spinner fa-spin" aria-hidden="true"></i> Loading';
+                            
                         },
                         success: function(data){
-                            //resultsetter(data,custId);
-                            //console.log(custId);
-                            synccustomer();
-                            document.getElementById("btnupload").disabled = false;
-                            document.getElementById("btnupload").innerHTML = "Upload";
                             document.getElementById("uploadresult").innerHTML +="<div style='margin-left:20px;color:grey'>"+data+"</div><hr>";
                             document.getElementById('currentjsonupload').innerHTML = curcount;
-                            //document.getElementById("uploadresult").innerHTML +="<div style='margin-left:20px;color:red'>Name Already Exist in Xero!</div><hr>";  
-                            
-                            
-                            
+                            document.getElementById('progresslabel').innerHTML = "Finalizing..";
                          }
                         
                 });
@@ -115,6 +127,7 @@ function upload(){
 	}else{
         document.getElementById("uploadresult").innerHTML = "";
 		splitJson(formatted);
+        
 	}
 	
 }
@@ -124,11 +137,18 @@ function synccustomer(){
                         type: 'POST',
                         url: 'process/customersyncher.php',
                         data:{},
-                        beforeSend:function(){                        },
+                        beforeSend:function(){        
+
+                        },
                         success: function(data){
-                            //alert(data);
-                          
+
+                            hidePleaseWait();
+                            document.getElementById("btnupload").disabled = false;
+                            document.getElementById("btnupload").innerHTML = "Upload"; 
+                            //alert("DONE");
                          }
                         
                 });
 }
+
+
