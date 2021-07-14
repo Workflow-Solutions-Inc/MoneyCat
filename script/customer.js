@@ -66,12 +66,9 @@ var counter = 1;
 var totalnouploaded = 0;
 function splitJson(jsonParams)
 {
-    if(validateconnectiontoapi() == ""){
-        showPleaseWait2();
-        return;
-    }
     document.getElementById('progresslabel').innerHTML = "Processing..";
     showPleaseWait();
+    console.log(timerdate.getDate());
     var custName = "";
     var custId = "";
     var custEmail = "";
@@ -173,14 +170,13 @@ function validateconnectiontoapi(formatted){
         },
         success: function(data){
             if(data==1){
-                
+                splitJson(formatted);
             }else{
                 showPleaseWait2();
             }   
         }
         
     });
-    splitJson(formatted);
 }
 
 
