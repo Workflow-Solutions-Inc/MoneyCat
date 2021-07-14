@@ -50,8 +50,6 @@ var counter = 1;
 var totalnouploaded = 0;
 function splitJson(jsonParams)
 {
-    document.getElementById("btnupload").disabled = true;
-    document.getElementById("btnupload").innerHTML = '<i class="fa fa-spinner fa-spin" aria-hidden="true"></i> Loading';
     document.getElementById('progresslabel').innerHTML = "Processing..";
     showPleaseWait();
     console.log(timerdate.getDate());
@@ -143,8 +141,6 @@ function synccustomer(){
                         success: function(data){
 
                             hidePleaseWait();
-                            document.getElementById("btnupload").disabled = false;
-                            document.getElementById("btnupload").innerHTML = "Upload"; 
                             //alert("DONE");
                          }
                         
