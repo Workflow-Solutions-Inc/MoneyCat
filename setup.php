@@ -1,434 +1,236 @@
-$(function () {
-    var pleaseWait = $('#pleasereconnectmodal'); 
+<?php 
+require_once('inc/sidebarexcelreports.php');
+require_once('inc/header.php');
+include("process/controllers/config/dbconn.php");
+?>
+
+<!doctype html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="assets/img/favicon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Setup</title>
+
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+
+    <!-- Bootstrap core CSS     -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Animation library for notifications   -->
+    <link href="assets/css/animate.min.css" rel="stylesheet"/>
+
+    <!--  Light Bootstrap Table core CSS    -->
+    <link href="assets/css/light-bootstrap-dashboard.css?v=1.4.0" rel="stylesheet"/>
+  <link href="assets/css/demo.css" rel="stylesheet" />
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+    <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+
+    <!-- js  -->
+    <style type="text/css">
     
-    showPleaseWait2 = function() {
-        $('#pleasereconnectmodal').modal({backdrop: 'static', keyboard: false}) 
-        pleaseWait.modal('show');
+</style>
 
-    };
-        
-    hidePleaseWait2 = function () {
-        pleaseWait.modal('hide');
-    };
-    
-    //showPleaseWait();
-});
+</head>
+<body>
 
-function validateconnectiontoapi(){
-    $.ajax({
-        type: 'GET',
-        url: 'process/checkconnection.php',
-        data:{},
-        beforeSend:function(){        
+<div class="wrapper">
+    <div class="main-panel">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                      <div class="col-md-12">
+                            <div class="card">
+                                <div class="header">
+                                    <h4 class="title">Loan Disbursement Setup</h4>
+                                    <p class="category">Note: Setup all the necessary data before uploading a json file.</p>
+                                </div>
+                                <div class="content">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                              <i class="pe-7s-date"></i>   <label>Tax Rates</label>
+                                                <select class="form-control" onclick="validateconnectiontoapi();" id="taxrates" onchange="updateTaxrate()">
+                                                    
+                                                </select>
+                                            </div>
+                                            <br>
+                                            <div class="form-group">
+                                                <i class="pe-7s-date"></i> <label>Add Disbursement Channel</label>
+                                                <br>
+                                                <div class="col-md-12">
+                                                    <div class="col-md-4"><input class="form-control" type="text" placeholder="Account code" id="loanaccountcode"></div>
+                                                    <div class="col-md-4">
+                                                        <select class="form-control" id="xerochannel">
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-2"><input class="btn  btn-fill pull-right" type="button" value="Save Channel" onclick="saveLoanChannel()"></div>      
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <br>
+                                            <div class="form-group">
+                                                <i class="pe-7s-date"></i>   <label>List of Disbursement Channel</label>
+                                                <br>
+                                                <div style="height:400px; overflow-y: scroll;" id="listofloanchannel">
+                                              
+                                            </div>
+                                            </div>
 
-        },
-        success: function(data){
-            if(data!=1){
-                showPleaseWait2();
-            } 
-        }
-        
-    });
-}
-//update account
-function boxboardDetails(value){
-    $("tr").removeClass('active');
-    var currentRow=$(value).closest("tr"); 
-    $(value).closest("tr").addClass('active');
-    name = currentRow.find("td:eq(0)").html();
-    code = currentRow.find("td:eq(5)").html();
-    desc = currentRow.find("td:eq(2)").html();
-    tax = currentRow.find("td:eq(3)").html();
-    type = currentRow.find("td:eq(4)").html();
-    document.getElementById("accountcode").value = code;
-    document.getElementById("accountname").value = name;
-    document.getElementById("accountdesc").value = desc;
-    document.getElementById("accounttype").value = type;
-    //alert(type);
-} 
+                                        </div>
+                                    </div>
+                                </div>     
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="header">
+                                    <h4 class="title">Payment Setup</h4>
+                                    <p class="category">Note: Setup all the necessary data before uploading a json file.</p>
+                                </div>
+                                <div class="content">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group" style="display: none;">
+                                              <i class="pe-7s-date"></i>   <label>Tax Rates</label>
+                                                <select class="form-control"  onclick="validateconnectiontoapi();" id="taxrates2" onchange="updateTaxrate2()">
+                                                    
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <i class="pe-7s-date"></i> <label>Select Bank Account</label>
+                                                <br>
+                                                <div class="col-md-12">
+                                                    <div class="col-md-12">
+                                                        <select class="form-control"  onclick="validateconnectiontoapi();" id="paymentchannel" onchange="updatePaymentChannel()">
+                                                        </select>
+                                                    </div>     
+                                                </div>
+                                            </div>                                       
+                                            <div class="form-group" style="display: none;">
+                                                <i class="pe-7s-date"></i><label>List of Disbursement Channel</label>
+                                                <br>
+                                                <div style="height:400px; overflow-y: scroll;" id="listofpaymentchannel">
+                                              
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                              <i class="pe-7s-date"></i>   <label>Add Accounts</label>
+                                              <br>
+                                                <div class="col-md-12">
+                                                    <div class="col-md-3">
+                                                        <select class="form-control" id="accountcode">
+                                                    
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3"><input class="form-control" type="text" id ="accountname" placeholder="Account name" ></div>
+                                                    <div class="col-md-3" style="display:none;"><input class="form-control" type="text" id ="accountdesc" placeholder="Description" ></div>
+                                                    <div class="col-md-3">
+                                                        <select class="form-control" id="accounttype">
+                                                            <option value = "2">Receive Payment</option>
+                                                            <option value = "1">Invoice Payment</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3"><input class="btn  btn-fill pull-right" type="button" value="Save Account" onclick="addupdate()"></div>      
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <i class="pe-7s-date"></i><label>List of Accounts</label>
+                                                <br>
+                                                <div style="height:480px; overflow-y: scroll;" id="listofaccounts" >
+                                              
+                                                </div>
+                                            </div>
 
-function clearaccounts(){
-    document.getElementById("accountcode").value = "";
-    document.getElementById("accountname").value = "";
-    document.getElementById("accountdesc").value = "";
-    document.getElementById("accounttype").value = "2";
-}
+                                            <div class="form-group">
+                                                <i class="pe-7s-date"></i><label>Overpayment Setup</label>
+                                                <br>
+                                                <div class="col-md-12">
+                                                        <select class="form-control" onclick="validateconnectiontoapi();" id="accountcodeoverpayment" onchange="updateoverpaymentchannel()">
+                                                    
+                                                        </select>
+                                                    </div>
+                                              
+                                                    
+                                            </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>     
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <?php include("inc/footer.php"); ?>
+    </div>
+</div>
 
-function addupdate(){
-    
-    var res = document.getElementById("accountcode").value.split("@");
-    var name = document.getElementById("accountname").value;
-    //var desc = document.getElementById("accountdesc").value;
-    var desc = res[1];
-    var code = res[0];
-    var tax = document.getElementById("accounttype").value;
-    var type = 
-    $.ajax({
-        type: 'GET',
-        url: 'process/insertupdateaccount.php',
-        data:{code:code, name:name, desc:desc, tax:tax},
-        beforeSend:function(){
 
+
+
+</body>
+
+
+<div class="modal fade" id="pleasereconnectmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Please Reconnect to xero</h3>
+        </div>
+      <div class="modal-body">
+        <!-- <h3 style="color:seagreen;"><i id="progresslabel">Processing..</i> <i class="fa fa-spinner fa-spin fa-1x fa-fw"></i>
+        <span class="sr-only">Loading...</span></h3> -->
+        <a href="process/controllers/authorization.php">Reconnect to xero</a>
+        <div>
             
-        },
-        success: function(data){
-            //alert(data);
-            if(data=="0"){
-                alert("Account Added");
-            }else{
-                alert("Account Updated")
-            }
-            getListofAccounts();
-            clearaccounts();
-          
-         }   
-    });
-}   
-
-function removeaccount(val){
-    $.ajax({
-        type: 'GET',
-        url: 'process/removeaccount.php',
-        data:{code:val.id},
-        beforeSend:function(){
-
-            
-        },
-        success: function(data){
-            alert("Account "+val.id+" has been removed");
-            
-            getListofAccounts();
-            clearaccounts();
-          
-         }   
-    });
-}
-
-function getxeroaccounts(){
-    $.ajax({
-        type: 'GET',
-        url: 'process/getAccountinxero.php',
-        data:{},
-        beforeSend:function(){
-
-            
-        },
-        success: function(data){
-            console.log(data);
-            document.getElementById("accountcode").innerHTML = data;
-            document.getElementById("accountcodeoverpayment").innerHTML = data;
-            getselectedopchannel();
-          
-         }   
-    });
-}
-
-function updateoverpaymentchannel(){
-    
-    var opchannel = document.getElementById("accountcodeoverpayment").value;
-    $.ajax({
-        type: 'GET',
-        url: 'process/updateoverpaymentchannel.php',
-        data:{opchannel:opchannel},
-        beforeSend:function(){
-
-            
-        },
-        success: function(data){
-            
-          
-         }   
-    });
-}
-
-function getselectedopchannel(){
-    $.ajax({
-        type: 'GET',
-        url: 'process/getopchannel.php',
-        data:{},
-        beforeSend:function(){
-
-            
-        },
-        success: function(data){
-            //alerrt(data);
-            document.getElementById("accountcodeoverpayment").value = data;
-          
-         }   
-    });
-}
-// update account
-
-function getTaxrates(){
-    $.ajax({
-        type: 'GET',
-        url: 'process/getTaxRates.php',
-        data:{},
-        beforeSend:function(){
-
-            
-        },
-        success: function(data){
-            console.log(data);
-            document.getElementById("taxrates").innerHTML = data;
-            document.getElementById("taxrates2").innerHTML = data;
-            //document.getElementById("accounttax").innerHTML = data;
-            getcurrentTaxrates();
-            getcurrentTaxrates2();
-          
-         }   
-    });
-}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 
-function updateTaxrate(){
-
-    var rate = document.getElementById("taxrates").value;
-    $.ajax({
-        type: 'GET',
-        url: 'process/updateTaxRates.php',
-        data:{rate:rate},
-        beforeSend:function(){
-
-            
-        },
-        success: function(data){
-            //alert(data);
-            getcurrentTaxrates();
-         }   
-    });
-}
-function updateTaxrate2(){
-
-    var rate = document.getElementById("taxrates2").value;
-    $.ajax({
-        type: 'GET',
-        url: 'process/updateTaxRates2.php',
-        data:{rate:rate},
-        beforeSend:function(){
-
-            
-        },
-        success: function(data){
-            //alert(data);
-            getcurrentTaxrates2();
-         }   
-    });
-}
-function updateAccountType(val){
-
-    var code = val.id;
-    $.ajax({
-        type: 'GET',
-        url: 'process/updateAccountType.php',
-        data:{code:code},
-        beforeSend:function(){
-
-            
-        },
-        success: function(data){
-            //alert(data);
-            getListofAccounts();
-            getcurrentTaxrates();
-         }   
-    });
-}
-
-function getcurrentTaxrates(){
-
-    $.ajax({
-        type: 'GET',
-        url: 'process/getCurrentTaxRates.php',
-        data:{},
-        beforeSend:function(){
-
-            
-        },
-        success: function(data){
-            //alert(data);
-            let element = document.getElementById("taxrates");
-            element.value = data;
-         }   
-    });
-}
-function getcurrentTaxrates2(){
-
-    $.ajax({
-        type: 'GET',
-        url: 'process/getCurrentTaxRates2.php',
-        data:{},
-        beforeSend:function(){
-
-            
-        },
-        success: function(data){
-            //alert(data);
-            let element = document.getElementById("taxrates2");
-            element.value = data;
-         }   
-    });
-}
-
-function getListofAccounts(){
-    $.ajax({
-        type: 'GET',
-        url: 'process/getListofAccounts.php',
-        data:{},
-        beforeSend:function(){
-
-            
-        },
-        success: function(data){
-            //alert(data);
-            let element = document.getElementById("listofaccounts");
-            element.innerHTML = data;
-         }   
-    });
-}
-
-function getListofLoanChannel(){
-    $.ajax({
-        type: 'GET',
-        url: 'process/getListofLoanChannel.php',
-        data:{},
-        beforeSend:function(){
-
-            
-        },
-        success: function(data){
-            //alert(data);
-            let element = document.getElementById("listofloanchannel");
-            element.innerHTML = data;
-         }   
-    });
-}
-
-function getListofLoanXeroChannel(){
-    $.ajax({
-        type: 'GET',
-        url: 'process/getxerobankchannels.php',
-        data:{},
-        beforeSend:function(){
-
-            
-        },
-        success: function(data){
-            //alert(data);
-            let element = document.getElementById("xerochannel");
-            element.innerHTML = data;
-         }   
-    });
-}
-
-function saveLoanChannel(){
-    var code = document.getElementById("loanaccountcode").value;
-    var xero = document.getElementById("xerochannel").value;
-    $.ajax({
-        type: 'GET',
-        url: 'process/inserttoLoanChannel.php',
-        data:{code:code, xero:xero},
-        beforeSend:function(){
-
-            
-        },
-        success: function(data){
-            alert(data);
-            getListofLoanChannel();
-            getListofLoanXeroChannel();
-            getListofPaymentChannel();
-            getPaymentChannelList();
-         }   
-    });
-}
-
-function removeLoanChannel(val){
-    var code = val.id;
-    $.ajax({
-        type: 'GET',
-        url: 'process/removeLoanChannel.php',
-        data:{code:code},
-        beforeSend:function(){
-
-            
-        },
-        success: function(data){
-            alert(data);
-            getListofLoanChannel();
-            getListofLoanXeroChannel();
-            getListofPaymentChannel();
-            getPaymentChannelList();
-         }   
-    });
-}
-
-function getListofPaymentChannel(){
-    $.ajax({
-        type: 'GET',
-        url: 'process/getListofPaymentChannel.php',
-        data:{},
-        beforeSend:function(){
-
-            
-        },
-        success: function(data){
-            //alert(data);
-            let element = document.getElementById("paymentchannel");
-            element.innerHTML = data;
-            getSelectedPaymentChannel();
-         }   
-    });
-}
-
-function getSelectedPaymentChannel(){
-    $.ajax({
-        type: 'GET',
-        url: 'process/getSelectedPaymentChannel.php',
-        data:{},
-        beforeSend:function(){
-
-            
-        },
-        success: function(data){
-            let element = document.getElementById("paymentchannel");
-            element.value = data;
-         }   
-    });
-}
-
-function updatePaymentChannel(){
-    //alert(1);
-    var code = document.getElementById("paymentchannel").value;
-    $.ajax({
-        type: 'GET',
-        url: 'process/updateSelectedPaymentChannel.php',
-        data:{code:code},
-        beforeSend:function(){
-
-            
-        },
-        success: function(data){
-            getListofAccounts();
-            getcurrentTaxrates();
-
-         }   
-    });
-}
 
 
-function getPaymentChannelList(){
-    //listofpaymentchannel
-    $.ajax({
-        type: 'GET',
-        url: 'process/getPaymentChannelList.php',
-        data:{},
-        beforeSend:function(){
 
-            
-        },
-        success: function(data){
-            //alert(data);
-            let element = document.getElementById("listofpaymentchannel");
-            element.innerHTML = data;
-         }   
-    });
-}
+</html>
+<script src="assets/js/jquery.3.2.1.min.js" type="text/javascript"></script>
+<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+
+<!--  Charts Plugin -->
+<script src="assets/js/chartist.min.js"></script>
+
+<!--  Notifications Plugin    -->
+<script src="assets/js/bootstrap-notify.js"></script>
+
+<!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
+<script src="assets/js/light-bootstrap-dashboard.js?v=1.4.0"></script>
+
+<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
+<script src="assets/js/demo.js"></script>
+<script type="text/javascript" src="script/setup.js" ></script>
+<script type="text/javascript">
+    window.onload = function(value){
+        getTaxrates();
+        getListofAccounts();
+        getListofLoanChannel();
+        getListofPaymentChannel();
+        getListofLoanXeroChannel();
+        getPaymentChannelList();
+        getxeroaccounts();
+        getselectedopchannel();
+    }
+</script>
