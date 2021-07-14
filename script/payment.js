@@ -1,47 +1,3 @@
- var fileToRead = document.getElementById("myjson");
- var formatted = "";
-
-fileToRead.addEventListener("change", function(event) {
-    var files = fileToRead.files;
-    if (files.length) {
-        var files = document.getElementById('myjson').files;
-          console.log(files);
-          if (files.length <= 0) {
-            return false;
-          }
-          
-          var fr = new FileReader();
-          
-          fr.onload = function(e) { 
-          console.log(e);
-            var result = JSON.parse(e.target.result);
-            formatted = JSON.stringify(result, null, 2);
-            document.getElementById('result').innerHTML = formatted;
-            document.getElementById('totaljsondata').innerHTML = result.length;
-            //alert(formatted);
-          }
-          
-          fr.readAsText(files.item(0));
-            }
-
-}, false);
-
-$(function () {
-    var pleaseWait = $('#pleaseWaitDialog'); 
-    
-    showPleaseWait = function() {
-        $('#pleaseWaitDialog').modal({backdrop: 'static', keyboard: false}) 
-        pleaseWait.modal('show');
-
-    };
-        
-    hidePleaseWait = function () {
-        pleaseWait.modal('hide');
-    };
-    
-    //showPleaseWait();
-});
-
 $(function () {
     var pleaseWait = $('#pleasereconnectmodal'); 
     
@@ -58,126 +14,7 @@ $(function () {
     //showPleaseWait();
 });
 
-function splitJson(jsonParams)
-{
-    showPleaseWait();
-    var json = $.parseJSON(jsonParams);
-    var currentcount = 1;
-    for (var i=0;i< json.length;++i)
-        {
-            //alert(json[i].Fullname);
-
-            contact_Id = json[i].id;
-            agreement_number = json[i].agreement_number;
-            loan_description = json[i].id;
-            loan_amount = json[i].amount;
-            account = json[i].account;
-            category = json[i].category;
-            date_of_payment = json[i].date_of_payment;
-            amount_type = json[i].amount_type;
-
-            if(category == 2){
-                uploadpayments(contact_Id,agreement_number,loan_description,loan_amount,account,category,date_of_payment,amount_type);
-                getLines();
-            }
-     
-        }
-
-    for (var i=0;i< json.length;++i)
-        {
-            //alert(json[i].Fullname);
-
-            contact_Id = json[i].id;
-            agreement_number = json[i].agreement_number;
-            loan_description = json[i].id;
-            loan_amount = json[i].amount;
-            account = json[i].account;
-            category = json[i].category;
-            date_of_payment = json[i].date_of_payment;
-            amount_type = json[i].amount_type;
-
-            if(category != 2){
-                uploadpayments(contact_Id,agreement_number,loan_description,loan_amount,account,category,date_of_payment,amount_type);  
-                getLines();          
-            }
-     
-        }
-    
-}
-
-function uploadpayments(contact_Id,agreement_number,loan_description,loan_amount,account,category,date_of_payment,amount_type){
-    var action = "postdata";
-    $.ajax({
-                type: 'POST',
-                url: 'process/paymentprocess2.php',
-                data:{action:action,
-                  contact_Id:contact_Id,
-                  agreement_number:agreement_number,
-                  loan_description:loan_description,
-                  loan_amount:loan_amount,
-                  account:account,
-                  category:category,
-                  date_of_payment:date_of_payment,
-                  amount_type:amount_type
-                },
-
-                 beforeSend:function(){
-                },
-                success: function(data){
-                    // document.getElementById("uploadresult").innerHTML +="<div style='margin-left:20px;color:grey;'>"+data+"</div><hr>";
-                 }
-                
-        });
-}
-
-function currentcountjson(count){
-   document.getElementById('currentjsonupload').innerHTML = count;
-}
-
-function upload(){
-	if(formatted == ""){
-		alert("no file chosen");
-	}else{
-        clearjson()
-        document.getElementById("uploadresult").innerHTML = "";
-		validateconnectiontoapi(formatted);
-	}
-	
-}
-
-function clearjson(){
-    $.ajax({
-            type: 'POST',
-            url: 'process/clearjson.php',
-            data:{
-            },
-            beforeSend:function(){
-            },
-            success: function(data){
-                console.log(data);
-             }
-            
-    });
-}
-
-function getLines(){
-    $.ajax({
-            type: 'POST',
-            url: 'process/processpaymentlines.php',
-            data:{
-            },
-            beforeSend:function(){
-            },
-            success: function(data){
-                console.log(data);
-                hidePleaseWait();
-                //document.getElementById("uploadresult").innerHTML += data;
-             }
-            
-    });
-}
-
-function validateconnectiontoapi(formatted){
+function validateconnectiontoapi(){
     $.ajax({
         type: 'GET',
         url: 'process/checkconnection.php',
@@ -186,13 +23,420 @@ function validateconnectiontoapi(formatted){
 
         },
         success: function(data){
-            if(data==1){
-                splitJson(formatted);
-            }else{
+            if(data!=1){
                 showPleaseWait2();
-            }   
+            } 
         }
         
     });
+}
+//update account
+function boxboardDetails(value){
+    $("tr").removeClass('active');
+    var currentRow=$(value).closest("tr"); 
+    $(value).closest("tr").addClass('active');
+    name = currentRow.find("td:eq(0)").html();
+    code = currentRow.find("td:eq(5)").html();
+    desc = currentRow.find("td:eq(2)").html();
+    tax = currentRow.find("td:eq(3)").html();
+    type = currentRow.find("td:eq(4)").html();
+    document.getElementById("accountcode").value = code;
+    document.getElementById("accountname").value = name;
+    document.getElementById("accountdesc").value = desc;
+    document.getElementById("accounttype").value = type;
+    //alert(type);
+} 
 
+function clearaccounts(){
+    document.getElementById("accountcode").value = "";
+    document.getElementById("accountname").value = "";
+    document.getElementById("accountdesc").value = "";
+    document.getElementById("accounttype").value = "2";
+}
+
+function addupdate(){
+    
+    var res = document.getElementById("accountcode").value.split("@");
+    var name = document.getElementById("accountname").value;
+    if(res =="" && name ==""){
+        alert("values must not be null");
+        return;
+    }
+    //var desc = document.getElementById("accountdesc").value;
+    var desc = res[1];
+    var code = res[0];
+    var tax = document.getElementById("accounttype").value;
+    var type = 
+    $.ajax({
+        type: 'GET',
+        url: 'process/insertupdateaccount.php',
+        data:{code:code, name:name, desc:desc, tax:tax},
+        beforeSend:function(){
+
+            
+        },
+        success: function(data){
+            //alert(data);
+            if(data=="0"){
+                alert("Account Added");
+            }else{
+                alert("Account Updated")
+            }
+            getListofAccounts();
+            clearaccounts();
+          
+         }   
+    });
+}   
+
+function removeaccount(val){
+    $.ajax({
+        type: 'GET',
+        url: 'process/removeaccount.php',
+        data:{code:val.id},
+        beforeSend:function(){
+
+            
+        },
+        success: function(data){
+            alert("Account "+val.id+" has been removed");
+            
+            getListofAccounts();
+            clearaccounts();
+          
+         }   
+    });
+}
+
+function getxeroaccounts(){
+    $.ajax({
+        type: 'GET',
+        url: 'process/getAccountinxero.php',
+        data:{},
+        beforeSend:function(){
+
+            
+        },
+        success: function(data){
+            console.log(data);
+            document.getElementById("accountcode").innerHTML = data;
+            document.getElementById("accountcodeoverpayment").innerHTML = data;
+            getselectedopchannel();
+          
+         }   
+    });
+}
+
+function updateoverpaymentchannel(){
+
+    var opchannel = document.getElementById("accountcodeoverpayment").value;
+    $.ajax({
+        type: 'GET',
+        url: 'process/updateoverpaymentchannel.php',
+        data:{opchannel:opchannel},
+        beforeSend:function(){
+
+            
+        },
+        success: function(data){
+            
+          
+         }   
+    });
+}
+
+function getselectedopchannel(){
+    $.ajax({
+        type: 'GET',
+        url: 'process/getopchannel.php',
+        data:{},
+        beforeSend:function(){
+
+            
+        },
+        success: function(data){
+            //alerrt(data);
+            document.getElementById("accountcodeoverpayment").value = data;
+          
+         }   
+    });
+}
+// update account
+
+function getTaxrates(){
+    $.ajax({
+        type: 'GET',
+        url: 'process/getTaxRates.php',
+        data:{},
+        beforeSend:function(){
+
+            
+        },
+        success: function(data){
+            console.log(data);
+            document.getElementById("taxrates").innerHTML = data;
+            document.getElementById("taxrates2").innerHTML = data;
+            //document.getElementById("accounttax").innerHTML = data;
+            getcurrentTaxrates();
+            getcurrentTaxrates2();
+          
+         }   
+    });
+}
+
+
+function updateTaxrate(){
+
+    var rate = document.getElementById("taxrates").value;
+    $.ajax({
+        type: 'GET',
+        url: 'process/updateTaxRates.php',
+        data:{rate:rate},
+        beforeSend:function(){
+
+            
+        },
+        success: function(data){
+            //alert(data);
+            getcurrentTaxrates();
+         }   
+    });
+}
+function updateTaxrate2(){
+
+    var rate = document.getElementById("taxrates2").value;
+    $.ajax({
+        type: 'GET',
+        url: 'process/updateTaxRates2.php',
+        data:{rate:rate},
+        beforeSend:function(){
+
+            
+        },
+        success: function(data){
+            //alert(data);
+            getcurrentTaxrates2();
+         }   
+    });
+}
+function updateAccountType(val){
+
+    var code = val.id;
+    $.ajax({
+        type: 'GET',
+        url: 'process/updateAccountType.php',
+        data:{code:code},
+        beforeSend:function(){
+
+            
+        },
+        success: function(data){
+            //alert(data);
+            getListofAccounts();
+            getcurrentTaxrates();
+         }   
+    });
+}
+
+function getcurrentTaxrates(){
+
+    $.ajax({
+        type: 'GET',
+        url: 'process/getCurrentTaxRates.php',
+        data:{},
+        beforeSend:function(){
+
+            
+        },
+        success: function(data){
+            //alert(data);
+            let element = document.getElementById("taxrates");
+            element.value = data;
+         }   
+    });
+}
+function getcurrentTaxrates2(){
+
+    $.ajax({
+        type: 'GET',
+        url: 'process/getCurrentTaxRates2.php',
+        data:{},
+        beforeSend:function(){
+
+            
+        },
+        success: function(data){
+            //alert(data);
+            let element = document.getElementById("taxrates2");
+            element.value = data;
+         }   
+    });
+}
+
+function getListofAccounts(){
+    $.ajax({
+        type: 'GET',
+        url: 'process/getListofAccounts.php',
+        data:{},
+        beforeSend:function(){
+
+            
+        },
+        success: function(data){
+            //alert(data);
+            let element = document.getElementById("listofaccounts");
+            element.innerHTML = data;
+         }   
+    });
+}
+
+function getListofLoanChannel(){
+    $.ajax({
+        type: 'GET',
+        url: 'process/getListofLoanChannel.php',
+        data:{},
+        beforeSend:function(){
+
+            
+        },
+        success: function(data){
+            //alert(data);
+            let element = document.getElementById("listofloanchannel");
+            element.innerHTML = data;
+         }   
+    });
+}
+
+function getListofLoanXeroChannel(){
+    $.ajax({
+        type: 'GET',
+        url: 'process/getxerobankchannels.php',
+        data:{},
+        beforeSend:function(){
+
+            
+        },
+        success: function(data){
+            //alert(data);
+            let element = document.getElementById("xerochannel");
+            element.innerHTML = data;
+         }   
+    });
+}
+
+function saveLoanChannel(){
+    var code = document.getElementById("loanaccountcode").value;
+    var xero = document.getElementById("xerochannel").value;
+    if(xero =="" && code ==""){
+        alert("values must not be null");
+        return;
+    }
+    $.ajax({
+        type: 'GET',
+        url: 'process/inserttoLoanChannel.php',
+        data:{code:code, xero:xero},
+        beforeSend:function(){
+
+            
+        },
+        success: function(data){
+            alert(data);
+            getListofLoanChannel();
+            getListofLoanXeroChannel();
+            getListofPaymentChannel();
+            getPaymentChannelList();
+         }   
+    });
+}
+
+function removeLoanChannel(val){
+    var code = val.id;
+    $.ajax({
+        type: 'GET',
+        url: 'process/removeLoanChannel.php',
+        data:{code:code},
+        beforeSend:function(){
+
+            
+        },
+        success: function(data){
+            alert(data);
+            getListofLoanChannel();
+            getListofLoanXeroChannel();
+            getListofPaymentChannel();
+            getPaymentChannelList();
+         }   
+    });
+}
+
+function getListofPaymentChannel(){
+    $.ajax({
+        type: 'GET',
+        url: 'process/getListofPaymentChannel.php',
+        data:{},
+        beforeSend:function(){
+
+            
+        },
+        success: function(data){
+            //alert(data);
+            let element = document.getElementById("paymentchannel");
+            element.innerHTML = data;
+            getSelectedPaymentChannel();
+         }   
+    });
+}
+
+function getSelectedPaymentChannel(){
+    $.ajax({
+        type: 'GET',
+        url: 'process/getSelectedPaymentChannel.php',
+        data:{},
+        beforeSend:function(){
+
+            
+        },
+        success: function(data){
+            let element = document.getElementById("paymentchannel");
+            element.value = data;
+         }   
+    });
+}
+
+function updatePaymentChannel(){
+    //alert(1);
+    var code = document.getElementById("paymentchannel").value;
+    $.ajax({
+        type: 'GET',
+        url: 'process/updateSelectedPaymentChannel.php',
+        data:{code:code},
+        beforeSend:function(){
+
+            
+        },
+        success: function(data){
+            getListofAccounts();
+            getcurrentTaxrates();
+
+         }   
+    });
+}
+
+
+function getPaymentChannelList(){
+    //listofpaymentchannel
+    $.ajax({
+        type: 'GET',
+        url: 'process/getPaymentChannelList.php',
+        data:{},
+        beforeSend:function(){
+
+            
+        },
+        success: function(data){
+            //alert(data);
+            let element = document.getElementById("listofpaymentchannel");
+            element.innerHTML = data;
+         }   
+    });
 }
