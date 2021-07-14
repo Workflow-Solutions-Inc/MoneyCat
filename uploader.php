@@ -70,7 +70,7 @@ include("process/controllers/config/dbconn.php");
                                                   <div class="col-md-12">
                                                     <div class="col-md-5"></div>
                                                     <div class="col-md-5"></div>
-                                                    <div class="col-md-1"><button  class="btn  btn-fill pull-right" id="btnupload">validate</button></div>
+                                                    <div class="col-md-1"><button style="display:none;"  class="btn  btn-fill pull-right" id="btnupload">validate</button></div>
                                                     <div class="col-md-1"><button onclick="upload()" class="btn  btn-fill pull-right" id="btnupload">Upload</button></div>
                                                 </div>
                                               </div>
