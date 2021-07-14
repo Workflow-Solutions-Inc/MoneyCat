@@ -111,8 +111,7 @@ include("process/controllers/config/dbconn.php");
           <h1>Progress</h1>
       </div>
       <div class="modal-body">
-        <h3 style="color:seagreen;"><i id="progresslabel">Processing..</i> <i class="fa fa-spinner fa-spin fa-1x fa-fw"></i>
-        <span class="sr-only">Loading...</span></h3>
+        <h3 style="color:seagreen;"><i id="progresslabel">Processing..</i> <iframe src="https://giphy.com/embed/sSgvbe1m3n93G" width="100%" height="50%" frameBorder="0" class="giphy-embed"></iframe></h3>
       </div>
     </div>
   </div>
