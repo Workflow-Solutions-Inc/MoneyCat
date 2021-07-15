@@ -158,7 +158,10 @@ function uploadloans(contact_Id,agreement_number,loan_description,loan_amount,ac
                     document.getElementById("testresult").innerHTML += data;
                     document.getElementById("btnupload").disabled = true;
                     document.getElementById("btnupload").style.backgroundColor = "grey";
-                    hidePleaseWait();          
+                    hidePleaseWait(); 
+                    document.getElementById('resultlabel').innerHTML = "Finished uploading json file.";
+                    document.getElementById("resultlabel").style.color = "green";
+                    showPleaseWait3();         
                  }
                 
         });
@@ -220,13 +223,19 @@ function loanvalidator(contact_Id,agreement_number,loan_description,loan_amount,
                     if(data==""){
                         document.getElementById("btnupload").disabled = false;
                         document.getElementById("btnupload").style.backgroundColor = "lightgreen";
+                        document.getElementById('resultlabel').innerHTML = "Validation found without errors, you may now upload the json file.";
+                        document.getElementById("resultlabel").style.color = "green";
                     }else{
                         document.getElementById("btnupload").disabled = true;
                         document.getElementById("btnupload").style.backgroundColor = "grey";
+                        document.getElementById('resultlabel').innerHTML = "Validation found with errors";
+                        document.getElementById("resultlabel").style.color = "red";
                     }
                     document.getElementById("testresult").innerHTML += data;
                     document.getElementById('progresslabel').innerHTML = "Finalizing.."; 
-                    hidePleaseWait();         
+                    hidePleaseWait(); 
+                    showPleaseWait3();
+
                  }
                 
         });
@@ -295,4 +304,23 @@ function validateloandata(jsonParams)
     {
             loanvalidator(contact_Id,agreement_number,loan_description,loan_amount,account,bankaccount,Date_of_loan,Due_Date_of_loan,category,amount_type);
     }
+}
+
+function validateconnectiontoapi2(){
+    $.ajax({
+        type: 'GET',
+        url: 'process/checkconnection.php',
+        data:{},
+        beforeSend:function(){        
+
+        },
+        success: function(data){
+            if(data==1){
+                
+            }else{
+                showPleaseWait2();
+            }   
+        }
+
+    });
 }
