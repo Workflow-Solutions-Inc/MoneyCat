@@ -154,10 +154,10 @@ include("process/controllers/config/dbconn.php");
             <h3>Contact Upload Logs</h3>
         </div>
       <div class="modal-body">
-        <pre id="testresult" style="overflow-y: scroll; height: 600px;margin : 0;">
+        <div id="testresult" style="overflow-y: scroll; height: 600px;margin : 0;">
             <dl id="testresult">
             </dl>
-        </pre>
+        </div>
       </div>
       <div class="modal-footer">
           <button onclick="hidePleaseWait3()" class="btn  btn-danger pull-right">close</button>
