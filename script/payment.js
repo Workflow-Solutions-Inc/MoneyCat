@@ -194,6 +194,9 @@ function getLines(){
                 hidePleaseWait();
                 document.getElementById("btnupload").disabled = true;
                 document.getElementById("btnupload").style.backgroundColor = "grey";
+                document.getElementById('resultlabel').innerHTML = "Finished uploading json file.";
+                document.getElementById("resultlabel").style.color = "green";
+                showPleaseWait3();
              }
             
     });
@@ -256,12 +259,17 @@ function paymentsvalidator(contact_Id,agreement_number,loan_description,loan_amo
                         if(document.getElementById('testresult').innerHTML == ""){
                             document.getElementById("btnupload").disabled = false;
                             document.getElementById("btnupload").style.backgroundColor = "lightgreen";
+                            document.getElementById('resultlabel').innerHTML = "Validation found without errors, you may now upload the json file.";
+                            document.getElementById("resultlabel").style.color = "green";
                         }else{
                             document.getElementById("btnupload").disabled = true;
                             document.getElementById("btnupload").style.backgroundColor = "grey";
+                            document.getElementById('resultlabel').innerHTML = "Validation found with errors";
+                            document.getElementById("resultlabel").style.color = "red";
                         }
                         document.getElementById('progresslabel').innerHTML = "Finalizing..";
                         hidePleaseWait();
+                        showPleaseWait3();
                     }
                  }
                 
@@ -314,4 +322,24 @@ function validatepaymentdata(jsonParams)
      
         }
     
+}
+
+
+function validateconnectiontoapi2(){
+    $.ajax({
+        type: 'GET',
+        url: 'process/checkconnection.php',
+        data:{},
+        beforeSend:function(){        
+
+        },
+        success: function(data){
+            if(data==1){
+                
+            }else{
+                showPleaseWait2();
+            }   
+        }
+
+    });
 }
