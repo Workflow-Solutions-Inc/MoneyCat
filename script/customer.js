@@ -263,8 +263,10 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
         success: function(data){
         if(data==""){
             document.getElementById("btnupload").disabled = false;
+            document.getElementById("btnupload").style.backgroundColor = "lightgreen";
         }else{
             document.getElementById("btnupload").disabled = true;
+            document.getElementById("btnupload").style.backgroundColor = "grey";
         }
         document.getElementById("testresult").innerHTML += data;
         document.getElementById('progresslabel').innerHTML = "Finalizing..";
