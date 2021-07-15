@@ -183,6 +183,9 @@ function synccustomer(){
             document.getElementById("btnupload").disabled = true;
             document.getElementById("btnupload").style.backgroundColor = "grey";
             hidePleaseWait();
+            document.getElementById('resultlabel').innerHTML = "Finished uploading json file.";
+            document.getElementById("resultlabel").style.color = "green";
+            showPleaseWait3();
         }
 
     });
@@ -199,6 +202,25 @@ function validateconnectiontoapi(formatted){
         success: function(data){
             if(data==1){
                 splitJson(formatted);
+            }else{
+                showPleaseWait2();
+            }   
+        }
+
+    });
+}
+
+function validateconnectiontoapi2(){
+    $.ajax({
+        type: 'GET',
+        url: 'process/checkconnection.php',
+        data:{},
+        beforeSend:function(){        
+
+        },
+        success: function(data){
+            if(data==1){
+                
             }else{
                 showPleaseWait2();
             }   
@@ -266,13 +288,18 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
         if(data==""){
             document.getElementById("btnupload").disabled = false;
             document.getElementById("btnupload").style.backgroundColor = "lightgreen";
+            document.getElementById('resultlabel').innerHTML = "Validation found without errors, you may now upload the json file.";
+            document.getElementById("resultlabel").style.color = "green";
         }else{
             document.getElementById("btnupload").disabled = true;
             document.getElementById("btnupload").style.backgroundColor = "grey";
+            document.getElementById('resultlabel').innerHTML = "Validation found with errors";
+            document.getElementById("resultlabel").style.color = "red";
         }
         document.getElementById("testresult").innerHTML += data;
         document.getElementById('progresslabel').innerHTML = "Finalizing..";
         hidePleaseWait();
+        showPleaseWait3();
     }
 
 });
