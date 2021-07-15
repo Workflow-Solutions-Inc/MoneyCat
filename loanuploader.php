@@ -158,6 +158,8 @@ include("process/controllers/config/dbconn.php");
             <h3>Upload Logs</h3>
         </div>
       <div class="modal-body">
+        <div id ="resultlabel"></div>
+        <hr>
         <div id="testresult" style="overflow-y: scroll; height: 600px;margin : 0;">
             <dl id="testresult">
             </dl>
@@ -193,6 +195,7 @@ include("process/controllers/config/dbconn.php");
         window.onload = function(value){
         //synccustomer();
         document.getElementById("btnupload").disabled = true;
+        validateconnectiontoapi2();
         }
     </script>
 
