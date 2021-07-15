@@ -180,6 +180,8 @@ function synccustomer(){
 
         },
         success: function(data){
+            document.getElementById("btnupload").disabled = true;
+            document.getElementById("btnupload").style.backgroundColor = "grey";
             hidePleaseWait();
         }
 
