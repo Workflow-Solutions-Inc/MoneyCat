@@ -72,7 +72,9 @@ include("process/controllers/config/dbconn.php");
                                                     <i class="pe-7s-date"></i>   <label>Choose File</label>
                                                     <input type="File" name="myjson" id="myjson" class="form-control" required>
                                                     <br>
-                                                    <button onclick="upload()" class="btn  btn-fill pull-right" id="btnupload">Upload</button>
+                                                    <button onclick="upload()" class="btn  btn-fill pull-right" style="margin-left: 20px;" id="btnupload">Upload</button>
+
+                                                    <button onclick="validate()" class="btn  btn-fill pull-right" id="btnupload">Validate</button>
                                                 </div>
                                             </div>
 
@@ -109,6 +111,11 @@ include("process/controllers/config/dbconn.php");
                             </pre>
                         </div>
                     </div>
+                    <div class="col-md-12">
+                    <div>
+                        <button onclick="showPleaseWait3();" class="btn  btn-fill pull-right">Upload Logs</button>
+                    </div>
+                </div>
                 </div>
             </div>
 
@@ -126,7 +133,7 @@ include("process/controllers/config/dbconn.php");
         </div>
     </div>
 
-    <div class="modal fade" id="pleasereconnectmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+<div class="modal fade" id="pleasereconnectmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
   <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
@@ -139,6 +146,25 @@ include("process/controllers/config/dbconn.php");
         <div>
             
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="logsmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Upload Logs</h3>
+        </div>
+      <div class="modal-body">
+        <div id="testresult" style="overflow-y: scroll; height: 600px;margin : 0;">
+            <dl id="testresult">
+            </dl>
+        </div>
+      </div>
+      <div class="modal-footer">
+          <button onclick="hidePleaseWait3()" class="btn  btn-danger pull-right">close</button>
       </div>
     </div>
   </div>
@@ -164,7 +190,10 @@ include("process/controllers/config/dbconn.php");
 
 
     <script type="text/javascript">
-
+        window.onload = function(value){
+        //synccustomer();
+        document.getElementById("btnupload").disabled = true;
+        }
     </script>
 
     </html>
