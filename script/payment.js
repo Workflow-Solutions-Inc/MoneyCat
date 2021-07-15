@@ -191,11 +191,9 @@ function getLines(){
             beforeSend:function(){
             },
             success: function(data){
-                //console.log(data);
                 hidePleaseWait();
                 document.getElementById("btnupload").disabled = true;
                 document.getElementById("btnupload").style.backgroundColor = "grey";
-                //document.getElementById("uploadresult").innerHTML += data;
              }
             
     });
