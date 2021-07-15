@@ -75,7 +75,7 @@ function validateTaxRate(){
 	}
 	if($_SESSION['taxrate'] == '')
 	{
-		$message = '<div>Undefined Tax Rate</div>';
+		$message = '<dd style="color:red;" >- Undefined Tax Rate</dd>';
 	}
 	return $message;
 }
@@ -92,7 +92,7 @@ function validatePaymentChannel(){
 	}
 	if($_SESSION['paymentbankaccount'] == '')
 	{
-		$message = '<div>Undefined Payment Channel</div>';
+		$message = '<dd style="color:red;">- Undefined Payment Channel</dd>';
 	}
 	return $message;
 }
@@ -115,7 +115,7 @@ function validateAccount($account, $category){
 			}
 		}
 		if($flag == 0){
-			$message = '<div>Undefined Account</div>';
+			$message = '<dd style="color:red;">- Undefined Account</dd>';
 		}
 	}
 	
@@ -127,7 +127,7 @@ function validateContactId($contact_Id){
 	$myid = $cust->getcustomerid($contact_Id);
 	$errormessage = ""; 
 	if($myid == ""){
-	$errormessage = "<div>Contact Does not Exist</div>";
+	$errormessage = '<dd style="color:red;">- Contact Does not Exist</dd>';
 	}else{
 		$_SESSION['contactid'] = $myid;
 	}
@@ -140,7 +140,7 @@ function validateCategory($category)
 	$message = "";
 	if($category > 3 || $category == 0)
 	{
-		$message = '<div>Undefined Category</div>';
+		$message = '<dd style="color:red;">- Undefined Category</dd>';
 	}
 	return $message;
 }
@@ -200,11 +200,17 @@ function processCategory1($clientid, $clientsecret, $callback, $contact_Id, $agr
 		$queryheader = "CALL `insert_agreement_header`('$agreement_number', '".$_SESSION['contactid']."', '$amounttype', '$date_of_payment', '".$_SESSION['paymentbankaccount']."', 'receive', '$account', '$loan_amount', '".$_SESSION['taxrate']."', '$loan_description');";
 		if(mysqli_query($conn,$queryheader))
 		{
-		  $message = '<div>ID: '.$agreement_number.'</div><br><div><h5 style="color:green;">PAYMENT SUCCESSFULLY UPLOADED</h5></div>';
+		  $message .= '<dt>Line no: '.$_POST['currentcount'].'</dt>
+          <dd>- Agreement no: '.$agreement_number.'</dd>
+          <dd>- Contact ID: '.$contact_Id.'</dd>
+          <dd style="color:green;">- Payment successfully uploaded.</dd><hr>';
 		}
 		else
 		{
-		  $message = '<div>ID: '.$agreement_number.'</div><br><div><h5 style="color:red;">PAYMENT UPLOAD FAILED</h5></div>';
+		  $message .= '<dt>Line no: '.$_POST['currentcount'].'</dt>
+          <dd>- Agreement no: '.$agreement_number.'</dd>
+          <dd>- Contact ID: '.$contact_Id.'</dd>
+          <dd style="color:red;">- Payment upload failed.</dd><hr>';
 		}
 		echo $message;
 		exit();
@@ -292,7 +298,10 @@ function processCategory1($clientid, $clientsecret, $callback, $contact_Id, $agr
 				//echo $btrans;
 				$apiInstance->createBankTransactions($xeroTenantId, $btrans, false);
 			}
-			echo '<div>ID: '.$agreement_number.'</div><div><h5 style="color:green;">PAYMENT SUCCESSFULLY UPLOADED</h5></div>';
+			echo $messagealert .= '<dt>Line no: '.$_POST['currentcount'].'</dt>
+          <dd>- Agreement no: '.$agreement_number.'</dd>
+          <dd>- Contact ID: '.$contact_Id.'</dd>
+          <dd style="color:green;">- Payment successfully uploaded.</dd><hr>';
 
 		}
 		catch (\XeroAPI\XeroPHP\ApiException $e) {
@@ -302,7 +311,10 @@ function processCategory1($clientid, $clientsecret, $callback, $contact_Id, $agr
 		        []
 		    );
 		    $message = "ApiException - " . $error->getElements()[0]["validation_errors"][0]["message"];
-		    echo '<div>ID: '.$agreement_number.'</div><div><h5 style="color:red;">'.$message.'</h5></div>';
+		    echo $messagealert = '<dt>Line no: '.$_POST['currentcount'].'</dt>
+          <dd>- Agreement no: '.$agreement_number.'</dd>
+          <dd>- Contact ID: '.$contact_Id.'</dd>
+          <dd style="color:red;">- '.$message.'</dd><hr>';
 		    //echo $_SESSION['opchannel'];
 		  }
 		
@@ -315,7 +327,10 @@ function processCategory2($clientid, $clientsecret, $callback, $contact_Id, $agr
 
 	if($account_type != 1)
 	{
-		echo '<div>ID: '.$agreement_number.'</div><div><h5 style="color:red;">INVALID ACCOUNT TYPE</h5></div>';
+		echo $message = '<dt>Line no: '.$_POST['currentcount'].'</dt>
+          <dd>- Agreement no: '.$agreement_number.'</dd>
+          <dd>- Contact ID: '.$contact_Id.'</dd>
+          <dd style="color:red;">- Invalid Account type</dd><hr>';
 		//echo $account_type;
 		exit();
 	}
@@ -334,11 +349,17 @@ function processCategory2($clientid, $clientsecret, $callback, $contact_Id, $agr
 	$queryheader = "CALL `insert_agreement_header`('$agreement_number', '".$_SESSION['contactid']."', '$amounttype', '$date_of_payment', '".$_SESSION['paymentbankaccount']."', 'invoice', '$account', '$loan_amount', '".$_SESSION['taxrate']."','$loan_description');";
 	if(mysqli_query($conn,$queryheader))
 	{
-	  $message = '<div>ID: '.$agreement_number.'</div><br><div><h5 style="color:green;">PAYMENT SUCCESSFULLY UPLOADED</h5></div>';
+	  $message = '<dt>Line no: '.$_POST['currentcount'].'</dt>
+          <dd>- Agreement no: '.$agreement_number.'</dd>
+          <dd>- Contact ID: '.$contact_Id.'</dd>
+          <dd style="color:green;">- Payment successfully uploaded.</dd><hr>';
 	}
 	else
 	{
-	  $message = '<div>ID: '.$agreement_number.'</div><br><div><h5 style="color:red;">PAYMENT UPLOAD FAILED</h5></div>';
+	  $message = '<dt>Line no: '.$_POST['currentcount'].'</dt>
+          <dd>- Agreement no: '.$agreement_number.'</dd>
+          <dd>- Contact ID: '.$contact_Id.'</dd>
+          <dd style="color:red;">- Payment upload failed</dd><hr>';
 	}
 	echo $message;
 }
@@ -464,7 +485,10 @@ function processCategory3($clientid, $clientsecret, $callback, $contact_Id, $agr
 			//echo $btrans;
 			$apiInstance->createBankTransactions($xeroTenantId, $btrans, true);
 		}
-		echo '<div>ID: '.$agreement_number.'</div><div><h5 style="color:green;">PAYMENT SUCCESSFULLY UPLOADED</h5></div>';
+		echo $messagealert .= '<dt>Line no: '.$_POST['currentcount'].'</dt>
+          <dd>- Agreement no: '.$agreement_number.'</dd>
+          <dd>- Contact ID: '.$contact_Id.'</dd>
+          <dd style="color:green;">- Payment successfully uploaded.</dd><hr>';
 
 	}
 	catch (\XeroAPI\XeroPHP\ApiException $e) {
@@ -474,7 +498,10 @@ function processCategory3($clientid, $clientsecret, $callback, $contact_Id, $agr
 	        []
 	    );
 	    $message = "ApiException - " . $error->getElements()[0]["validation_errors"][0]["message"];
-	    echo '<div>ID: '.$agreement_number.'</div><div><h5 style="color:red;">'.$message.'</h5></div>';
+	    echo $messagealert .= '<dt>Line no: '.$_POST['currentcount'].'</dt>
+          <dd>- Agreement no: '.$agreement_number.'</dd>
+          <dd>- Contact ID: '.$contact_Id.'</dd>
+          <dd style="color:red;">- '.$message.'</dd><hr>';
 	    //echo $_SESSION['opchannel'];
 	  }
 
