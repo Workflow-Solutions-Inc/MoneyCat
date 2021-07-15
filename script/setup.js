@@ -1,4 +1,35 @@
+$(function () {
+    var pleaseWait = $('#pleasereconnectmodal'); 
+    
+    showPleaseWait2 = function() {
+        $('#pleasereconnectmodal').modal({backdrop: 'static', keyboard: false}) 
+        pleaseWait.modal('show');
 
+    };
+        
+    hidePleaseWait2 = function () {
+        pleaseWait.modal('hide');
+    };
+    
+    //showPleaseWait();
+});
+
+function validateconnectiontoapi(){
+    $.ajax({
+        type: 'GET',
+        url: 'process/checkconnection.php',
+        data:{},
+        beforeSend:function(){        
+
+        },
+        success: function(data){
+            if(data!=1){
+                showPleaseWait2();
+            } 
+        }
+        
+    });
+}
 //update account
 function boxboardDetails(value){
     $("tr").removeClass('active');
@@ -27,31 +58,37 @@ function addupdate(){
     
     var res = document.getElementById("accountcode").value.split("@");
     var name = document.getElementById("accountname").value;
-    //var desc = document.getElementById("accountdesc").value;
-    var desc = res[1];
-    var code = res[0];
-    var tax = document.getElementById("accounttype").value;
-    var type = 
-    $.ajax({
-        type: 'GET',
-        url: 'process/insertupdateaccount.php',
-        data:{code:code, name:name, desc:desc, tax:tax},
-        beforeSend:function(){
+    if(res == "" || name ==""){
+        alert("values must not be null");
+        return;
+    }else{
+        //var desc = document.getElementById("accountdesc").value;
+            var desc = res[1];
+            var code = res[0];
+            var tax = document.getElementById("accounttype").value;
+            var type = 
+            $.ajax({
+                type: 'GET',
+                url: 'process/insertupdateaccount.php',
+                data:{code:code, name:name, desc:desc, tax:tax},
+                beforeSend:function(){
 
-            
-        },
-        success: function(data){
-            //alert(data);
-            if(data=="0"){
-                alert("Account Added");
-            }else{
-                alert("Account Updated")
-            }
-            getListofAccounts();
-            clearaccounts();
-          
-         }   
-    });
+                    
+                },
+                success: function(data){
+                    //alert(data);
+                    if(data=="0"){
+                        alert("Account Added");
+                    }else{
+                        alert("Account Updated")
+                    }
+                    getListofAccounts();
+                    clearaccounts();
+                  
+                 }   
+            });
+    }
+    
 }   
 
 function removeaccount(val){
@@ -93,6 +130,7 @@ function getxeroaccounts(){
 }
 
 function updateoverpaymentchannel(){
+
     var opchannel = document.getElementById("accountcodeoverpayment").value;
     $.ajax({
         type: 'GET',
@@ -291,7 +329,11 @@ function getListofLoanXeroChannel(){
 function saveLoanChannel(){
     var code = document.getElementById("loanaccountcode").value;
     var xero = document.getElementById("xerochannel").value;
-    $.ajax({
+    if(xero =="" || code ==""){
+        alert("values must not be null");
+        return;
+    }else{
+       $.ajax({
         type: 'GET',
         url: 'process/inserttoLoanChannel.php',
         data:{code:code, xero:xero},
@@ -306,7 +348,9 @@ function saveLoanChannel(){
             getListofPaymentChannel();
             getPaymentChannelList();
          }   
-    });
+        }); 
+    }
+    
 }
 
 function removeLoanChannel(val){
