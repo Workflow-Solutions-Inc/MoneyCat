@@ -67,12 +67,9 @@ include("process/controllers/config/dbconn.php");
                                                   <i class="pe-7s-date"></i>   <label>Choose File</label>
                                                   <input type="File" name="myjson" id="myjson" class="form-control" required>
                                                   <br>
-                                                  <div class="col-md-12">
-                                                    <div class="col-md-5"></div>
-                                                    <div class="col-md-5"></div>
-                                                    <div class="col-md-1"><button onclick="validate()" class="btn  btn-fill pull-right" id="btnvalidate">validate</button></div>
-                                                    <div class="col-md-1"><button onclick="upload()" class="btn  btn-fill pull-right" id="btnupload">Upload</button></div>
-                                                </div>
+                                                  <button onclick="upload()" class="btn  btn-fill pull-right" style="margin-left: 20px;" id="btnupload">Upload</button>
+
+                                                    <button onclick="validate()" class="btn  btn-fill pull-right" id="btnupload">Validate</button>
                                               </div>
                                           </div>
                                       </div>
@@ -104,7 +101,7 @@ include("process/controllers/config/dbconn.php");
                 </div>
                 <div class="col-md-12">
                     <div>
-                        <button onclick="showPleaseWait3();" class="btn  btn-fill pull-right">View Upload Logs</button>
+                        <button onclick="showPleaseWait3();" class="btn  btn-fill pull-right">Upload Logs</button>
                     </div>
                 </div>
             </div>
@@ -151,7 +148,7 @@ include("process/controllers/config/dbconn.php");
   <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
-            <h3>Contact Upload Logs</h3>
+            <h3>Upload Logs</h3>
         </div>
       <div class="modal-body">
         <div id="testresult" style="overflow-y: scroll; height: 600px;margin : 0;">
