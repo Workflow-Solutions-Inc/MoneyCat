@@ -47,7 +47,7 @@ function validateContactId($contact_Id){
 	$myid = $cust->getcustomerid($contact_Id);
 	$errormessage = ""; 
 	if($myid == ""){
-	$errormessage = "Contact Does not Exist";
+	$errormessage = '<dd style="color:red;">- Contact Does not Exist</dd>';
 	}else{
 		$_SESSION['contactid'] = $myid;
 	}
@@ -69,7 +69,7 @@ function validateTaxRate(){
 	}
 	if($taxtype == "")
 	{
-		$errormessage = "Tax Rate Does not Exist";
+		$errormessage = '<dd style="color:red;">- Tax Rate Does not Exist</dd>';
 	}
 	else
 	{
@@ -95,15 +95,15 @@ function validateLoanChannel($bankaccount){
         }
     } 
     if($flag==0){
-    	$errormessage = "Loan Channel Does not Exist";
+    	$errormessage = '<dd style="color:red;">- Loan Channel Does not Exist</dd>';
     }
     return $errormessage;   
 }
 
 function validateAll($contact_Id, $bankaccount){
 	$errormessage = "";
-	$errormessage .= validateContactId($contact_Id).', ';
-	$errormessage .= validateTaxRate().', ';
+	$errormessage .= validateContactId($contact_Id);
+	$errormessage .= validateTaxRate();
 	$errormessage .= validateLoanChannel($bankaccount);
 	$globalerror = $errormessage;
 	return $errormessage;
@@ -163,7 +163,8 @@ function insertLoan($clientid, $clientsecret, $callback, $agreement_number, $loa
 
 		for($i = 0; $i < count($contact_Idarray)-1; $i++)
 		{
-			if(str_replace(', ','',validateAll($contact_Idarray[$i], $bankaccountarray[$i])) == "")
+			$currentcount = $i + 1;
+			if(validateAll($contact_Idarray[$i], $bankaccountarray[$i]) == "")
 			{
 				$btrans = new \XeroAPI\XeroPHP\Models\Accounting\BankTransaction;
 			    $itrans = new \XeroAPI\XeroPHP\Models\Accounting\Invoice;
@@ -199,9 +200,17 @@ function insertLoan($clientid, $clientsecret, $callback, $agreement_number, $loa
 				//echo $btrans;
 				array_push($btranslines, $btrans);
         		$btrans_array ->setBankTransactions($btranslines);
-				$messagealert .= '<div>ID: '.$agreement_numberarray[$i].' <h5 style="color:green;">LOAN SUCCESSFULLY UPLOADED</h5></div><hr>';
+				// $messagealert .= '<div>ID: '.$agreement_numberarray[$i].' <h5 style="color:green;">LOAN SUCCESSFULLY UPLOADED</h5></div><hr>';
+				$messagealert .= '<dt>Line no: '.$currentcount.'</dt>
+	              <dd>- Agreement no: '.$agreement_numberarray[$i].'</dd>
+	              <dd>- Contact ID: '.$contact_Idarray[$i].'</dd>
+	              <dd style="color:green;">- Loan Successfully uploaded</dd><hr>';
 			}else{
-			    $messagealert .= '<div>ID: '.$agreement_numberarray[$i].' <h5 style="color:red;">'.validateAll($contact_Idarray[$i], $bankaccountarray[$i]).'</h5></div><hr>';
+			    //$messagealert .= '<div>ID: '.$agreement_numberarray[$i].' <h5 style="color:red;">'.validateAll($contact_Idarray[$i], $bankaccountarray[$i]).'</h5></div><hr>';
+			    $messagealert .= '<dt>Line no: '.$currentcount.'</dt>
+              <dd>- Agreement no: '.$agreement_numberarray[$i].'</dd>
+              <dd>- Contact ID: '.$contact_Idarray[$i].'</dd>
+              '.validateAll($contact_Idarray[$i], $bankaccountarray[$i]).'<hr>';
 			}
 
 		}
