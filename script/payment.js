@@ -27,6 +27,22 @@ fileToRead.addEventListener("change", function(event) {
 }, false);
 
 $(function () {
+    var pleaseWait = $('#logsmodal'); 
+
+    showPleaseWait3 = function() {
+        $('#logsmodal').modal({backdrop: 'static', keyboard: false}) 
+        pleaseWait.modal('show');
+
+    };
+
+    hidePleaseWait3 = function () {
+        pleaseWait.modal('hide');
+    };
+
+//showPleaseWait();
+});
+
+$(function () {
     var pleaseWait = $('#pleaseWaitDialog'); 
     
     showPleaseWait = function() {
@@ -60,6 +76,7 @@ $(function () {
 
 function splitJson(jsonParams)
 {
+    document.getElementById('progresslabel').innerHTML = "Processing..";
     showPleaseWait();
     var json = $.parseJSON(jsonParams);
     var currentcount = 1;
@@ -77,7 +94,8 @@ function splitJson(jsonParams)
             amount_type = json[i].amount_type;
 
             if(category == 2){
-                uploadpayments(contact_Id,agreement_number,loan_description,loan_amount,account,category,date_of_payment,amount_type);
+                uploadpayments(contact_Id,agreement_number,loan_description,loan_amount,account,category,date_of_payment,amount_type,currentcount);
+                currentcount += 1;
             }
      
         }
@@ -96,14 +114,15 @@ function splitJson(jsonParams)
             amount_type = json[i].amount_type;
 
             if(category != 2){
-                uploadpayments(contact_Id,agreement_number,loan_description,loan_amount,account,category,date_of_payment,amount_type);       
+                uploadpayments(contact_Id,agreement_number,loan_description,loan_amount,account,category,date_of_payment,amount_type,currentcount); 
+                currentcount += 1;      
             }
      
         }
     
 }
 
-function uploadpayments(contact_Id,agreement_number,loan_description,loan_amount,account,category,date_of_payment,amount_type){
+function uploadpayments(contact_Id,agreement_number,loan_description,loan_amount,account,category,date_of_payment,amount_type,currentcount){
     var action = "postdata";
     $.ajax({
                 type: 'POST',
@@ -116,13 +135,14 @@ function uploadpayments(contact_Id,agreement_number,loan_description,loan_amount
                   account:account,
                   category:category,
                   date_of_payment:date_of_payment,
-                  amount_type:amount_type
+                  amount_type:amount_type,
+                  currentcount:currentcount
                 },
 
                  beforeSend:function(){
                 },
                 success: function(data){
-                     document.getElementById("uploadresult").innerHTML +="<div style='margin-left:20px;color:grey;'>"+data+"</div><hr>";
+                     document.getElementById("testresult").innerHTML += data;
                  }
                 
         });
@@ -173,6 +193,8 @@ function getLines(){
             success: function(data){
                 //console.log(data);
                 hidePleaseWait();
+                document.getElementById("btnupload").disabled = true;
+                document.getElementById("btnupload").style.backgroundColor = "grey";
                 //document.getElementById("uploadresult").innerHTML += data;
              }
             
@@ -197,4 +219,101 @@ function validateconnectiontoapi(formatted){
         
     });
 
+}
+
+function validate(){
+    if(formatted == ""){
+        alert("no file chosen");
+    }else{
+        document.getElementById("testresult").innerHTML = ""; 
+        validatepaymentdata(formatted);
+
+    }
+
+}
+
+function paymentsvalidator(contact_Id,agreement_number,loan_description,loan_amount,account,category,date_of_payment,amount_type,currentcount){
+    var action = "postdata";
+    $.ajax({
+                type: 'POST',
+                url: 'process/validatepaymentupload.php',
+                data:{action:action,
+                  contact_Id:contact_Id,
+                  agreement_number:agreement_number,
+                  loan_description:loan_description,
+                  loan_amount:loan_amount,
+                  account:account,
+                  category:category,
+                  date_of_payment:date_of_payment,
+                  amount_type:amount_type,
+                  currentcount:currentcount
+                },
+
+                 beforeSend:function(){
+                },
+                success: function(data){
+                   
+                    document.getElementById("testresult").innerHTML += data;
+                    if(currentcount == document.getElementById('totaljsondata').innerHTML){
+                        if(document.getElementById('testresult').innerHTML == ""){
+                            document.getElementById("btnupload").disabled = false;
+                            document.getElementById("btnupload").style.backgroundColor = "lightgreen";
+                        }else{
+                            document.getElementById("btnupload").disabled = true;
+                            document.getElementById("btnupload").style.backgroundColor = "grey";
+                        }
+                        document.getElementById('progresslabel').innerHTML = "Finalizing..";
+                        hidePleaseWait();
+                    }
+                 }
+                
+        });
+}
+
+function validatepaymentdata(jsonParams)
+{
+    document.getElementById('progresslabel').innerHTML = "validating..";
+    showPleaseWait();
+    var json = $.parseJSON(jsonParams);
+    var currentcount = 1;
+    for (var i=0;i< json.length;++i)
+        {
+            //alert(json[i].Fullname);
+
+            contact_Id = json[i].id;
+            agreement_number = json[i].agreement_number;
+            loan_description = json[i].id;
+            loan_amount = json[i].amount;
+            account = json[i].account;
+            category = json[i].category;
+            date_of_payment = json[i].date_of_payment;
+            amount_type = json[i].amount_type;
+
+            if(category == 2){
+                paymentsvalidator(contact_Id,agreement_number,loan_description,loan_amount,account,category,date_of_payment,amount_type,currentcount);
+                currentcount+=1;
+            }
+     
+        }
+
+    for (var i=0;i< json.length;++i)
+        {
+            //alert(json[i].Fullname);
+
+            contact_Id = json[i].id;
+            agreement_number = json[i].agreement_number;
+            loan_description = json[i].id;
+            loan_amount = json[i].amount;
+            account = json[i].account;
+            category = json[i].category;
+            date_of_payment = json[i].date_of_payment;
+            amount_type = json[i].amount_type;
+
+            if(category != 2){
+                paymentsvalidator(contact_Id,agreement_number,loan_description,loan_amount,account,category,date_of_payment,amount_type,currentcount);  
+                currentcount+=1;     
+            }
+     
+        }
+    
 }
