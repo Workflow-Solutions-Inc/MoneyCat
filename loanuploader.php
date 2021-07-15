@@ -112,10 +112,10 @@ include("process/controllers/config/dbconn.php");
                         </div>
                     </div>
                     <div class="col-md-12">
-                    <div>
-                        <button onclick="showPleaseWait3();" class="btn  btn-fill pull-right">Upload Logs</button>
+                        <div>
+                            <button onclick="showPleaseWait3();" class="btn  btn-fill pull-right">Upload Logs</button>
+                        </div>
                     </div>
-                </div>
                 </div>
             </div>
 
