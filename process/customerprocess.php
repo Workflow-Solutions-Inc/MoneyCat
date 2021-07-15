@@ -46,43 +46,48 @@ function validateContactId($custId){
 
 function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $custEmail, $AddressLine, $custTaxNum, $phonetype, $phone_number){
   // Storage Classe uses sessions for storing token > extend to your DB of choice
-  $storage = new StorageClass();
-  $xeroTenantId = (string)$storage->getSession()['tenant_id'];
-  //session_start();
+  try{
+    $storage = new StorageClass();
+    $xeroTenantId = (string)$storage->getSession()['tenant_id'];
+    //session_start();
 
-  $provider = new \League\OAuth2\Client\Provider\GenericProvider([
-    'clientId'                => $clientid,   
-    'clientSecret'            => $clientsecret,
-    'redirectUri'             => $callback,
-    'urlAuthorize'            => 'https://login.xero.com/identity/connect/authorize',
-    'urlAccessToken'          => 'https://identity.xero.com/connect/token',
-    'urlResourceOwnerDetails' => 'https://api.xero.com/api.xro/2.0/Organisation'
-  ]);
+    $provider = new \League\OAuth2\Client\Provider\GenericProvider([
+      'clientId'                => $clientid,   
+      'clientSecret'            => $clientsecret,
+      'redirectUri'             => $callback,
+      'urlAuthorize'            => 'https://login.xero.com/identity/connect/authorize',
+      'urlAccessToken'          => 'https://identity.xero.com/connect/token',
+      'urlResourceOwnerDetails' => 'https://api.xero.com/api.xro/2.0/Organisation'
+    ]);
 
-  $newAccessToken = $provider->getAccessToken('refresh_token', [
-    'refresh_token' => $storage->getRefreshToken()
-  ]);
+    $newAccessToken = $provider->getAccessToken('refresh_token', [
+      'refresh_token' => $storage->getRefreshToken()
+    ]);
+    
+    // Save my token, expiration and refresh token
+    $storage->setToken(
+    $newAccessToken->getToken(),
+    $newAccessToken->getExpires(), 
+    $xeroTenantId,
+    $newAccessToken->getRefreshToken(),
+    $newAccessToken->getValues()["id_token"] );     
+
+    $config = XeroAPI\XeroPHP\Configuration::getDefaultConfiguration()->setAccessToken( (string)$storage->getSession()['token'] );
+    $config->setHost("https://api.xero.com/api.xro/2.0");        
+
+    $apiInstance = new XeroAPI\XeroPHP\Api\AccountingApi(
+        new GuzzleHttp\Client(),
+        $config
+    );
+  }catch (\XeroAPI\XeroPHP\ApiException $e) {
+      header("location: ../uploader.php?invalid=0");
+  }
   
-  // Save my token, expiration and refresh token
-  $storage->setToken(
-  $newAccessToken->getToken(),
-  $newAccessToken->getExpires(), 
-  $xeroTenantId,
-  $newAccessToken->getRefreshToken(),
-  $newAccessToken->getValues()["id_token"] );     
-
-  $config = XeroAPI\XeroPHP\Configuration::getDefaultConfiguration()->setAccessToken( (string)$storage->getSession()['token'] );
-  $config->setHost("https://api.xero.com/api.xro/2.0");        
-
-  $apiInstance = new XeroAPI\XeroPHP\Api\AccountingApi(
-      new GuzzleHttp\Client(),
-      $config
-  );
-  $messagealert = "";
+  
   try
   {
 
-    
+    $messagealert = "";
     $contact_array = new \XeroAPI\XeroPHP\Models\Accounting\Contacts;
     $contactlines = [];
     
@@ -111,39 +116,30 @@ function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $c
       array_push($arr_lineitems2, $phone);
       $contact->setAddresses($arr_lineitems);
       $contact->setPhones($arr_lineitems2);
-
+      $currentcount = $i + 1;
       if(validateContactId($custidarray[$i]) != 1){
         array_push($contactlines, $contact);
         $contact_array ->setContacts($contactlines);
-        $messagealert .= '</div><br><div><h5 style="color:green;">ID: '.$custidarray[$i].' Successfully uploaded!</h5></div>'; 
+        //$messagealert .= '</div><br><div><h5 style="color:green;">ID: '.$custidarray[$i].' Successfully uploaded!</h5></div>'; 
+        $messagealert .= '<dt>Line no: '.$currentcount.'</dt>
+              <dd style="margin : 0;">- Contact ID: '.$custidarray[$i].'</dd>
+              <dd style="margin : 0;">- Name: '.$custnamearray[$i].'</dd>
+              <dd style="color:green;margin : 0">- Successfully Uploaded.</dd><hr>';
         syncContacts($custnamearray[$i], $custidarray[$i]);
       }else{
-        $messagealert .= '</div><br><div><h5 style="color:red;">ID: '.$custidarray[$i].' Already exist!</h5></div>';
+        '<dt>Line no: '.$currentcount.'</dt>
+              <dd style="margin : 0;">- Contact ID: '.$custidarray[$i].'</dd>
+              <dd style="margin : 0;">- Name: '.$custnamearray[$i].'</dd>
+              <dd style="color:red;margin : 0">- Contact ID already exist.</dd><hr>';
+        //$messagealert .= '</div><br><div><h5 style="color:red;">ID: '.$custidarray[$i].' Already exist!</h5></div>';
       }
       
       
     }
-    
-    //echo $contact_array[0].",".$contact_array[1].",".$contact_array[2];
-    //echo $contact_array;
+
    $apiInstance->createContacts($xeroTenantId, $contact_array, true);
    echo $messagealert;
-    /*$contact->setName($custName);
-    $contact->setEmailAddress($custEmail);
-    $contact->setTaxNumber($custTaxNum);
-    $address->setAddressType("POBOX");
-    $address->setAddressLine1($AddressLine);
-    $arr_lineitems = []; 
-    array_push($arr_lineitems, $address);
-    $phone->setPhoneType('MOBILE');
-    $phone->setPhoneNumber($phone_number);
-    $arr_lineitems2 = []; 
-    array_push($arr_lineitems2, $phone);
-    $contact->setAddresses($arr_lineitems);
-    $contact->setPhones($arr_lineitems2);*/
-    //$apiInstance->createContacts($xeroTenantId, $contact, true);
-    
-    //echo 'ID: '.$_POST['custId'].' Successfully uploaded!';
+
   }
   catch (\XeroAPI\XeroPHP\ApiException $e) {
       $error = AccountingObjectSerializer::deserialize(
@@ -152,7 +148,7 @@ function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $c
           []
       );
       $message = "ApiException - " . $error->getElements()[0]["validation_errors"][0]["message"];
-      //$messagealert .= '</div><br><div><h5 style="color:red;">ID: '.$custidarray[$i].' '. $message.'</h5></div>';
+      //echo $messagealert .= '</div><br><div><h5 style="color:red;">ID: '.$custidarray[$i].' '. $message.'</h5></div>';
       echo $messagealert;
   }
 }
