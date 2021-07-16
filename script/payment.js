@@ -78,8 +78,54 @@ function splitJson(jsonParams)
 {
     document.getElementById('progresslabel').innerHTML = "Processing..";
     showPleaseWait();
+    var count = 0;
+    var contact_Id = "";
+    var agreement_number = "";
+    var loan_description = "";
+    var loan_amount = "";
+    var account = "";
+    var category = "";
+    var date_of_payment = "";
+    var amount_type = "";
     var json = $.parseJSON(jsonParams);
     var currentcount = 1;
+    for (var i=0;i< json.length;++i)
+        {
+            contact_Id += json[i].id+ "|";
+            agreement_number += json[i].agreement_number+ "|";
+            loan_description += json[i].id+ "|";
+            loan_amount += json[i].amount+ "|";
+            account += json[i].account+ "|";
+            category += json[i].category+ "|";
+            date_of_payment += json[i].date_of_payment+ "|";
+            amount_type += json[i].amount_type+ "|";
+
+            count++;
+            if(count % 1000 == 0)
+            {
+                uploadpayments(contact_Id, agreement_number, loan_description, loan_amount, account, category, date_of_payment, amount_type);
+                contact_Id = "";
+                agreement_number = "";
+                loan_description = "";
+                loan_amount = "";
+                account = "";
+                category = "";
+                date_of_payment = "";
+                amount_type = "";
+            }
+        
+     
+        }
+    if(contact_Id != "")
+    {
+       uploadpayments(contact_Id, agreement_number, loan_description, loan_amount, account, category, date_of_payment, amount_type);
+    }
+    
+}
+
+function splitjason2(jsonParams){
+    var currentcount = 1;
+    var json = $.parseJSON(jsonParams);
     for (var i=0;i< json.length;++i)
         {
             //alert(json[i].Fullname);
@@ -94,7 +140,7 @@ function splitJson(jsonParams)
             amount_type = json[i].amount_type;
 
             if(category == 2){
-                uploadpayments(contact_Id,agreement_number,loan_description,loan_amount,account,category,date_of_payment,amount_type,currentcount);
+                uploadpayments2(contact_Id,agreement_number,loan_description,loan_amount,account,category,date_of_payment,amount_type,currentcount);
                 currentcount += 1;
             }
      
@@ -114,19 +160,43 @@ function splitJson(jsonParams)
             amount_type = json[i].amount_type;
 
             if(category != 2){
-                uploadpayments(contact_Id,agreement_number,loan_description,loan_amount,account,category,date_of_payment,amount_type,currentcount); 
+                uploadpayments2(contact_Id,agreement_number,loan_description,loan_amount,account,category,date_of_payment,amount_type,currentcount); 
                 currentcount += 1;      
             }
      
         }
-    
 }
 
-function uploadpayments(contact_Id,agreement_number,loan_description,loan_amount,account,category,date_of_payment,amount_type,currentcount){
+function uploadpayments(contact_Id,agreement_number,loan_description,loan_amount,account,category,date_of_payment,amount_type){
     var action = "postdata";
     $.ajax({
                 type: 'POST',
-                url: 'process/paymentprocess2.php',
+                url: 'process/newpaymentprocess.php',
+                data:{action:action,
+                  contact_Id:contact_Id,
+                  agreement_number:agreement_number,
+                  loan_description:loan_description,
+                  loan_amount:loan_amount,
+                  account:account,
+                  category:category,
+                  date_of_payment:date_of_payment,
+                  amount_type:amount_type
+                },
+
+                 beforeSend:function(){
+                },
+                success: function(data){
+                     document.getElementById("testresult").innerHTML += data;
+                 }
+                
+        });
+}
+
+function uploadpayments2(contact_Id,agreement_number,loan_description,loan_amount,account,category,date_of_payment,amount_type,currentcount){
+    var action = "postdata";
+    $.ajax({
+                type: 'POST',
+                url: 'process/newpaymentprocess2.php',
                 data:{action:action,
                   contact_Id:contact_Id,
                   agreement_number:agreement_number,
@@ -159,6 +229,7 @@ function upload(){
         clearjson()
         document.getElementById("uploadresult").innerHTML = "";
 		validateconnectiontoapi(formatted);
+        splitjason2(formatted);
         setTimeout(function(){
         getLines();
         //alert("Done");
