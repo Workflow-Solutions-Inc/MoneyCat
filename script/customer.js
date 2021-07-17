@@ -259,6 +259,7 @@ custTaxNum += json[i].TIN+ "|";
 phonetype += json[i].phone_type+ "|";
 phone_number += json[i].phone_number+ "|";
 count++;
+counter2++;
 //console.log(count);
 if(count % 1000 == 0){
     contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count);
@@ -297,7 +298,7 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
         success: function(data){
             newdata = data;
             //console.log(data);
-            counter2++;
+            
             console.log(counter2);
             if(counter2 == document.getElementById('totaljsondata').innerHTML){
                 if(newdata==""){
@@ -320,6 +321,8 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
 
             document.getElementById("testresult").innerHTML += newdata;
         
+    },complete: function(data){
+        alert("done");
     }
 
 });
