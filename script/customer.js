@@ -277,6 +277,9 @@ if(custName != "")
     contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count);
 
 }
+
+
+
 }
 
 function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count){
@@ -293,11 +296,15 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
         success: function(data){
             newdata = data;
             console.log(data);
+            if(count == document.getElementById('totaljsondata').innerHTML){
+                alert(count);
+            }
         
     }
 
 });
-    if(count == document.getElementById('totaljsondata').innerHTML){
+
+    /*if(count == document.getElementById('totaljsondata').innerHTML){
             if(newdata==""){
             document.getElementById("btnupload").disabled = false;
             document.getElementById("btnupload").style.backgroundColor = "lightgreen";
@@ -316,7 +323,7 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
         }
         
         document.getElementById("testresult").innerHTML += newdata;
-    console.log(count);
+    console.log(count);*/
 }
 
 
