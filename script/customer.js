@@ -271,11 +271,11 @@ if(count % 1000 == 0){
 
 }
 
-if(custName != "")
+/*if(custName != "")
 {
     contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count);
 
-}
+}*/
 }
 
 function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count){
