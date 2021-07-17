@@ -132,7 +132,7 @@ function splitJson(jsonParams)
     }
 }
 
-
+var counter = 0;
 function uploadloans(contact_Id,agreement_number,loan_description,loan_amount,account,bankaccount,Date_of_loan,Due_Date_of_loan,category,amount_type){
     var action = "postdata";
     $.ajax({
@@ -154,14 +154,12 @@ function uploadloans(contact_Id,agreement_number,loan_description,loan_amount,ac
 
                 },
                 success: function(data){
-                    document.getElementById('progresslabel').innerHTML = "Finalizing.."; 
                     document.getElementById("testresult").innerHTML += data;
-                    document.getElementById("btnupload").disabled = true;
-                    document.getElementById("btnupload").style.backgroundColor = "grey";
-                    hidePleaseWait(); 
-                    document.getElementById('resultlabel').innerHTML = "Finished uploading json file.";
-                    document.getElementById("resultlabel").style.color = "green";
-                    showPleaseWait3();         
+                    counter += 1000;
+                    if(counter >= document.getElementById('totaljsondata').innerHTML){
+                        successupload(); 
+                    }
+                            
                  }
                 
         });
@@ -220,23 +218,22 @@ function loanvalidator(contact_Id,agreement_number,loan_description,loan_amount,
                 },
                 success: function(data){
                     //alert(data);
-                    if(data==""){
-                        document.getElementById("btnupload").disabled = false;
-                        document.getElementById("btnupload").style.backgroundColor = "lightgreen";
-                        document.getElementById('resultlabel').innerHTML = "Validation found without errors, you may now upload the json file.";
-                        document.getElementById("resultlabel").style.color = "green";
-                    }else{
-                        document.getElementById("btnupload").disabled = true;
-                        document.getElementById("btnupload").style.backgroundColor = "grey";
-                        document.getElementById('resultlabel').innerHTML = "Validation found with errors";
-                        document.getElementById("resultlabel").style.color = "red";
-                    }
                     document.getElementById("testresult").innerHTML += data;
-                    document.getElementById('progresslabel').innerHTML = "Finalizing.."; 
+                    counter2 += 1000;
+                    if(counter2 >= document.getElementById('totaljsondata').innerHTML){
+                        if(document.getElementById("testresult").innerHTML == ""){
+                            foundwithouterrors();
+                        }else{
+                            foundwitherrors();
+                        }
+                        hidePleaseWait();
+                        showPleaseWait3();
+                    }
+                    
                     hidePleaseWait(); 
                     showPleaseWait3();
 
-                 }
+                }
                 
         });
 }
@@ -251,6 +248,7 @@ function validate(){
 
 }
 
+var counter2 = 0;
 function validateloandata(jsonParams)
 {
     document.getElementById('progresslabel').innerHTML = "Validating..";
@@ -324,3 +322,28 @@ function validateconnectiontoapi2(){
 
     });
 }
+
+function foundwitherrors(){
+    document.getElementById("btnupload").disabled = true;
+    document.getElementById("btnupload").style.backgroundColor = "grey";
+    document.getElementById('resultlabel').innerHTML = "Validation found with errors";
+    document.getElementById("resultlabel").style.color = "red";
+}
+
+function foundwithouterrors(){
+    document.getElementById("btnupload").disabled = false;
+    document.getElementById("btnupload").style.backgroundColor = "lightgreen";
+    document.getElementById('resultlabel').innerHTML = "Validation found without errors, you may now upload the json file.";
+    document.getElementById("resultlabel").style.color = "green";
+}
+
+function successupload(){
+    document.getElementById('progresslabel').innerHTML = "Finalizing.."; 
+    document.getElementById("btnupload").disabled = true;
+    document.getElementById("btnupload").style.backgroundColor = "grey";
+    hidePleaseWait(); 
+    document.getElementById('resultlabel').innerHTML = "Finished uploading json file.";
+    document.getElementById("resultlabel").style.color = "green";
+    showPleaseWait3();  
+}
+
