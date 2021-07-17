@@ -74,6 +74,8 @@ $(function () {
     //showPleaseWait();
 });
 
+var counter1 = 0;
+var counter2 = 0;
 function splitJson(jsonParams)
 {
     document.getElementById('progresslabel').innerHTML = "Processing..";
@@ -122,6 +124,7 @@ function splitJson(jsonParams)
     }
     
 }
+
 
 function splitjason2(jsonParams){
     var currentcount = 1;
@@ -186,7 +189,11 @@ function uploadpayments(contact_Id,agreement_number,loan_description,loan_amount
                  beforeSend:function(){
                 },
                 success: function(data){
-                     document.getElementById("testresult").innerHTML += data;
+                    counter2+=1;
+                    document.getElementById("testresult").innerHTML += data;
+                    if(counter2 >= document.getElementById('totaljsondata').innerHTML){
+                        getLines();
+                    }
                  }
                 
         });
@@ -212,7 +219,8 @@ function uploadpayments2(contact_Id,agreement_number,loan_description,loan_amoun
                  beforeSend:function(){
                 },
                 success: function(data){
-                     document.getElementById("testresult").innerHTML += data;
+                    counter2+=1000;
+                    document.getElementById("testresult").innerHTML += data;
                  }
                 
         });
@@ -229,11 +237,6 @@ function upload(){
         clearjson()
         document.getElementById("uploadresult").innerHTML = "";
 		validateconnectiontoapi(formatted);
-        splitjason2(formatted);
-        setTimeout(function(){
-        getLines();
-        //alert("Done");
-        },3000);
 	}
 	
 }
@@ -262,12 +265,7 @@ function getLines(){
             beforeSend:function(){
             },
             success: function(data){
-                hidePleaseWait();
-                document.getElementById("btnupload").disabled = true;
-                document.getElementById("btnupload").style.backgroundColor = "grey";
-                document.getElementById('resultlabel').innerHTML = "Finished uploading json file.";
-                document.getElementById("resultlabel").style.color = "green";
-                showPleaseWait3();
+                successpaymentupload();
              }
             
     });
@@ -413,4 +411,13 @@ function validateconnectiontoapi2(){
         }
 
     });
+}
+
+function successpaymentupload(){
+    hidePleaseWait();
+    document.getElementById("btnupload").disabled = true;
+    document.getElementById("btnupload").style.backgroundColor = "grey";
+    document.getElementById('resultlabel').innerHTML = "Finished uploading json file.";
+    document.getElementById("resultlabel").style.color = "green";
+    showPleaseWait3();
 }
