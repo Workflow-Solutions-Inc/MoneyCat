@@ -308,6 +308,7 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
         if(counter2 > document.getElementById('totaljsondata').innerHTML){
                 hidePleaseWait();
                 showPleaseWait3();
+            alert("done");
             }
         //document.getElementById('progresslabel').innerHTML = "Finalizing..";
         
