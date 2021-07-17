@@ -233,7 +233,7 @@ function validateconnectiontoapi2(){
     });
 }
 
-var counter2 = 0;
+var counter2 = 1;
 function validatecontactdata(jsonParams){
     var counter = 1;
     document.getElementById('progresslabel').innerHTML = "validating..";
@@ -296,11 +296,29 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
         },
         success: function(data){
             newdata = data;
-            console.log(data);
+            //console.log(data);
             counter2++;
+            console.log(counter2);
             if(counter2 == document.getElementById('totaljsondata').innerHTML){
-                alert(counter2);
+                if(newdata==""){
+                document.getElementById("btnupload").disabled = false;
+                document.getElementById("btnupload").style.backgroundColor = "lightgreen";
+                document.getElementById('resultlabel').innerHTML = "Validation found without errors, you may now upload the json file.";
+                document.getElementById("resultlabel").style.color = "green";
+                }else{
+                    document.getElementById("btnupload").disabled = true;
+                    document.getElementById("btnupload").style.backgroundColor = "grey";
+                    document.getElementById('resultlabel').innerHTML = "Validation found with errors";
+                    document.getElementById("resultlabel").style.color = "red";
+                }
+                
+                document.getElementById('progresslabel').innerHTML = "Finalizing..";
+                hidePleaseWait();
+                showPleaseWait3();
+
             }
+
+            document.getElementById("testresult").innerHTML += newdata;
         
     }
 
@@ -324,7 +342,7 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
             showPleaseWait3();
         }
         
-        document.getElementById("testresult").innerHTML += newdata;
+        
     console.log(count);*/
 }
 
