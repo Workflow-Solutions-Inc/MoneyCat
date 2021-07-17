@@ -257,7 +257,7 @@ function validatecontactdata(jsonParams){
     phone_number += res[prop].phone_number+ "|";
     count++;
         if(count % 1000 == 0){
-            runajaxfuntion(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
+            contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
             custName = "";
             custId = "";
             custEmail = "";
@@ -271,7 +271,7 @@ function validatecontactdata(jsonParams){
 
     if(custName != "")
     {
-        runajaxfuntion(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
+        contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
 
     }
     
@@ -290,7 +290,7 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
 
         },
         success: function(data){
-            counter2+=1000;
+        counter2+=1000;
         if(data==""){
             
         }else{
@@ -304,17 +304,18 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
         }
         console.log(flag1);
         document.getElementById("testresult").innerHTML += data;
+        console.log(counter2);
+        if(counter2 > document.getElementById('totaljsondata').innerHTML){
+                hidePleaseWait();
+                showPleaseWait3();
+            }
         //document.getElementById('progresslabel').innerHTML = "Finalizing..";
         
         
     }
 
 });
-    console.log(counter2);
-    if(counter2 > document.getElementById('totaljsondata').innerHTML){
-            hidePleaseWait();
-            showPleaseWait3();
-        }
+    
 }
 
 function foundwitherrors(){
@@ -331,13 +332,13 @@ function foundwithouterrors(){
     document.getElementById("resultlabel").style.color = "green";
 }
 
-async function runajaxfuntion(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number){
-    try {
-        const res = await contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number)
-        console.log(res)
-    } catch(err) {
-        console.log(err);
-    }
-}
+// async function runajaxfuntion(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number){
+//     try {
+//         const res = await contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number)
+//         console.log(res)
+//     } catch(err) {
+//         console.log(err);
+//     }
+// }
 
 
