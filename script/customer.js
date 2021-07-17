@@ -106,7 +106,7 @@ phonetype += res[prop].phone_type+ "|";
 phone_number += res[prop].phone_number+ "|";
 count++;
 if(count % 1000 == 0){
-    looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
+    looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, counter);
     custName = "";
     custId = "";
     custEmail = "";
@@ -120,11 +120,11 @@ if(count % 1000 == 0){
 
 if(custName != "")
 {
-    looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
+    looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, counter);
 
 }
 
-synccustomer();
+//synccustomer();
 
 }
 
@@ -136,13 +136,17 @@ function looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonet
         data:{action:action, custName:custName,custEmail:custEmail,
             AddressLine:AddressLine,custTaxNum:custTaxNum, custId:custId, phonetype:phonetype, phone_number:phone_number},
             beforeSend:function(){
-
+                document.getElementById("testresult").innerHTML += data;
+                document.getElementById('progresslabel').innerHTML = "Finalizing..";
+                if(count == document.getElementById('totaljsondata').innerHTML){
+                    synccustomer();
+                }
+                
             },
             success: function(data){
 //console.log(data);
 
-document.getElementById("testresult").innerHTML += data;
-document.getElementById('progresslabel').innerHTML = "Finalizing..";
+
 }
 
 });
@@ -255,7 +259,7 @@ phonetype += res[prop].phone_type+ "|";
 phone_number += res[prop].phone_number+ "|";
 count++;
 if(count % 1000 == 0){
-    contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
+    contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, counter);
     custName = "";
     custId = "";
     custEmail = "";
@@ -269,12 +273,12 @@ if(count % 1000 == 0){
 
 if(custName != "")
 {
-    contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
+    contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, counter);
 
 }
 }
 
-function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number){
+function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count){
     var action = "postdata";
     $.ajax({
     type: 'POST',
@@ -285,21 +289,24 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
 
         },
         success: function(data){
-        if(data==""){
+        if(count == document.getElementById('totaljsondata').innerHTML){
+            if(data==""){
             document.getElementById("btnupload").disabled = false;
             document.getElementById("btnupload").style.backgroundColor = "lightgreen";
             document.getElementById('resultlabel').innerHTML = "Validation found without errors, you may now upload the json file.";
             document.getElementById("resultlabel").style.color = "green";
-        }else{
-            document.getElementById("btnupload").disabled = true;
-            document.getElementById("btnupload").style.backgroundColor = "grey";
-            document.getElementById('resultlabel').innerHTML = "Validation found with errors";
-            document.getElementById("resultlabel").style.color = "red";
+            }else{
+                document.getElementById("btnupload").disabled = true;
+                document.getElementById("btnupload").style.backgroundColor = "grey";
+                document.getElementById('resultlabel').innerHTML = "Validation found with errors";
+                document.getElementById("resultlabel").style.color = "red";
+            }
+            document.getElementById("testresult").innerHTML += data;
+            document.getElementById('progresslabel').innerHTML = "Finalizing..";
+            hidePleaseWait();
+            showPleaseWait3();
         }
-        document.getElementById("testresult").innerHTML += data;
-        document.getElementById('progresslabel').innerHTML = "Finalizing..";
-        hidePleaseWait();
-        showPleaseWait3();
+        
     }
 
 });
