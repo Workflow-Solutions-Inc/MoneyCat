@@ -280,7 +280,7 @@ function validatecontactdata(jsonParams){
 function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number){
     var action = "postdata";
     flag2 = true;
-    counter2+=1000;
+    
     $.ajax({
     type: 'POST',
     url: 'process/validatecontactupload.php',
@@ -290,6 +290,7 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
 
         },
         success: function(data){
+            counter2+=1000;
         if(data==""){
             
         }else{
