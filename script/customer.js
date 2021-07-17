@@ -246,17 +246,17 @@ function validatecontactdata(jsonParams){
     var phonetype = "";
     var phone_number = "";
     var count = 0;
-    const res = JSON.parse(jsonParams);   
-    for(var prop in res){
+    var json = $.parseJSON(jsonParams); 
+    for(var i=0;i< json.length;++i){
 //alert(res[prop].id);
 
-custName += res[prop].full_name + "|";
-custId += res[prop].id + "|";
-custEmail += res[prop].email + "|";
-AddressLine += res[prop].full_address+ "|";
-custTaxNum += res[prop].TIN+ "|";
-phonetype += res[prop].phone_type+ "|";
-phone_number += res[prop].phone_number+ "|";
+custName += json[i].full_name + "|";
+custId += json[i].id + "|";
+custEmail += json[i].email + "|";
+AddressLine += json[i].full_address+ "|";
+custTaxNum += json[i].TIN+ "|";
+phonetype += json[i].phone_type+ "|";
+phone_number += json[i].phone_number+ "|";
 count++;
 if(count % 1000 == 0){
     contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count);
