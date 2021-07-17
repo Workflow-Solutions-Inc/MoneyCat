@@ -321,8 +321,6 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
 
             document.getElementById("testresult").innerHTML += newdata;
         
-    },complete: function(data){
-        alert("done");
     }
 
 });
