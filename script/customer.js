@@ -258,7 +258,7 @@ custTaxNum += json[i].TIN+ "|";
 phonetype += json[i].phone_type+ "|";
 phone_number += json[i].phone_number+ "|";
 count++;
-console.log(count);
+//console.log(count);
 if(count % 1000 == 0){
     contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count);
     custName = "";
@@ -292,7 +292,7 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
         },
         success: function(data){
             newdata = data;
-        
+            console.log(data);
         
     }
 
