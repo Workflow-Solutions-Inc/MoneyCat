@@ -66,7 +66,7 @@ fileToRead.addEventListener("change", function(event) {
             var result = JSON.parse(e.target.result);
             formatted = JSON.stringify(result, null, 2);
             document.getElementById('result').innerHTML = formatted;
-
+            alert(result.length);
             document.getElementById('totaljsondata').innerHTML = result.length;
         }
 
@@ -309,6 +309,7 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
     }
 
 });
+    console.log(counter2);
     if(counter2 > document.getElementById('totaljsondata').innerHTML){
             hidePleaseWait();
             showPleaseWait3();
