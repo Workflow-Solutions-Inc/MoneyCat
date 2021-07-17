@@ -285,7 +285,7 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
     type: 'POST',
     url: 'process/validatecontactupload.php',
     data:{action:action, custName:custName,custEmail:custEmail,
-        AddressLine:AddressLine,custTaxNum:custTaxNum, custId:custId, phonetype:phonetype, phone_number:phone_number},
+        AddressLine:AddressLine,custTaxNum:custTaxNum, custId:custId, phonetype:phonetype, phone_number:phone_number,counter2:counter2},
         beforeSend:function(){
 
         },
@@ -308,7 +308,6 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
         if(counter2 > document.getElementById('totaljsondata').innerHTML){
                 hidePleaseWait();
                 showPleaseWait3();
-            alert("done");
             }
         //document.getElementById('progresslabel').innerHTML = "Finalizing..";
         
