@@ -106,7 +106,7 @@ phonetype += res[prop].phone_type+ "|";
 phone_number += res[prop].phone_number+ "|";
 count++;
 if(count % 1000 == 0){
-    looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, counter);
+    looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
     custName = "";
     custId = "";
     custEmail = "";
@@ -120,11 +120,11 @@ if(count % 1000 == 0){
 
 if(custName != "")
 {
-    looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, counter);
+    looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
 
 }
 
-//synccustomer();
+synccustomer();
 
 }
 
@@ -136,17 +136,13 @@ function looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonet
         data:{action:action, custName:custName,custEmail:custEmail,
             AddressLine:AddressLine,custTaxNum:custTaxNum, custId:custId, phonetype:phonetype, phone_number:phone_number},
             beforeSend:function(){
-                document.getElementById("testresult").innerHTML += data;
-                document.getElementById('progresslabel').innerHTML = "Finalizing..";
-                if(count == document.getElementById('totaljsondata').innerHTML){
-                    synccustomer();
-                }
-                
+
             },
             success: function(data){
 //console.log(data);
 
-
+document.getElementById("testresult").innerHTML += data;
+document.getElementById('progresslabel').innerHTML = "Finalizing..";
 }
 
 });
@@ -233,7 +229,6 @@ function validateconnectiontoapi2(){
     });
 }
 
-var counter2 = 1;
 function validatecontactdata(jsonParams){
     var counter = 1;
     document.getElementById('progresslabel').innerHTML = "validating..";
@@ -247,22 +242,20 @@ function validatecontactdata(jsonParams){
     var phonetype = "";
     var phone_number = "";
     var count = 0;
-    var json = $.parseJSON(jsonParams); 
-    for(var i=0;i< json.length;i++){
+    const res = JSON.parse(jsonParams);   
+    for(var prop in res){
 //alert(res[prop].id);
 
-custName += json[i].full_name + "|";
-custId += json[i].id + "|";
-custEmail += json[i].email + "|";
-AddressLine += json[i].full_address+ "|";
-custTaxNum += json[i].TIN+ "|";
-phonetype += json[i].phone_type+ "|";
-phone_number += json[i].phone_number+ "|";
+custName += res[prop].full_name + "|";
+custId += res[prop].id + "|";
+custEmail += res[prop].email + "|";
+AddressLine += res[prop].full_address+ "|";
+custTaxNum += res[prop].TIN+ "|";
+phonetype += res[prop].phone_type+ "|";
+phone_number += res[prop].phone_number+ "|";
 count++;
-counter2++;
-//console.log(count);
 if(count % 1000 == 0){
-    contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count);
+    contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
     custName = "";
     custId = "";
     custEmail = "";
@@ -276,17 +269,13 @@ if(count % 1000 == 0){
 
 if(custName != "")
 {
-    contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count);
+    contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
 
 }
-
-
-
 }
 
-function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count){
+function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number){
     var action = "postdata";
-    var newdata = "";
     $.ajax({
     type: 'POST',
     url: 'process/validatecontactupload.php',
@@ -296,55 +285,24 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
 
         },
         success: function(data){
-            newdata = data;
-            //console.log(data);
-            
-            console.log(counter2);
-            if(counter2 == document.getElementById('totaljsondata').innerHTML){
-                if(newdata==""){
-                document.getElementById("btnupload").disabled = false;
-                document.getElementById("btnupload").style.backgroundColor = "lightgreen";
-                document.getElementById('resultlabel').innerHTML = "Validation found without errors, you may now upload the json file.";
-                document.getElementById("resultlabel").style.color = "green";
-                }else{
-                    document.getElementById("btnupload").disabled = true;
-                    document.getElementById("btnupload").style.backgroundColor = "grey";
-                    document.getElementById('resultlabel').innerHTML = "Validation found with errors";
-                    document.getElementById("resultlabel").style.color = "red";
-                }
-                
-                document.getElementById('progresslabel').innerHTML = "Finalizing..";
-                hidePleaseWait();
-                showPleaseWait3();
-
-            }
-
-            document.getElementById("testresult").innerHTML += newdata;
-        
-    }
-
-});
-
-    /*if(count == document.getElementById('totaljsondata').innerHTML){
-            if(newdata==""){
+        if(data==""){
             document.getElementById("btnupload").disabled = false;
             document.getElementById("btnupload").style.backgroundColor = "lightgreen";
             document.getElementById('resultlabel').innerHTML = "Validation found without errors, you may now upload the json file.";
             document.getElementById("resultlabel").style.color = "green";
-            }else{
-                document.getElementById("btnupload").disabled = true;
-                document.getElementById("btnupload").style.backgroundColor = "grey";
-                document.getElementById('resultlabel').innerHTML = "Validation found with errors";
-                document.getElementById("resultlabel").style.color = "red";
-            }
-            
-            document.getElementById('progresslabel').innerHTML = "Finalizing..";
-            hidePleaseWait();
-            showPleaseWait3();
+        }else{
+            document.getElementById("btnupload").disabled = true;
+            document.getElementById("btnupload").style.backgroundColor = "grey";
+            document.getElementById('resultlabel').innerHTML = "Validation found with errors";
+            document.getElementById("resultlabel").style.color = "red";
         }
-        
-        
-    console.log(count);*/
+        document.getElementById("testresult").innerHTML += data;
+        document.getElementById('progresslabel').innerHTML = "Finalizing..";
+        hidePleaseWait();
+        showPleaseWait3();
+    }
+
+});
 }
 
 
