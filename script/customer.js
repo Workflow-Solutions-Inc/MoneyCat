@@ -301,11 +301,12 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
                 document.getElementById('resultlabel').innerHTML = "Validation found with errors";
                 document.getElementById("resultlabel").style.color = "red";
             }
-            document.getElementById("testresult").innerHTML += data;
+            
             document.getElementById('progresslabel').innerHTML = "Finalizing..";
             hidePleaseWait();
             showPleaseWait3();
         }
+        document.getElementById("testresult").innerHTML += data;
         
     }
 
