@@ -233,6 +233,7 @@ function validateconnectiontoapi2(){
     });
 }
 
+var counter2 = 0;
 function validatecontactdata(jsonParams){
     var counter = 1;
     document.getElementById('progresslabel').innerHTML = "validating..";
@@ -296,8 +297,9 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
         success: function(data){
             newdata = data;
             console.log(data);
-            if(count == document.getElementById('totaljsondata').innerHTML){
-                alert(count);
+            counter2++;
+            if(counter2 == document.getElementById('totaljsondata').innerHTML){
+                alert(counter2);
             }
         
     }
