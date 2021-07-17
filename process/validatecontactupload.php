@@ -10,6 +10,7 @@ if ($_POST['action'] == "postdata")
 {
   //validateContactId();
   //exit if id already exist
+
   $custName = getValue($_POST['custName']);
   $custEmail = getValue($_POST['custEmail']);
   $AddressLine = getValue($_POST['AddressLine']);
@@ -86,7 +87,7 @@ function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $c
   
   try
   {
-
+    $startofcount = $_POST["counter2"];
     $messagealert = "";
     $contact_array = new \XeroAPI\XeroPHP\Models\Accounting\Contacts;
     $contactlines = [];
@@ -116,7 +117,7 @@ function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $c
       array_push($arr_lineitems2, $phone);
       $contact->setAddresses($arr_lineitems);
       $contact->setPhones($arr_lineitems2);*/
-      $currentcount = $i + 1;
+      $startofcount += 1;
       if(validateContactId($custidarray[$i]) != 1){
         /*array_push($contactlines, $contact);
         $contact_array ->setContacts($contactlines);
@@ -127,7 +128,7 @@ function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $c
               <dd style="color:red;">- Contact ID already exist.</dd><hr>';
         syncContacts($custnamearray[$i], $custidarray[$i]);*/
       }else{
-        $messagealert .= '<dt>Line no: '.$currentcount.'</dt>
+        $messagealert .= '<dt>Line no: '.$startofcount.'</dt>
               <dd>- Contact ID: '.$custidarray[$i].'</dd>
               <dd>- Name: '.$custnamearray[$i].'</dd>
               <dd style="color:red;">- Contact ID already exist.</dd><hr>';
