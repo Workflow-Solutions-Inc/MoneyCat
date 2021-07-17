@@ -66,7 +66,7 @@ fileToRead.addEventListener("change", function(event) {
             var result = JSON.parse(e.target.result);
             formatted = JSON.stringify(result, null, 2);
             document.getElementById('result').innerHTML = formatted;
-            alert(result.length);
+            //alert(result.length);
             document.getElementById('totaljsondata').innerHTML = result.length;
         }
 
