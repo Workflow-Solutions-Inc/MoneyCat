@@ -229,9 +229,6 @@ function loanvalidator(contact_Id,agreement_number,loan_description,loan_amount,
                         hidePleaseWait();
                         showPleaseWait3();
                     }
-                    
-                    hidePleaseWait(); 
-                    showPleaseWait3();
 
                 }
                 
