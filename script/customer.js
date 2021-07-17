@@ -306,6 +306,7 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
             hidePleaseWait();
             showPleaseWait3();
         }
+        console.log(count);
         document.getElementById("testresult").innerHTML += data;
         
     }
