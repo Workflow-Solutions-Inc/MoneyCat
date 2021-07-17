@@ -124,7 +124,7 @@ if(custName != "")
 
 }
 
-synccustomer();
+//synccustomer();
 
 }
 
@@ -139,13 +139,15 @@ function looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonet
 
             },
             success: function(data){
-//console.log(data);
+            document.getElementById("testresult").innerHTML += data;
+            counter+=1000;
+            if(counter2 > document.getElementById('totaljsondata').innerHTML){
+                synccustomer();
+            }
+            //document.getElementById('progresslabel').innerHTML = "Finalizing..";
+            }
 
-document.getElementById("testresult").innerHTML += data;
-document.getElementById('progresslabel').innerHTML = "Finalizing..";
-}
-
-});
+    });
 }
 
 
@@ -154,6 +156,7 @@ function upload(){
     if(formatted == ""){
         alert("no file chosen");
     }else{
+        counter = 0;
         document.getElementById("testresult").innerHTML = "";
         validateconnectiontoapi(formatted);  
 
@@ -165,6 +168,7 @@ function validate(){
     if(formatted == ""){
         alert("no file chosen");
     }else{
+        counter2 = 0;
         document.getElementById("testresult").innerHTML = ""; 
         validatecontactdata(formatted);
     }
@@ -180,12 +184,7 @@ function synccustomer(){
 
         },
         success: function(data){
-            document.getElementById("btnupload").disabled = true;
-            document.getElementById("btnupload").style.backgroundColor = "grey";
-            hidePleaseWait();
-            document.getElementById('resultlabel').innerHTML = "Finished uploading json file.";
-            document.getElementById("resultlabel").style.color = "green";
-            showPleaseWait3();
+            successupload();
         }
 
     });
@@ -305,7 +304,7 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
         console.log(flag1);
         document.getElementById("testresult").innerHTML += data;
         console.log(counter2);
-        if(counter2 > document.getElementById('totaljsondata').innerHTML){
+        if(counter2 >= document.getElementById('totaljsondata').innerHTML){
                 hidePleaseWait();
                 showPleaseWait3();
             }
@@ -332,13 +331,14 @@ function foundwithouterrors(){
     document.getElementById("resultlabel").style.color = "green";
 }
 
-// async function runajaxfuntion(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number){
-//     try {
-//         const res = await contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number)
-//         console.log(res)
-//     } catch(err) {
-//         console.log(err);
-//     }
-// }
+function successupload(){
+    document.getElementById("btnupload").disabled = true;
+    document.getElementById("btnupload").style.backgroundColor = "grey";
+    hidePleaseWait();
+    document.getElementById('resultlabel').innerHTML = "Finished uploading json file.";
+    document.getElementById("resultlabel").style.color = "green";
+    showPleaseWait3();
+}
+
 
 
