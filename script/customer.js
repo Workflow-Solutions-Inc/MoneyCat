@@ -258,9 +258,9 @@ custTaxNum += json[i].TIN+ "|";
 phonetype += json[i].phone_type+ "|";
 phone_number += json[i].phone_number+ "|";
 count++;
-//console.log(count);
+console.log(count);
 if(count % 1000 == 0){
-    //contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count);
+    contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count);
     custName = "";
     custId = "";
     custEmail = "";
@@ -268,53 +268,52 @@ if(count % 1000 == 0){
     custTaxNum = "";
     phonetype = "";
     phone_number = "";
-    console.log(count);
 }
 
 }
 
 if(custName != "")
 {
-    //contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count);
-    console.log(count);
+    contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count);
 
 }
 }
 
 function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count){
     var action = "postdata";
-    $.ajax({
-    type: 'POST',
-    url: 'process/validatecontactupload.php',
-    data:{action:action, custName:custName,custEmail:custEmail,
-        AddressLine:AddressLine,custTaxNum:custTaxNum, custId:custId, phonetype:phonetype, phone_number:phone_number},
-        beforeSend:function(){
+//     $.ajax({
+//     type: 'POST',
+//     url: 'process/validatecontactupload.php',
+//     data:{action:action, custName:custName,custEmail:custEmail,
+//         AddressLine:AddressLine,custTaxNum:custTaxNum, custId:custId, phonetype:phonetype, phone_number:phone_number},
+//         beforeSend:function(){
 
-        },
-        success: function(data){
-        if(count == document.getElementById('totaljsondata').innerHTML){
-            if(data==""){
-            document.getElementById("btnupload").disabled = false;
-            document.getElementById("btnupload").style.backgroundColor = "lightgreen";
-            document.getElementById('resultlabel').innerHTML = "Validation found without errors, you may now upload the json file.";
-            document.getElementById("resultlabel").style.color = "green";
-            }else{
-                document.getElementById("btnupload").disabled = true;
-                document.getElementById("btnupload").style.backgroundColor = "grey";
-                document.getElementById('resultlabel').innerHTML = "Validation found with errors";
-                document.getElementById("resultlabel").style.color = "red";
-            }
+//         },
+//         success: function(data){
+//         if(count == document.getElementById('totaljsondata').innerHTML){
+//             if(data==""){
+//             document.getElementById("btnupload").disabled = false;
+//             document.getElementById("btnupload").style.backgroundColor = "lightgreen";
+//             document.getElementById('resultlabel').innerHTML = "Validation found without errors, you may now upload the json file.";
+//             document.getElementById("resultlabel").style.color = "green";
+//             }else{
+//                 document.getElementById("btnupload").disabled = true;
+//                 document.getElementById("btnupload").style.backgroundColor = "grey";
+//                 document.getElementById('resultlabel').innerHTML = "Validation found with errors";
+//                 document.getElementById("resultlabel").style.color = "red";
+//             }
             
-            document.getElementById('progresslabel').innerHTML = "Finalizing..";
-            hidePleaseWait();
-            showPleaseWait3();
-        }
-        console.log(count);
-        document.getElementById("testresult").innerHTML += data;
+//             document.getElementById('progresslabel').innerHTML = "Finalizing..";
+//             hidePleaseWait();
+//             showPleaseWait3();
+//         }
         
-    }
+//         document.getElementById("testresult").innerHTML += data;
+        
+//     }
 
-});
+// });
+    console.log(count);
 }
 
 
