@@ -230,7 +230,7 @@ function validateconnectiontoapi2(){
 }
 
 var flag1 = true;
-var flag2 = false;
+var counter2 = 0;
 function validatecontactdata(jsonParams){
     var counter = 1;
     document.getElementById('progresslabel').innerHTML = "validating..";
@@ -274,15 +274,13 @@ function validatecontactdata(jsonParams){
         contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
 
     }
-    if(flag2 == true){
-
-    }
     
 }
 
 function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number){
     var action = "postdata";
     flag2 = true;
+    counter2+=1000;
     $.ajax({
     type: 'POST',
     url: 'process/validatecontactupload.php',
@@ -305,12 +303,16 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
         }
         console.log(flag1);
         document.getElementById("testresult").innerHTML += data;
-        document.getElementById('progresslabel').innerHTML = "Finalizing..";
-        hidePleaseWait();
-        showPleaseWait3();
+        //document.getElementById('progresslabel').innerHTML = "Finalizing..";
+        
+        
     }
 
 });
+    if(counter2 > document.getElementById('totaljsondata').innerHTML){
+            hidePleaseWait();
+            showPleaseWait3();
+        }
 }
 
 function foundwitherrors(){
