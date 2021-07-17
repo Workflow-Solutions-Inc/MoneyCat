@@ -230,6 +230,7 @@ function validateconnectiontoapi2(){
 }
 
 var flag1 = true;
+var flag2 = false;
 function validatecontactdata(jsonParams){
     var counter = 1;
     document.getElementById('progresslabel').innerHTML = "validating..";
@@ -273,16 +274,19 @@ function validatecontactdata(jsonParams){
         contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
 
     }
-
-    if(flag1==true){
+    if(flag2 == true){
+        if(flag1==true){
         foundwithouterrors();
-    }else{
-        foundwitherrors();
+        }else{
+            foundwitherrors();
+        }
     }
+    
 }
 
 function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number){
     var action = "postdata";
+    flag2 = true;
     $.ajax({
     type: 'POST',
     url: 'process/validatecontactupload.php',
