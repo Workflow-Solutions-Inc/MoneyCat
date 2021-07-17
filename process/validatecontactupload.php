@@ -100,45 +100,18 @@ function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $c
     $phonetypearray = explode("|",$phonetype);
     $phone_numberarray = explode("|",$phone_number);
     for($i = 0; $i < count($custnamearray) - 1; $i++){
-      
-      /*$contact = new \XeroAPI\XeroPHP\Models\Accounting\Contact;
-      $address = new \XeroAPI\XeroPHP\Models\Accounting\Address;
-      $phone = new \XeroAPI\XeroPHP\Models\Accounting\Phone;
-      $contact->setName($custnamearray[$i]);
-      $contact->setEmailAddress($custEmailarray[$i]);
-      $contact->setTaxNumber($custTaxNumarray[$i]);
-      $address->setAddressType("POBOX");
-      $address->setAddressLine1($AddressLinearray[$i]);
-      $arr_lineitems = []; 
-      array_push($arr_lineitems, $address);
-      $phone->setPhoneType('MOBILE');
-      $phone->setPhoneNumber($phone_numberarray[$i]);
-      $arr_lineitems2 = []; 
-      array_push($arr_lineitems2, $phone);
-      $contact->setAddresses($arr_lineitems);
-      $contact->setPhones($arr_lineitems2);*/
+
       $startofcount += 1;
       if(validateContactId($custidarray[$i]) != 1){
-        /*array_push($contactlines, $contact);
-        $contact_array ->setContacts($contactlines);
-        //$messagealert .= '</div><br><div><h5 style="color:green;">ID: '.$custidarray[$i].' Successfully uploaded!</h5></div>'; 
-        $messagealert .= '<dt>Line no: '.$currentcount.'</dt>
-              <dd>- Contact ID: '.$custidarray[$i].'</dd>
-              <dd>- Name: '.$custnamearray[$i].'</dd>
-              <dd style="color:red;">- Contact ID already exist.</dd><hr>';
-        syncContacts($custnamearray[$i], $custidarray[$i]);*/
       }else{
         $messagealert .= '<dt>Line no: '.$startofcount.'</dt>
               <dd>- Contact ID: '.$custidarray[$i].'</dd>
               <dd>- Name: '.$custnamearray[$i].'</dd>
               <dd style="color:red;">- Contact ID already exist.</dd><hr>';
-        //$messagealert .= '</div><br><div><h5 style="color:red;">ID: '.$custidarray[$i].' Already exist!</h5></div>';
       }
       
       
     }
-
-   // $apiInstance->createContacts($xeroTenantId, $contact_array, true);
    echo $messagealert;
 
   }
@@ -149,7 +122,6 @@ function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $c
           []
       );
       $message = "ApiException - " . $error->getElements()[0]["validation_errors"][0]["message"];
-      //echo $messagealert .= '</div><br><div><h5 style="color:red;">ID: '.$custidarray[$i].' '. $message.'</h5></div>';
       echo $messagealert;
   }
 }
