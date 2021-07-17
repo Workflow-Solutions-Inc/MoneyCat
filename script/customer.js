@@ -229,6 +229,7 @@ function validateconnectiontoapi2(){
     });
 }
 
+var flag1 = true;
 function validatecontactdata(jsonParams){
     var counter = 1;
     document.getElementById('progresslabel').innerHTML = "validating..";
@@ -246,32 +247,38 @@ function validatecontactdata(jsonParams){
     for(var prop in res){
 //alert(res[prop].id);
 
-custName += res[prop].full_name + "|";
-custId += res[prop].id + "|";
-custEmail += res[prop].email + "|";
-AddressLine += res[prop].full_address+ "|";
-custTaxNum += res[prop].TIN+ "|";
-phonetype += res[prop].phone_type+ "|";
-phone_number += res[prop].phone_number+ "|";
-count++;
-if(count % 1000 == 0){
-    contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
-    custName = "";
-    custId = "";
-    custEmail = "";
-    AddressLine = "";
-    custTaxNum = "";
-    phonetype = "";
-    phone_number = "";
-}
+    custName += res[prop].full_name + "|";
+    custId += res[prop].id + "|";
+    custEmail += res[prop].email + "|";
+    AddressLine += res[prop].full_address+ "|";
+    custTaxNum += res[prop].TIN+ "|";
+    phonetype += res[prop].phone_type+ "|";
+    phone_number += res[prop].phone_number+ "|";
+    count++;
+        if(count % 1000 == 0){
+            contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
+            custName = "";
+            custId = "";
+            custEmail = "";
+            AddressLine = "";
+            custTaxNum = "";
+            phonetype = "";
+            phone_number = "";
+        }
 
-}
+    }
 
-if(custName != "")
-{
-    contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
+    if(custName != "")
+    {
+        contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
 
-}
+    }
+
+    if(flag1==true){
+        foundwithouterrors();
+    }else{
+        foundwitherrors();
+    }
 }
 
 function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number){
@@ -286,16 +293,11 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
         },
         success: function(data){
         if(data==""){
-            document.getElementById("btnupload").disabled = false;
-            document.getElementById("btnupload").style.backgroundColor = "lightgreen";
-            document.getElementById('resultlabel').innerHTML = "Validation found without errors, you may now upload the json file.";
-            document.getElementById("resultlabel").style.color = "green";
+            
         }else{
-            document.getElementById("btnupload").disabled = true;
-            document.getElementById("btnupload").style.backgroundColor = "grey";
-            document.getElementById('resultlabel').innerHTML = "Validation found with errors";
-            document.getElementById("resultlabel").style.color = "red";
+            flag1 = false;
         }
+        console.log(flag1);
         document.getElementById("testresult").innerHTML += data;
         document.getElementById('progresslabel').innerHTML = "Finalizing..";
         hidePleaseWait();
@@ -303,6 +305,20 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
     }
 
 });
+}
+
+function foundwitherrors(){
+    document.getElementById("btnupload").disabled = true;
+    document.getElementById("btnupload").style.backgroundColor = "grey";
+    document.getElementById('resultlabel').innerHTML = "Validation found with errors";
+    document.getElementById("resultlabel").style.color = "red";
+}
+
+function foundwithouterrors(){
+    document.getElementById("btnupload").disabled = false;
+    document.getElementById("btnupload").style.backgroundColor = "lightgreen";
+    document.getElementById('resultlabel').innerHTML = "Validation found without errors, you may now upload the json file.";
+    document.getElementById("resultlabel").style.color = "green";
 }
 
 
