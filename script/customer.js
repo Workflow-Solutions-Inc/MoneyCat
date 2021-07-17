@@ -247,7 +247,7 @@ function validatecontactdata(jsonParams){
     var phone_number = "";
     var count = 0;
     var json = $.parseJSON(jsonParams); 
-    for(var i=0;i< json.length;++i){
+    for(var i=0;i< json.length;i++){
 //alert(res[prop].id);
 
 custName += json[i].full_name + "|";
@@ -260,7 +260,7 @@ phone_number += json[i].phone_number+ "|";
 count++;
 console.log(count);
 if(count % 1000 == 0){
-    contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count);
+    //contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count);
     custName = "";
     custId = "";
     custEmail = "";
@@ -268,13 +268,15 @@ if(count % 1000 == 0){
     custTaxNum = "";
     phonetype = "";
     phone_number = "";
+    console.log(count);
 }
 
 }
 
 if(custName != "")
 {
-    contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count);
+    //contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count);
+    console.log(count);
 
 }
 }
