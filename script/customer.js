@@ -1,317 +1,163 @@
-var fileToRead = document.getElementById("myjson");
-var formatted = "";
+<?php
+session_start();
+ini_set('display_errors', 'On');
+require_once('controllers/config/xeroconfig.php');
+require_once('vendor/autoload.php');
+require_once('controllers/storage.php');
+use XeroAPI\XeroPHP\AccountingObjectSerializer;
 
-$(function () {
-    var pleaseWait = $('#logsmodal'); 
-
-    showPleaseWait3 = function() {
-        $('#logsmodal').modal({backdrop: 'static', keyboard: false}) 
-        pleaseWait.modal('show');
-
-    };
-
-    hidePleaseWait3 = function () {
-        pleaseWait.modal('hide');
-    };
-
-//showPleaseWait();
-});
-
-
-$(function () {
-    var pleaseWait = $('#pleaseWaitDialog'); 
-
-    showPleaseWait = function() {
-        $('#pleaseWaitDialog').modal({backdrop: 'static', keyboard: false}) 
-        pleaseWait.modal('show');
-
-    };
-
-    hidePleaseWait = function () {
-        pleaseWait.modal('hide');
-    };
-
-//showPleaseWait();
-});
-
-$(function () {
-    var pleaseWait = $('#pleasereconnectmodal'); 
-
-    showPleaseWait2 = function() {
-        $('#pleasereconnectmodal').modal({backdrop: 'static', keyboard: false}) 
-        pleaseWait.modal('show');
-
-    };
-
-    hidePleaseWait2 = function () {
-        pleaseWait.modal('hide');
-    };
-
-//showPleaseWait();
-});
-
-fileToRead.addEventListener("change", function(event) {
-    var files = fileToRead.files;
-    if (files.length) {
-        var files = document.getElementById('myjson').files;
-        console.log(files);
-        if (files.length <= 0) {
-            return false;
-        }
-
-        var fr = new FileReader();
-
-        fr.onload = function(e) { 
-            console.log(e);
-            var result = JSON.parse(e.target.result);
-            formatted = JSON.stringify(result, null, 2);
-            document.getElementById('result').innerHTML = formatted;
-
-            document.getElementById('totaljsondata').innerHTML = result.length;
-        }
-
-        fr.readAsText(files.item(0));
-    }
-
-}, false);
-
-
-
-var timerdate = new Date();
-var counter = 1;
-var totalnouploaded = 0;
-function splitJson(jsonParams)
+if ($_POST['action'] == "postdata")
 {
-    document.getElementById('progresslabel').innerHTML = "Processing..";
-    showPleaseWait();
-    console.log(timerdate.getDate());
-    var custName = "";
-    var custId = "";
-    var custEmail = "";
-    var AddressLine = "";
-    var custTaxNum = "";
-    var phonetype = "";
-    var phone_number = "";
-    var count = 0;
-    const res = JSON.parse(jsonParams);   
-    for(var prop in res){
-//alert(res[prop].id);
+  //validateContactId();
+  //exit if id already exist
 
-custName += res[prop].full_name + "|";
-custId += res[prop].id + "|";
-custEmail += res[prop].email + "|";
-AddressLine += res[prop].full_address+ "|";
-custTaxNum += res[prop].TIN+ "|";
-phonetype += res[prop].phone_type+ "|";
-phone_number += res[prop].phone_number+ "|";
-count++;
-if(count % 1000 == 0){
-    looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, counter);
-    custName = "";
-    custId = "";
-    custEmail = "";
-    AddressLine = "";
-    custTaxNum = "";
-    phonetype = "";
-    phone_number = "";
+  $custName = getValue($_POST['custName']);
+  $custEmail = getValue($_POST['custEmail']);
+  $AddressLine = getValue($_POST['AddressLine']);
+  $custTaxNum = getValue($_POST['custTaxNum']);
+  $phonetype = getValue($_POST['phonetype']);
+  $phone_number = getValue($_POST['phone_number']);
+  
+  insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $custEmail, $AddressLine, $custTaxNum, $phonetype, $phone_number);
+  //syncContacts($custName);
+  
 }
 
+function getValue($fieldname){
+  if(isset($fieldname)){
+  $value = $fieldname;
+  }else{
+  $value = "";
+  }
+  return $value;
 }
 
-if(custName != "")
-{
-    looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, counter);
-
+function validateContactId($custId){
+  include('controllers/config/dbconn.php');
+  $errormessage = "";
+  $query = "SELECT * FROM customer_bridge where cust_id = '".$custId."'";
+  $result = $conn->query($query);
+  if ($result->num_rows > 0)
+  {
+    $errormessage = 1;
+    //exit();
+  }
+  return $errormessage;
 }
 
-//synccustomer();
+function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $custEmail, $AddressLine, $custTaxNum, $phonetype, $phone_number){
+  // Storage Classe uses sessions for storing token > extend to your DB of choice
+  try{
+    $storage = new StorageClass();
+    $xeroTenantId = (string)$storage->getSession()['tenant_id'];
+    //session_start();
 
-}
+    $provider = new \League\OAuth2\Client\Provider\GenericProvider([
+      'clientId'                => $clientid,   
+      'clientSecret'            => $clientsecret,
+      'redirectUri'             => $callback,
+      'urlAuthorize'            => 'https://login.xero.com/identity/connect/authorize',
+      'urlAccessToken'          => 'https://identity.xero.com/connect/token',
+      'urlResourceOwnerDetails' => 'https://api.xero.com/api.xro/2.0/Organisation'
+    ]);
 
-function looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number){
-    var action = "postdata";
-    $.ajax({
-        type: 'POST',
-        url: 'process/customerprocess.php',
-        data:{action:action, custName:custName,custEmail:custEmail,
-            AddressLine:AddressLine,custTaxNum:custTaxNum, custId:custId, phonetype:phonetype, phone_number:phone_number},
-            beforeSend:function(){
-                document.getElementById("testresult").innerHTML += data;
-                document.getElementById('progresslabel').innerHTML = "Finalizing..";
-                if(count == document.getElementById('totaljsondata').innerHTML){
-                    synccustomer();
-                }
-                
-            },
-            success: function(data){
-//console.log(data);
+    $newAccessToken = $provider->getAccessToken('refresh_token', [
+      'refresh_token' => $storage->getRefreshToken()
+    ]);
+    
+    // Save my token, expiration and refresh token
+    $storage->setToken(
+    $newAccessToken->getToken(),
+    $newAccessToken->getExpires(), 
+    $xeroTenantId,
+    $newAccessToken->getRefreshToken(),
+    $newAccessToken->getValues()["id_token"] );     
 
+    $config = XeroAPI\XeroPHP\Configuration::getDefaultConfiguration()->setAccessToken( (string)$storage->getSession()['token'] );
+    $config->setHost("https://api.xero.com/api.xro/2.0");        
 
-}
-
-});
-}
-
-
-
-function upload(){
-    if(formatted == ""){
-        alert("no file chosen");
-    }else{
-        document.getElementById("testresult").innerHTML = "";
-        validateconnectiontoapi(formatted);  
-
+    $apiInstance = new XeroAPI\XeroPHP\Api\AccountingApi(
+        new GuzzleHttp\Client(),
+        $config
+    );
+  }catch (\XeroAPI\XeroPHP\ApiException $e) {
+      header("location: ../uploader.php?invalid=0");
+  }
+  
+  
+  try
+  {
+    $startofcount = $_POST["counter2"];
+    $messagealert = "";
+    $contact_array = new \XeroAPI\XeroPHP\Models\Accounting\Contacts;
+    $contactlines = [];
+    
+    $custidarray = explode("|",$_POST['custId']);
+    $custnamearray = explode("|",$custName);
+    $custEmailarray = explode("|",$custEmail);
+    $AddressLinearray = explode("|",$AddressLine);
+    $custTaxNumarray = explode("|",$custTaxNum);
+    $phonetypearray = explode("|",$phonetype);
+    $phone_numberarray = explode("|",$phone_number);
+    for($i = 0; $i < count($custnamearray) - 1; $i++){
+      
+      /*$contact = new \XeroAPI\XeroPHP\Models\Accounting\Contact;
+      $address = new \XeroAPI\XeroPHP\Models\Accounting\Address;
+      $phone = new \XeroAPI\XeroPHP\Models\Accounting\Phone;
+      $contact->setName($custnamearray[$i]);
+      $contact->setEmailAddress($custEmailarray[$i]);
+      $contact->setTaxNumber($custTaxNumarray[$i]);
+      $address->setAddressType("POBOX");
+      $address->setAddressLine1($AddressLinearray[$i]);
+      $arr_lineitems = []; 
+      array_push($arr_lineitems, $address);
+      $phone->setPhoneType('MOBILE');
+      $phone->setPhoneNumber($phone_numberarray[$i]);
+      $arr_lineitems2 = []; 
+      array_push($arr_lineitems2, $phone);
+      $contact->setAddresses($arr_lineitems);
+      $contact->setPhones($arr_lineitems2);*/
+      $startofcount += 1;
+      if(validateContactId($custidarray[$i]) != 1){
+        /*array_push($contactlines, $contact);
+        $contact_array ->setContacts($contactlines);
+        //$messagealert .= '</div><br><div><h5 style="color:green;">ID: '.$custidarray[$i].' Successfully uploaded!</h5></div>'; 
+        $messagealert .= '<dt>Line no: '.$currentcount.'</dt>
+              <dd>- Contact ID: '.$custidarray[$i].'</dd>
+              <dd>- Name: '.$custnamearray[$i].'</dd>
+              <dd style="color:red;">- Contact ID already exist.</dd><hr>';
+        syncContacts($custnamearray[$i], $custidarray[$i]);*/
+      }else{
+        $messagealert .= '<dt>Line no: '.$startofcount.'</dt>
+              <dd>- Contact ID: '.$custidarray[$i].'</dd>
+              <dd>- Name: '.$custnamearray[$i].'</dd>
+              <dd style="color:red;">- Contact ID already exist.</dd><hr>';
+        //$messagealert .= '</div><br><div><h5 style="color:red;">ID: '.$custidarray[$i].' Already exist!</h5></div>';
+      }
+      
+      
     }
 
+   // $apiInstance->createContacts($xeroTenantId, $contact_array, true);
+   echo $messagealert;
+
+  }
+  catch (\XeroAPI\XeroPHP\ApiException $e) {
+      $error = AccountingObjectSerializer::deserialize(
+          $e->getResponseBody(),
+          '\XeroAPI\XeroPHP\Models\Accounting\Error',
+          []
+      );
+      $message = "ApiException - " . $error->getElements()[0]["validation_errors"][0]["message"];
+      //echo $messagealert .= '</div><br><div><h5 style="color:red;">ID: '.$custidarray[$i].' '. $message.'</h5></div>';
+      echo $messagealert;
+  }
 }
 
-function validate(){
-    if(formatted == ""){
-        alert("no file chosen");
-    }else{
-        document.getElementById("testresult").innerHTML = ""; 
-        validatecontactdata(formatted);
-    }
-
+function syncContacts($custName,$custId){
+  include_once('controllers/customer.php');
+  $cust = new CUSTOMER();
+  $cust->putcustomer($custId,$custName);
 }
 
-function synccustomer(){
-    $.ajax({
-        type: 'POST',
-        url: 'process/customersyncher.php',
-        data:{},
-        beforeSend:function(){        
-
-        },
-        success: function(data){
-            document.getElementById("btnupload").disabled = true;
-            document.getElementById("btnupload").style.backgroundColor = "grey";
-            hidePleaseWait();
-            document.getElementById('resultlabel').innerHTML = "Finished uploading json file.";
-            document.getElementById("resultlabel").style.color = "green";
-            showPleaseWait3();
-        }
-
-    });
-}
-
-function validateconnectiontoapi(formatted){
-    $.ajax({
-        type: 'GET',
-        url: 'process/checkconnection.php',
-        data:{},
-        beforeSend:function(){        
-
-        },
-        success: function(data){
-            if(data==1){
-                splitJson(formatted);
-            }else{
-                showPleaseWait2();
-            }   
-        }
-
-    });
-}
-
-function validateconnectiontoapi2(){
-    $.ajax({
-        type: 'GET',
-        url: 'process/checkconnection.php',
-        data:{},
-        beforeSend:function(){        
-
-        },
-        success: function(data){
-            if(data==1){
-                
-            }else{
-                showPleaseWait2();
-            }   
-        }
-
-    });
-}
-
-function validatecontactdata(jsonParams){
-    var counter = 1;
-    document.getElementById('progresslabel').innerHTML = "validating..";
-    showPleaseWait();
-    console.log(timerdate.getDate());
-    var custName = "";
-    var custId = "";
-    var custEmail = "";
-    var AddressLine = "";
-    var custTaxNum = "";
-    var phonetype = "";
-    var phone_number = "";
-    var count = 0;
-    const res = JSON.parse(jsonParams);   
-    for(var prop in res){
-//alert(res[prop].id);
-
-custName += res[prop].full_name + "|";
-custId += res[prop].id + "|";
-custEmail += res[prop].email + "|";
-AddressLine += res[prop].full_address+ "|";
-custTaxNum += res[prop].TIN+ "|";
-phonetype += res[prop].phone_type+ "|";
-phone_number += res[prop].phone_number+ "|";
-count++;
-if(count % 1000 == 0){
-    contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count);
-    custName = "";
-    custId = "";
-    custEmail = "";
-    AddressLine = "";
-    custTaxNum = "";
-    phonetype = "";
-    phone_number = "";
-}
-
-}
-
-if(custName != "")
-{
-    contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count);
-
-}
-}
-
-function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count){
-    var action = "postdata";
-    $.ajax({
-    type: 'POST',
-    url: 'process/validatecontactupload.php',
-    data:{action:action, custName:custName,custEmail:custEmail,
-        AddressLine:AddressLine,custTaxNum:custTaxNum, custId:custId, phonetype:phonetype, phone_number:phone_number},
-        beforeSend:function(){
-
-        },
-        success: function(data){
-        if(count == document.getElementById('totaljsondata').innerHTML){
-            if(data==""){
-            document.getElementById("btnupload").disabled = false;
-            document.getElementById("btnupload").style.backgroundColor = "lightgreen";
-            document.getElementById('resultlabel').innerHTML = "Validation found without errors, you may now upload the json file.";
-            document.getElementById("resultlabel").style.color = "green";
-            }else{
-                document.getElementById("btnupload").disabled = true;
-                document.getElementById("btnupload").style.backgroundColor = "grey";
-                document.getElementById('resultlabel').innerHTML = "Validation found with errors";
-                document.getElementById("resultlabel").style.color = "red";
-            }
-            
-            document.getElementById('progresslabel').innerHTML = "Finalizing..";
-            hidePleaseWait();
-            showPleaseWait3();
-        }
-        console.log(count);
-        document.getElementById("testresult").innerHTML += data;
-        
-    }
-
-});
-}
-
-
+?>
