@@ -259,7 +259,7 @@ phonetype += res[prop].phone_type+ "|";
 phone_number += res[prop].phone_number+ "|";
 count++;
 if(count % 1000 == 0){
-    contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, counter);
+    contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count);
     custName = "";
     custId = "";
     custEmail = "";
@@ -273,7 +273,7 @@ if(count % 1000 == 0){
 
 if(custName != "")
 {
-    contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, counter);
+    contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, count);
 
 }
 }
