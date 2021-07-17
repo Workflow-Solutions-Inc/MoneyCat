@@ -156,6 +156,7 @@ function upload(){
     if(formatted == ""){
         alert("no file chosen");
     }else{
+        counter = 0;
         document.getElementById("testresult").innerHTML = "";
         validateconnectiontoapi(formatted);  
 
@@ -167,6 +168,7 @@ function validate(){
     if(formatted == ""){
         alert("no file chosen");
     }else{
+        counter2 = 0;
         document.getElementById("testresult").innerHTML = ""; 
         validatecontactdata(formatted);
     }
@@ -302,7 +304,7 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
         console.log(flag1);
         document.getElementById("testresult").innerHTML += data;
         console.log(counter2);
-        if(counter2 > document.getElementById('totaljsondata').innerHTML){
+        if(counter2 >= document.getElementById('totaljsondata').innerHTML){
                 hidePleaseWait();
                 showPleaseWait3();
             }
