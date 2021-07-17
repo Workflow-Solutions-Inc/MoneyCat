@@ -275,11 +275,7 @@ function validatecontactdata(jsonParams){
 
     }
     if(flag2 == true){
-        if(flag1==true){
-        foundwithouterrors();
-        }else{
-            foundwitherrors();
-        }
+
     }
     
 }
@@ -300,6 +296,12 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
             
         }else{
             flag1 = false;
+        }
+        if(flag1==false){
+            
+            foundwitherrors();
+        }else{
+            foundwithouterrors();
         }
         console.log(flag1);
         document.getElementById("testresult").innerHTML += data;
