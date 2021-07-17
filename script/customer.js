@@ -257,7 +257,7 @@ function validatecontactdata(jsonParams){
     phone_number += res[prop].phone_number+ "|";
     count++;
         if(count % 1000 == 0){
-            contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
+            runajaxfuntion(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
             custName = "";
             custId = "";
             custEmail = "";
@@ -271,7 +271,7 @@ function validatecontactdata(jsonParams){
 
     if(custName != "")
     {
-        contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
+        runajaxfuntion(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
 
     }
     
@@ -328,6 +328,15 @@ function foundwithouterrors(){
     document.getElementById("btnupload").style.backgroundColor = "lightgreen";
     document.getElementById('resultlabel').innerHTML = "Validation found without errors, you may now upload the json file.";
     document.getElementById("resultlabel").style.color = "green";
+}
+
+async function runajaxfuntion(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number){
+    try {
+        const res = await contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number)
+        console.log(res)
+    } catch(err) {
+        console.log(err);
+    }
 }
 
 
