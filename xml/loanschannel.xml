@@ -5,4 +5,9 @@
     <xerocode>1010207</xerocode>
     <xeroname>CIB-UBP-102060073132 (PHP)</xeroname>
   </Loan>
+  <Loan>
+    <lmscode>1010104</lmscode>
+    <xerocode>1010207</xerocode>
+    <xeroname>Union Bank</xeroname>
+  </Loan>
 </Loans>

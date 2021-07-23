@@ -2,6 +2,6 @@
 
 	$base_path = "https://test-moneycat-uploader.sypro-it.com/";
 	
-	//$base_path = "";
+	//$base_path = "https://localhost/moneycat/";
 
 ?>

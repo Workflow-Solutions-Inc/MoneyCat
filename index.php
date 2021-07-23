@@ -1,3 +1,16 @@
+<?php
+    session_start();
+
+    if(!isset($_SESSION['user']))
+    {
+        header('location: login.php');
+    }
+    else
+    {
+        $user = $_SESSION["user"];
+    }
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -57,10 +70,17 @@
                         <p>Integrate with Xero</p>
                     </a>
                 </li>
-        <li class="active-pro">
+                <!-- <li class="active-pro"> -->
+                <li>
                     <a href="https://www.xero.com/ph/features-and-tools/accounting-software/">
                         <i class="pe-7s-rocket"></i>
                         <p>Go To Xero</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="login.php">
+                        <i class="pe-7s-door-lock"></i>
+                        <p>Log Out</p>
                     </a>
                 </li>
             </ul>
@@ -77,7 +97,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Main Profiling</a>
+                    <a class="navbar-brand" href="#">Dashboard</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-left">
@@ -85,6 +105,13 @@
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
+                         <li>
+                            <p>
+                                <?php
+                                    echo $_SESSION['name'];
+                                ?>
+                            </p>
+                        </li>
                         <li class="dropdown">
                               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <p>
@@ -97,11 +124,11 @@
                                 <li><a href="process/controllers/authorization.php" onclick="">Connect To Xero</a></li>
                               </ul>
                         </li>
-                        <!-- <li>
+                        <li>
                             <a href="login.php">
-                                <p><i class="pe-7s-back-2"></i> Log Out</p>
+                                <p><i class="pe-7s-door-lock"></i> Log Out</p>
                             </a>
-                        </li> -->
+                        </li>
             <li class="separator hidden-lg hidden-md"></li>
                     </ul>
                 </div>

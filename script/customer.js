@@ -154,7 +154,7 @@ function looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonet
 
 function upload(){
     if(formatted == ""){
-        alert("no file chosen");
+        alert("No File Chosen");
     }else{
         counter = 0;
         document.getElementById("testresult").innerHTML = "";
@@ -166,7 +166,7 @@ function upload(){
 
 function validate(){
     if(formatted == ""){
-        alert("no file chosen");
+        alert("No File Chosen");
     }else{
         counter2 = 0;
         document.getElementById("testresult").innerHTML = ""; 
@@ -232,7 +232,7 @@ var flag1 = true;
 var counter2 = 0;
 function validatecontactdata(jsonParams){
     var counter = 1;
-    document.getElementById('progresslabel').innerHTML = "validating..";
+    document.getElementById('progresslabel').innerHTML = "Validating...";
     showPleaseWait();
     console.log(timerdate.getDate());
     var custName = "";
@@ -320,14 +320,14 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
 function foundwitherrors(){
     document.getElementById("btnupload").disabled = true;
     document.getElementById("btnupload").style.backgroundColor = "grey";
-    document.getElementById('resultlabel').innerHTML = "Validation found with errors";
+    document.getElementById('resultlabel').innerHTML = "Validation done with errors. Please fix them first and validate again.";
     document.getElementById("resultlabel").style.color = "red";
 }
 
 function foundwithouterrors(){
     document.getElementById("btnupload").disabled = false;
     document.getElementById("btnupload").style.backgroundColor = "lightgreen";
-    document.getElementById('resultlabel').innerHTML = "Validation found without errors, you may now upload the json file.";
+    document.getElementById('resultlabel').innerHTML = "Validation done successfully. You may now proceed with the Upload.";
     document.getElementById("resultlabel").style.color = "green";
 }
 
@@ -335,7 +335,7 @@ function successupload(){
     document.getElementById("btnupload").disabled = true;
     document.getElementById("btnupload").style.backgroundColor = "grey";
     hidePleaseWait();
-    document.getElementById('resultlabel').innerHTML = "Finished uploading json file.";
+    document.getElementById('resultlabel').innerHTML = "Upload successful.";
     document.getElementById("resultlabel").style.color = "green";
     showPleaseWait3();
 }

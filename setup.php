@@ -56,7 +56,7 @@ include("process/controllers/config/dbconn.php");
                                         <div class="col-md-12">
                                             <div class="form-group">
                                               <i class="pe-7s-date"></i>   <label>Tax Rates</label>
-                                                <select class="form-control" onclick="validateconnectiontoapi();" id="taxrates" onchange="updateTaxrate()">
+                                                <select style="margin-left: 30px; width: auto;" class="form-control" onclick="validateconnectiontoapi();" id="taxrates" onchange="updateTaxrate()">
                                                     
                                                 </select>
                                             </div>
@@ -67,7 +67,7 @@ include("process/controllers/config/dbconn.php");
                                                 <div class="col-md-12">
                                                     <div class="col-md-4"><input class="form-control" type="text" placeholder="Account code" id="loanaccountcode"></div>
                                                     <div class="col-md-4">
-                                                        <select class="form-control" id="xerochannel">
+                                                        <select style="margin-left: 7px;" class="form-control" id="xerochannel">
                                                         </select>
                                                     </div>
                                                     <div class="col-md-2"><input class="btn  btn-fill pull-right" type="button" value="Save Channel" onclick="saveLoanChannel()"></div>      
@@ -78,7 +78,7 @@ include("process/controllers/config/dbconn.php");
                                             <div class="form-group">
                                                 <i class="pe-7s-date"></i>   <label>List of Disbursement Channel</label>
                                                 <br>
-                                                <div style="height:400px; overflow-y: scroll;" id="listofloanchannel">
+                                                <div style="height:400px; overflow-y: auto; margin-left: 30px; width: auto;" id="listofloanchannel">
                                               
                                             </div>
                                             </div>
@@ -110,7 +110,7 @@ include("process/controllers/config/dbconn.php");
                                                 <br>
                                                 <div class="col-md-12">
                                                     <div class="col-md-12">
-                                                        <select class="form-control"  onclick="validateconnectiontoapi();" id="paymentchannel" onchange="updatePaymentChannel()">
+                                                        <select style="width: auto;" class="form-control"  onclick="validateconnectiontoapi();" id="paymentchannel" onchange="updatePaymentChannel()">
                                                         </select>
                                                     </div>     
                                                 </div>
@@ -148,7 +148,7 @@ include("process/controllers/config/dbconn.php");
                                             <div class="form-group">
                                                 <i class="pe-7s-date"></i><label>List of Accounts</label>
                                                 <br>
-                                                <div style="height:480px; overflow-y: scroll;" id="listofaccounts" >
+                                                <div style="height: 400; overflow-y: auto; margin-left: 30px; width: auto;" id="listofaccounts" >
                                               
                                                 </div>
                                             </div>
@@ -157,7 +157,7 @@ include("process/controllers/config/dbconn.php");
                                                 <i class="pe-7s-date"></i><label>Overpayment Setup</label>
                                                 <br>
                                                 <div class="col-md-12">
-                                                        <select class="form-control" onclick="validateconnectiontoapi();" id="accountcodeoverpayment" onchange="updateoverpaymentchannel()">
+                                                        <select style="margin-left: 15px; width: auto;" class="form-control" onclick="validateconnectiontoapi();" id="accountcodeoverpayment" onchange="updateoverpaymentchannel()">
                                                     
                                                         </select>
                                                     </div>

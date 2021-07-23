@@ -94,7 +94,7 @@ include("process/controllers/config/dbconn.php");
                             <h5 id="progressbarid" class="title">Progress: <b id="currentjsonupload">1</b> out of <b id="totaljsondata">1</b></h5>
                         </div>
                         <br>
-                        <pre style="overflow-y: scroll; height: 400px;" id="uploadresult">
+                        <pre style="overflow-y: auto; height: 400px;" id="uploadresult">
                         </pre>
                     </div>
                 </div>
@@ -116,7 +116,7 @@ include("process/controllers/config/dbconn.php");
       <div class="modal-body">
         <!-- <h3 style="color:seagreen;"><i id="progresslabel">Processing..</i> <i class="fa fa-spinner fa-spin fa-1x fa-fw"></i>
         <span class="sr-only">Loading...</span></h3> -->
-        <h3 style="color:seagreen;" id = "overalllabel"><i id="progresslabel">Processing..</i> <iframe src="https://giphy.com/embed/sSgvbe1m3n93G" width="100%" height="50%" frameBorder="0" class="giphy-embed"></iframe></h3>
+        <h3 style="color:seagreen;" id = "overalllabel"><i id="progresslabel">Processing...</i> <iframe src="https://giphy.com/embed/sSgvbe1m3n93G" width="100%" height="50%" frameBorder="0" class="giphy-embed"></iframe></h3>
         <div>
             
         </div>
@@ -152,13 +152,13 @@ include("process/controllers/config/dbconn.php");
       <div class="modal-body">
         <div id ="resultlabel"></div>
         <hr>
-        <div id="testresult" style="overflow-y: scroll; height: 600px;margin : 0;">
+        <div id="testresult" style="overflow-y: auto; height: 400px;margin : 0;">
             <dl id="testresult">
             </dl>
         </div>
       </div>
       <div class="modal-footer">
-          <button onclick="hidePleaseWait3()" class="btn  btn-danger pull-right">close</button>
+          <button onclick="hidePleaseWait3()" class="btn  btn-danger pull-right">Close</button>
       </div>
     </div>
   </div>

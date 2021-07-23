@@ -7,6 +7,15 @@ if(isset($_SESSION["organisationID"])){
     $orgname = $_SESSION["organisationName"];
 }
 
+if(!isset($_SESSION['user']))
+{
+    header('location: login.php');
+}
+else
+{
+    $user = $_SESSION["user"];
+}
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -22,7 +31,7 @@ if(isset($_SESSION["organisationID"])){
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Main Profiling</a>
+                    <a class="navbar-brand" href="#">Dashboard</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-left">
@@ -51,9 +60,9 @@ if(isset($_SESSION["organisationID"])){
                               </ul>
                         </li>
                         <li>
-                            <!-- <a href="<?php echo $base_path; ?>login.php">
+                            <a href="<?php echo $base_path; ?>login.php">
                                 <p><i class="pe-7s-back-2"></i> Log Out</p>
-                            </a> -->
+                            </a>
                         </li>
                         <li class="separator hidden-lg hidden-md"></li>
                     </ul>
