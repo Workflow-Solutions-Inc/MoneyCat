@@ -17,7 +17,7 @@ if ($_POST['action'] == "postdata")
   $phonetype = getValue($_POST['phonetype']);
   $phone_number = getValue($_POST['phone_number']);
 
-  $custName = preg_replace('/\s/', ' ', $custName);
+  $custName = preg_replace('/\s+/', ' ', $custName);
   
   insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $custEmail, $AddressLine, $custTaxNum, $phonetype, $phone_number);
   //syncContacts($custName);
