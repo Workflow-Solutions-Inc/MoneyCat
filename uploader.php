@@ -129,12 +129,12 @@ include("process/controllers/config/dbconn.php");
   <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
-            <h3>Please Reconnect to xero</h3>
+            <h3>Xero Session Ended</h3>
         </div>
       <div class="modal-body">
         <!-- <h3 style="color:seagreen;"><i id="progresslabel">Processing..</i> <i class="fa fa-spinner fa-spin fa-1x fa-fw"></i>
         <span class="sr-only">Loading...</span></h3> -->
-        <a href="process/controllers/authorization.php">Reconnect to xero</a>
+        <a href="process/controllers/authorization.php">Reconnect to Xero</a>
         <div>
             
         </div>

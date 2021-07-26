@@ -95,7 +95,7 @@ function validateLoanChannel($bankaccount){
         }
     } 
     if($flag==0){
-    	$errormessage = '<dd style="color:red;">- Loan Channel Does not Exist</dd>';
+    	$errormessage = '<dd style="color:red;">- Disbursement Channel Does not Exist</dd>';
     }
     return $errormessage;   
 }

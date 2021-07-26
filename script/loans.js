@@ -248,7 +248,7 @@ function validate(){
 var counter2 = 0;
 function validateloandata(jsonParams)
 {
-    document.getElementById('progresslabel').innerHTML = "Validating..";
+    document.getElementById('progresslabel').innerHTML = "Validating...";
     var contact_Id = "";
     var agreement_number = "";
     var loan_description = "";
@@ -323,7 +323,7 @@ function validateconnectiontoapi2(){
 function foundwitherrors(){
     document.getElementById("btnupload").disabled = true;
     document.getElementById("btnupload").style.backgroundColor = "grey";
-    document.getElementById('resultlabel').innerHTML = "Validation found with errors";
+    document.getElementById('resultlabel').innerHTML = "Validation done with errors. Please fix them first and validate again.";
     document.getElementById("resultlabel").style.color = "red";
 }
 
@@ -339,7 +339,7 @@ function successupload(){
     document.getElementById("btnupload").disabled = true;
     document.getElementById("btnupload").style.backgroundColor = "grey";
     hidePleaseWait(); 
-    document.getElementById('resultlabel').innerHTML = "Finished uploading json file.";
+    document.getElementById('resultlabel').innerHTML = "Upload Successful.";
     document.getElementById("resultlabel").style.color = "green";
     showPleaseWait3();  
 }
