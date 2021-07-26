@@ -18,6 +18,7 @@ $message = $row["message"];
 		<script type="text/javascript">
 			<?php
 				$_SESSION['error'] = $message;
+				$_SESSION['email'] = $_POST["email"]
 			?>
 			window.location.href = "../login.php";
 		</script>

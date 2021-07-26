@@ -43,7 +43,14 @@
 				<form class="login100-form validate-form" action="process/loginprocess.php" method="post">
 					<div class="wrap-input100 validate-input m-b-26" data-validate="Email is required">
 						<span class="label-input100">Email</span>
-						<input class="input100" value="" minlength="2" maxlength="30" placeholder="Email" id="login-name" name="email" required="required" pattern="[^*()/><\][\\\x22,;|]+" type="email" autofocus>
+						<input class="input100" value="
+						<?php
+							if (isset($_SESSION['email'])) {
+								# code...
+								echo $_SESSION['email'];
+							}
+						?>
+						" minlength="2" maxlength="30" placeholder="Email" id="login-name" name="email" required="required" pattern="[^*()/><\][\\\x22,;|]+" type="email" autofocus>
 						<span class="focus-input100"></span>
 					</div>
 
