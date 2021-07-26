@@ -76,7 +76,7 @@ $(function () {
 
 function splitJson(jsonParams)
 {
-    document.getElementById('progresslabel').innerHTML = "Processing..";
+    document.getElementById('progresslabel').innerHTML = "Processing...";
     showPleaseWait();
     var count = 0;
     var contact_Id = "";
@@ -349,7 +349,7 @@ function paymentsvalidator(contact_Id,agreement_number,loan_description,loan_amo
 
 function validatepaymentdata(jsonParams)
 {
-    document.getElementById('progresslabel').innerHTML = "validating..";
+    document.getElementById('progresslabel').innerHTML = "Validating...";
     showPleaseWait();
     var json = $.parseJSON(jsonParams);
     var currentcount = 1;

@@ -106,7 +106,7 @@
 
                     <ul class="nav navbar-nav navbar-right">
                          <li>
-                            <p>
+                            <p style="margin-top: 20px;">
                                 <?php
                                     echo $_SESSION['name'];
                                 ?>
