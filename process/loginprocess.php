@@ -16,7 +16,9 @@ $message = $row["message"];
 	{
 		?>
 		<script type="text/javascript">
-			alert("<?php echo $message; ?>");
+			<?php
+				$_SESSION['error'] = $message;
+			?>
 			window.location.href = "../login.php";
 		</script>
 		<?php
@@ -25,7 +27,6 @@ $message = $row["message"];
 	{
 		?>
 		<script type="text/javascript">
-			alert("<?php echo $message; ?>");
 			//landing page
 			<?php
 				$_SESSION['user'] = $_POST["email"];

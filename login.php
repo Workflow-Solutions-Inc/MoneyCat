@@ -30,6 +30,15 @@
 						Welcome
 					</span>
 				</div>
+				<?php
+					if (isset($_SESSION['error'])) {
+						# code...
+						echo '<div class="error">';
+						echo $_SESSION['error'];
+						echo '</div>';
+						session_destroy();
+					}
+				?>
 
 				<form class="login100-form validate-form" action="process/loginprocess.php" method="post">
 					<div class="wrap-input100 validate-input m-b-26" data-validate="Email is required">

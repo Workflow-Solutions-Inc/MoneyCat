@@ -81,6 +81,13 @@ ul, li {
 	list-style-type: none;
 }
 
+.error{
+  padding: 20px;
+  margin: 10px 10px -10px 10px;
+  color: #D8000C;
+  background-color: #FFBABA;
+}
+
 
 /*---------------------------------------------*/
 input {
