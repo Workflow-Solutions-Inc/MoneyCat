@@ -152,6 +152,7 @@ function processCategory1($clientid, $clientsecret, $callback, $contact_Id, $agr
 	// Storage Classe uses sessions for storing token > extend to your DB of choice
 	$storage = new StorageClass();
 	$xeroTenantId = (string)$storage->getSession()['tenant_id'];
+	$message = "";
 	//session_start();
 
 	$provider = new \League\OAuth2\Client\Provider\GenericProvider([
@@ -228,6 +229,7 @@ function processCategory1($clientid, $clientsecret, $callback, $contact_Id, $agr
 			$pastinvoice = "";
 			$invoicenum = "";
 			$amountdue = 0;
+			$message = "";
 			for ($i=0; $i < $cnt; $i++) { 
 				if($arr["Invoices"][$i]["Status"]=="AUTHORISED"){
 				$pastinvoice = $arr["Invoices"][$i]["InvoiceID"];
@@ -299,10 +301,12 @@ function processCategory1($clientid, $clientsecret, $callback, $contact_Id, $agr
 				//echo $btrans;
 				$apiInstance->createBankTransactions($xeroTenantId, $btrans, false);
 			}
-			echo $message .= '<dt>Line no: '.$_POST['currentcount'].'</dt>
+			$message .= '<dt>Line no: '.$_POST['currentcount'].'</dt>
           <dd>- Agreement no: '.$agreement_number.'</dd>
           <dd>- Contact ID: '.$contact_Id.'</dd>
           <dd style="color:green;">- Payment successfully uploaded.</dd><hr>';
+
+          echo $message;
 
 		}
 		catch (\XeroAPI\XeroPHP\ApiException $e) {
@@ -311,11 +315,12 @@ function processCategory1($clientid, $clientsecret, $callback, $contact_Id, $agr
 		        '\XeroAPI\XeroPHP\Models\Accounting\Error',
 		        []
 		    );
-		    $message = "ApiException - " . $error->getElements()[0]["validation_errors"][0]["message"];
-		    echo $message = '<dt>Line no: '.$_POST['currentcount'].'</dt>
+		    $messageapi .= "ApiException - " . $error->getElements()[0]["validation_errors"][0]["message"];
+		    $message .= '<dt>Line no: '.$_POST['currentcount'].'</dt>
           <dd>- Agreement no: '.$agreement_number.'</dd>
           <dd>- Contact ID: '.$contact_Id.'</dd>
-          <dd style="color:red;">- '.$message.'</dd><hr>';
+          <dd style="color:red;">- '.$messageapi.'</dd><hr>';
+          echo $message;
 		    //echo $_SESSION['opchannel'];
 		  }
 		
@@ -486,10 +491,12 @@ function processCategory3($clientid, $clientsecret, $callback, $contact_Id, $agr
 			//echo $btrans;
 			$apiInstance->createBankTransactions($xeroTenantId, $btrans, true);
 		}
-		echo $message .= '<dt>Line no: '.$_POST['currentcount'].'</dt>
+		$message .= '<dt>Line no: '.$_POST['currentcount'].'</dt>
           <dd>- Agreement no: '.$agreement_number.'</dd>
           <dd>- Contact ID: '.$contact_Id.'</dd>
           <dd style="color:green;">- Payment successfully uploaded.</dd><hr>';
+
+        echo $message;
 
 	}
 	catch (\XeroAPI\XeroPHP\ApiException $e) {
@@ -498,11 +505,13 @@ function processCategory3($clientid, $clientsecret, $callback, $contact_Id, $agr
 	        '\XeroAPI\XeroPHP\Models\Accounting\Error',
 	        []
 	    );
-	    $message = "ApiException - " . $error->getElements()[0]["validation_errors"][0]["message"];
-	    echo $message .= '<dt>Line no: '.$_POST['currentcount'].'</dt>
+	    $messageapi = "ApiException - " . $error->getElements()[0]["validation_errors"][0]["message"];
+	    $message .= '<dt>Line no: '.$_POST['currentcount'].'</dt>
           <dd>- Agreement no: '.$agreement_number.'</dd>
           <dd>- Contact ID: '.$contact_Id.'</dd>
-          <dd style="color:red;">- '.$message.'</dd><hr>';
+          <dd style="color:red;">- '.$messageapi.'</dd><hr>';
+
+        echo $message;
 	    //echo $_SESSION['opchannel'];
 	  }
 
