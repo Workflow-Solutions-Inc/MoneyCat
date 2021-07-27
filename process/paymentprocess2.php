@@ -295,10 +295,11 @@ function processCategory1($clientid, $clientsecret, $callback, $contact_Id, $agr
 				$btrans->setLineItems($arr_lineitems);
 				$btrans->setReference($invoicenum);
 				$btrans -> setBankAccount($bankacc->setCode($_SESSION['paymentbankaccount']));
+				$btrans -> setDate($date_of_payment);
 				//echo $btrans;
 				$apiInstance->createBankTransactions($xeroTenantId, $btrans, false);
 			}
-			echo $messagealert .= '<dt>Line no: '.$_POST['currentcount'].'</dt>
+			echo $message .= '<dt>Line no: '.$_POST['currentcount'].'</dt>
           <dd>- Agreement no: '.$agreement_number.'</dd>
           <dd>- Contact ID: '.$contact_Id.'</dd>
           <dd style="color:green;">- Payment successfully uploaded.</dd><hr>';
@@ -311,7 +312,7 @@ function processCategory1($clientid, $clientsecret, $callback, $contact_Id, $agr
 		        []
 		    );
 		    $message = "ApiException - " . $error->getElements()[0]["validation_errors"][0]["message"];
-		    echo $messagealert = '<dt>Line no: '.$_POST['currentcount'].'</dt>
+		    echo $message = '<dt>Line no: '.$_POST['currentcount'].'</dt>
           <dd>- Agreement no: '.$agreement_number.'</dd>
           <dd>- Contact ID: '.$contact_Id.'</dd>
           <dd style="color:red;">- '.$message.'</dd><hr>';
@@ -485,7 +486,7 @@ function processCategory3($clientid, $clientsecret, $callback, $contact_Id, $agr
 			//echo $btrans;
 			$apiInstance->createBankTransactions($xeroTenantId, $btrans, true);
 		}
-		echo $messagealert .= '<dt>Line no: '.$_POST['currentcount'].'</dt>
+		echo $message .= '<dt>Line no: '.$_POST['currentcount'].'</dt>
           <dd>- Agreement no: '.$agreement_number.'</dd>
           <dd>- Contact ID: '.$contact_Id.'</dd>
           <dd style="color:green;">- Payment successfully uploaded.</dd><hr>';
@@ -498,7 +499,7 @@ function processCategory3($clientid, $clientsecret, $callback, $contact_Id, $agr
 	        []
 	    );
 	    $message = "ApiException - " . $error->getElements()[0]["validation_errors"][0]["message"];
-	    echo $messagealert .= '<dt>Line no: '.$_POST['currentcount'].'</dt>
+	    echo $message .= '<dt>Line no: '.$_POST['currentcount'].'</dt>
           <dd>- Agreement no: '.$agreement_number.'</dd>
           <dd>- Contact ID: '.$contact_Id.'</dd>
           <dd style="color:red;">- '.$message.'</dd><hr>';

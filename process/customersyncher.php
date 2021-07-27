@@ -318,40 +318,42 @@ ini_set('display_errors', 'On');
 				}
 				mysqli_close($conn);*/
 
-  function inserttocontacts($custID_,$custName_,$custName_fname,$custName_lname,$custAdd_line1,$custAdd_line2,$custAdd_line3,$custCity,$custRegion,$custPostalCode,$custCountry, $custAttentionTo, $custTax,$orgid){
+  function inserttocontacts($custID_,$custName_,$custName_fname,$custName_lname,$custAdd_line1,$custAdd_line2,$custAdd_line3,$custCity,$custRegion,$custPostalCode,$custCountry, $custAttentionTo, $custTax,$orgid)
+  {
     include("controllers/config/dbconn.php");
     $chkr = "";
     $query = "SELECT customerId from custinfo where customerID = '$custID_' and company = '$orgid'; ";
-                  $result = $conn->query($query);
-                  while ($row = $result->fetch_assoc()){
-                    $chkr = $row["customerId"];
-                  }
-                    
-                    if($chkr==""){
-                        $sql = "INSERT into custinfo (customerId, customerName, addressline3, addressline1, addressline2, postalid, region, city, firstname, lastname, company) values('".$custID_."','".$custName_."','".$custAdd_line3."','".$custAdd_line1."','".$custAdd_line2."','".$custPostalCode."','".$custRegion."','".$custCity."','".$custName_fname."','".$custName_lname."','".$orgid."')";
-                                  if(mysqli_query($conn,$sql))
-                                  {
-                                     //echo "New Rec Created";
-                                  }
-                                  else
-                                  {
-                                    echo "error".$sql."<br>".$conn->error;
-                                  }
-                         
-                    }else{
-                        $sql = "update custinfo set customerName = '".$custName_."', addressline3 = '".$custAdd_line3."', addressline1 = '".$custAdd_line1."', addressline2 = '".$custAdd_line2."'
-                        , postalid = '".$custPostalCode."', region = '".$custRegion."', city = '".$custCity."', firstname = '".$custName_fname."', lastname = '".$custName_lname."' where customerId = '".$custID_."' and company = '".$orgid."'";
-                                  if(mysqli_query($conn,$sql))
-                                  {
-                                     //echo "New Rec Created";
-                                  }
-                                  else
-                                  {
-                                    echo "error".$sql."<br>".$conn->error;
-                                  }
-                    }
-    
-
+    $result = $conn->query($query);
+    while ($row = $result->fetch_assoc())
+    {
+      $chkr = $row["customerId"];
+    }
+      
+    if($chkr=="")
+    {
+      $sql = "INSERT into custinfo (customerId, customerName, addressline3, addressline1, addressline2, postalid, region, city, firstname, lastname, company) values('".$custID_."','".$custName_."','".$custAdd_line3."','".$custAdd_line1."','".$custAdd_line2."','".$custPostalCode."','".$custRegion."','".$custCity."','".$custName_fname."','".$custName_lname."','".$orgid."')";
+      if(mysqli_query($conn,$sql))
+      {
+         //echo "New Rec Created";
+      }
+      else
+      {
+        echo "error".$sql."<br>".$conn->error;
+      }
+    }
+    else
+    {
+        $sql = "update custinfo set customerName = '".$custName_."', addressline3 = '".$custAdd_line3."', addressline1 = '".$custAdd_line1."', addressline2 = '".$custAdd_line2."'
+        , postalid = '".$custPostalCode."', region = '".$custRegion."', city = '".$custCity."', firstname = '".$custName_fname."', lastname = '".$custName_lname."' where customerId = '".$custID_."' and company = '".$orgid."'";
+        if(mysqli_query($conn,$sql))
+        {
+           //echo "New Rec Created";
+        }
+        else
+        {
+          echo "error".$sql."<br>".$conn->error;
+        }
+    }
  }
 
 

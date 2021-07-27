@@ -139,7 +139,8 @@ function splitjason2(jsonParams){
             date_of_payment = json[i].date_of_payment;
             amount_type = json[i].amount_type;
 
-            if(category == 2){
+            if(category == 2)
+            {
                 uploadpayments2(contact_Id,agreement_number,loan_description,loan_amount,account,category,date_of_payment,amount_type,currentcount);
                 currentcount += 1;
             }
@@ -159,7 +160,8 @@ function splitjason2(jsonParams){
             date_of_payment = json[i].date_of_payment;
             amount_type = json[i].amount_type;
 
-            if(category != 2){
+            if(category != 2)
+            {
                 uploadpayments2(contact_Id,agreement_number,loan_description,loan_amount,account,category,date_of_payment,amount_type,currentcount); 
                 currentcount += 1;      
             }
@@ -171,7 +173,7 @@ function uploadpayments(contact_Id,agreement_number,loan_description,loan_amount
     var action = "postdata";
     $.ajax({
                 type: 'POST',
-                url: 'process/newpaymentprocess.php',
+                url: 'process/paymentprocess.php',
                 data:{action:action,
                   contact_Id:contact_Id,
                   agreement_number:agreement_number,
@@ -196,7 +198,7 @@ function uploadpayments2(contact_Id,agreement_number,loan_description,loan_amoun
     var action = "postdata";
     $.ajax({
                 type: 'POST',
-                url: 'process/newpaymentprocess2.php',
+                url: 'process/paymentprocess2.php',
                 data:{action:action,
                   contact_Id:contact_Id,
                   agreement_number:agreement_number,
