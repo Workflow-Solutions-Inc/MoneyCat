@@ -500,6 +500,7 @@ function processCategory3($clientid, $clientsecret, $callback, $contact_Id, $agr
 
 	}
 	catch (\XeroAPI\XeroPHP\ApiException $e) {
+		$message = "";
 	    $error = AccountingObjectSerializer::deserialize(
 	        $e->getResponseBody(),
 	        '\XeroAPI\XeroPHP\Models\Accounting\Error',

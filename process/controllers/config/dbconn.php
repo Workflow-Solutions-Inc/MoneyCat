@@ -26,12 +26,37 @@ $socket="";
 $user="admin";
 $password="newsoft2019";
 $dbname="paysys2019_newsoftdev5";*/
-$host="156.67.217.132";
+
+
+
+//test2 (moneycat)
+$host="156.67.221.38";
 $port=3306;
 $socket="";
 $user="moneycat";
-$password="moneycat2021";
-$dbname="eyetax_test";
+$password="Moneycat2021!";
+$dbname="eyetax_test2";
+
+//test (moneycat)
+// $host="156.67.221.38";
+// $port=3306;
+// $socket="";
+// $user="moneycat";
+// $password="Moneycat2021!";
+// $dbname="eyetax_test";
+
+//dev
+// $host="156.67.217.132";
+// $port=3306;
+// $socket="";
+// $user="moneycat";
+// $password="moneycat2021";
+// $dbname="eyetax_dev";
+
+
+
+
+
 
 // $host="newsoftcloud-t3medium-asia-hk.cxhly8drtukq.ap-east-1.rds.amazonaws.com";
 // $port=3306;

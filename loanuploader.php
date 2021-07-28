@@ -160,7 +160,7 @@ include("process/controllers/config/dbconn.php");
       <div class="modal-body">
         <div id ="resultlabel"></div>
         <hr>
-        <div id="testresult" style="overflow-y: scroll; height: 600px;margin : 0;">
+        <div id="testresult" style="overflow-y: scroll; height: 400px;margin : 0;">
             <dl id="testresult">
             </dl>
         </div>

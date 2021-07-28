@@ -110,7 +110,7 @@ include("process/controllers/config/dbconn.php");
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <h3 style="color:seagreen;"><i id="progresslabel">Processing..</i> <iframe src="https://giphy.com/embed/sSgvbe1m3n93G" width="100%" height="50%" frameBorder="0" class="giphy-embed"></iframe></h3>
+                    <h3 style="color:seagreen;"><i id="progresslabel">Processing...</i> <iframe src="https://giphy.com/embed/sSgvbe1m3n93G" width="100%" height="50%" frameBorder="0" class="giphy-embed"></iframe></h3>
                 </div>
             </div>
         </div>
@@ -143,7 +143,7 @@ include("process/controllers/config/dbconn.php");
       <div class="modal-body">
         <div id ="resultlabel"></div>
         <hr>
-        <div id="testresult" style="overflow-y: scroll; height: 600px;margin : 0;">
+        <div id="testresult" style="overflow-y: scroll; height: 400px;margin : 0;">
             <dl id="testresult">
             </dl>
         </div>
