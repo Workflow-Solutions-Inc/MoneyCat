@@ -16,10 +16,11 @@ if ($_POST['action'] == "postdata")
   $custTaxNum = getValue($_POST['custTaxNum']);
   $phonetype = getValue($_POST['phonetype']);
   $phone_number = getValue($_POST['phone_number']);
+  $counter = getValue($_POST['counter']);
 
   $custName = preg_replace('/\s+/', ' ', $custName);
   
-  insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $custEmail, $AddressLine, $custTaxNum, $phonetype, $phone_number);
+  insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $custEmail, $AddressLine, $custTaxNum, $phonetype, $phone_number, $counter);
   //syncContacts($custName);
   
 }
@@ -46,7 +47,7 @@ function validateContactId($custId){
   return $errormessage;
 }
 
-function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $custEmail, $AddressLine, $custTaxNum, $phonetype, $phone_number){
+function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $custEmail, $AddressLine, $custTaxNum, $phonetype, $phone_number, $counter){
   // Storage Classe uses sessions for storing token > extend to your DB of choice
   try{
     $storage = new StorageClass();
@@ -118,7 +119,7 @@ function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $c
       array_push($arr_lineitems2, $phone);
       $contact->setAddresses($arr_lineitems);
       $contact->setPhones($arr_lineitems2);
-      $currentcount = $i + 1;
+      $currentcount = $counter + $i;
       if(validateContactId($custidarray[$i]) != 1){
         array_push($contactlines, $contact);
         $contact_array ->setContacts($contactlines);

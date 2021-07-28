@@ -97,24 +97,24 @@ function splitJson(jsonParams)
     for(var prop in res){
 //alert(res[prop].id);
 
-custName += res[prop].full_name + "|";
-custId += res[prop].id + "|";
-custEmail += res[prop].email + "|";
-AddressLine += res[prop].full_address+ "|";
-custTaxNum += res[prop].TIN+ "|";
-phonetype += res[prop].phone_type+ "|";
-phone_number += res[prop].phone_number+ "|";
-count++;
-if(count % 1000 == 0){
-    looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
-    custName = "";
-    custId = "";
-    custEmail = "";
-    AddressLine = "";
-    custTaxNum = "";
-    phonetype = "";
-    phone_number = "";
-}
+    custName += res[prop].full_name + "|";
+    custId += res[prop].id + "|";
+    custEmail += res[prop].email + "|";
+    AddressLine += res[prop].full_address+ "|";
+    custTaxNum += res[prop].TIN+ "|";
+    phonetype += res[prop].phone_type+ "|";
+    phone_number += res[prop].phone_number+ "|";
+    count++;
+    if(count % 1000 == 0){
+        looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
+        custName = "";
+        custId = "";
+        custEmail = "";
+        AddressLine = "";
+        custTaxNum = "";
+        phonetype = "";
+        phone_number = "";
+    }
 
 }
 
@@ -134,7 +134,7 @@ function looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonet
         type: 'POST',
         url: 'process/customerprocess.php',
         data:{action:action, custName:custName,custEmail:custEmail,
-            AddressLine:AddressLine,custTaxNum:custTaxNum, custId:custId, phonetype:phonetype, phone_number:phone_number},
+            AddressLine:AddressLine,custTaxNum:custTaxNum, custId:custId, phonetype:phonetype, phone_number:phone_number, counter:counter},
             beforeSend:function(){
 
             },
