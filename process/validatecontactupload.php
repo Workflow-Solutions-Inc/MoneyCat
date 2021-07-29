@@ -102,8 +102,15 @@ function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $c
     for($i = 0; $i < count($custnamearray) - 1; $i++){
 
       $startofcount += 1;
-      if(validateContactId($custidarray[$i]) != 1){
-      }else{
+      if(validateContactId($custidarray[$i]) != 1)
+      {
+        $messagealert .= '<dt>Line no: '.$startofcount.'</dt>
+              <dd>- Contact ID: '.$custidarray[$i].'</dd>
+              <dd>- Name: '.$custnamearray[$i].'</dd>
+              <dd style="color:green;">- Contact ID validation OK.</dd><hr>';
+      }
+      else
+      {
         $messagealert .= '<dt>Line no: '.$startofcount.'</dt>
               <dd>- Contact ID: '.$custidarray[$i].'</dd>
               <dd>- Name: '.$custnamearray[$i].'</dd>
