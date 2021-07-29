@@ -265,7 +265,7 @@ var flag1 = true;
 var counter2 = 0;
 function validatecontactdata(jsonParams)
 {
-    var counter2 = 1;
+    //var counter2 = 1;
     document.getElementById('progresslabel').innerHTML = "Validating...";
     showPleaseWait();
     console.log(timerdate.getDate());
@@ -292,7 +292,7 @@ function validatecontactdata(jsonParams)
         count++;
         if(count % 1000 == 0)
         {
-            contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, counter2);
+            contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
             custName = "";
             custId = "";
             custEmail = "";
@@ -307,12 +307,12 @@ function validatecontactdata(jsonParams)
 
     if(custName != "")
     {
-        contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, counter2);
+        contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
     }
     
 }
 
-function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, counter2)
+function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number)
 {
     var action = "postdata";
     flag2 = true;
@@ -323,7 +323,7 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
                 data:
                 {
                     action:action, custName:custName,custEmail:custEmail,
-                    AddressLine:AddressLine,custTaxNum:custTaxNum, custId:custId, phonetype:phonetype, phone_number:phone_number,counter2:counter2
+                    AddressLine:AddressLine,custTaxNum:custTaxNum, custId:custId, phonetype:phonetype, phone_number:phone_number, counter2:counter2
                 },
                 beforeSend:function()
                 {
@@ -331,7 +331,7 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
                 },
                 success: function(data)
                 {
-                    counter3 = counter3 + 1000;
+                    counter2 = counter2 + 1000;
                     if(data=="")
                     {
                         
@@ -351,8 +351,8 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
                     }
                     console.log(flag1);
                     document.getElementById("testresult").innerHTML += data;
-                    console.log(counter3);
-                    if(counter3 >= document.getElementById('totaljsondata').innerHTML)
+                    console.log(counter2);
+                    if(counter2 >= document.getElementById('totaljsondata').innerHTML)
                     {
                         hidePleaseWait();
                         showPleaseWait3();
