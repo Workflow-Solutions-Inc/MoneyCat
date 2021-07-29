@@ -70,7 +70,7 @@ fileToRead.addEventListener("change", function(event)
             var result = JSON.parse(e.target.result);
             formatted = JSON.stringify(result, null, 2);
             document.getElementById('result').innerHTML = formatted;
-            alert(result.length);
+            //alert(result.length);
             document.getElementById('totaljsondata').innerHTML = result.length;
         }
 
@@ -304,6 +304,7 @@ function validatecontactdata(jsonParams)
             custTaxNum = "";
             phonetype = "";
             phone_number = "";
+            counter2 += 1000;
         }
 
     }
@@ -315,6 +316,7 @@ function validatecontactdata(jsonParams)
     
 }
 
+var counter3 = 0;
 function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number)
 {
     var action = "postdata";
@@ -334,7 +336,8 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
                 },
                 success: function(data)
                 {
-                    counter2 = counter2 + 1000;
+                    alert(counter3);
+                    counter3 = counter3 + 1000;
                     if(data=="")
                     {
                         
@@ -354,8 +357,8 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
                     }
                     console.log(flag1);
                     document.getElementById("testresult").innerHTML += data;
-                    console.log(counter2);
-                    if(counter2 >= document.getElementById('totaljsondata').innerHTML)
+                    console.log(counter3);
+                    if(counter3 >= document.getElementById('totaljsondata').innerHTML)
                     {
                         hidePleaseWait();
                         showPleaseWait3();
