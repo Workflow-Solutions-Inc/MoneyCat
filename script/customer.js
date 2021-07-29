@@ -292,7 +292,7 @@ function validatecontactdata(jsonParams)
         count++;
         if(count % 1000 == 0)
         {
-            contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
+            contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, counter2);
             custName = "";
             custId = "";
             custEmail = "";
@@ -300,18 +300,19 @@ function validatecontactdata(jsonParams)
             custTaxNum = "";
             phonetype = "";
             phone_number = "";
+            counter2 += 1000;
         }
 
     }
 
     if(custName != "")
     {
-        contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
+        contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, counter2);
     }
     
 }
 
-function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number)
+function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number, counter2)
 {
     var action = "postdata";
     flag2 = true;
@@ -330,7 +331,7 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
                 },
                 success: function(data)
                 {
-                    counter2 = counter2 + 1000;
+                    //counter2 = counter2 + 1000;
                     if(data=="")
                     {
                         
