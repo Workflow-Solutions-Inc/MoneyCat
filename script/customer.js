@@ -331,7 +331,7 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
                 },
                 success: function(data)
                 {
-                    //counter2 = counter2 + 1000;
+                    counter3 = counter3 + 1000;
                     if(data=="")
                     {
                         
@@ -351,8 +351,8 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
                     }
                     console.log(flag1);
                     document.getElementById("testresult").innerHTML += data;
-                    console.log(counter2);
-                    if(counter2 >= document.getElementById('totaljsondata').innerHTML)
+                    console.log(counter3);
+                    if(counter3 >= document.getElementById('totaljsondata').innerHTML)
                     {
                         hidePleaseWait();
                         showPleaseWait3();
