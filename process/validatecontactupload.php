@@ -104,10 +104,11 @@ function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $c
       $startofcount += 1;
       if(validateContactId($custidarray[$i]) != 1)
       {
-        $messagealert .= '<dt>Line no: '.$startofcount.'</dt>
+        $validatemessage .= '<dt>Line no: '.$startofcount.'</dt>
               <dd>- Contact ID: '.$custidarray[$i].'</dd>
               <dd>- Name: '.$custnamearray[$i].'</dd>
               <dd style="color:green;">- Contact ID validation OK.</dd><hr>';
+        echo $validatemessage;
       }
       else
       {
@@ -115,11 +116,9 @@ function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $c
               <dd>- Contact ID: '.$custidarray[$i].'</dd>
               <dd>- Name: '.$custnamearray[$i].'</dd>
               <dd style="color:red;">- Contact ID already exist.</dd><hr>';
+        echo $messagealert;
       }
-      
-      
     }
-   echo $messagealert;
 
   }
   catch (\XeroAPI\XeroPHP\ApiException $e) {
