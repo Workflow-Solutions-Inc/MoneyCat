@@ -50,23 +50,27 @@ $(function () {
 //showPleaseWait();
 });
 
-fileToRead.addEventListener("change", function(event) {
+fileToRead.addEventListener("change", function(event) 
+{
     var files = fileToRead.files;
-    if (files.length) {
+    if (files.length) 
+    {
         var files = document.getElementById('myjson').files;
         console.log(files);
-        if (files.length <= 0) {
+        if (files.length <= 0) 
+        {
             return false;
         }
 
         var fr = new FileReader();
 
-        fr.onload = function(e) { 
+        fr.onload = function(e) 
+        { 
             console.log(e);
             var result = JSON.parse(e.target.result);
             formatted = JSON.stringify(result, null, 2);
             document.getElementById('result').innerHTML = formatted;
-            //alert(result.length);
+            alert(result.length);
             document.getElementById('totaljsondata').innerHTML = result.length;
         }
 
@@ -300,7 +304,6 @@ function validatecontactdata(jsonParams)
             custTaxNum = "";
             phonetype = "";
             phone_number = "";
-            counter2 += 1000;
         }
 
     }
