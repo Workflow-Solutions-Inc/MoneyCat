@@ -82,7 +82,7 @@ fileToRead.addEventListener("change", function(event)
 
 
 var timerdate = new Date();
-var counter = 1;
+var counter = 0;
 var totalnouploaded = 0;
 function splitJson(jsonParams)
 {
@@ -120,6 +120,7 @@ function splitJson(jsonParams)
             custTaxNum = "";
             phonetype = "";
             phone_number = "";
+            counter += 1000;
         }
 
     }
@@ -133,6 +134,7 @@ function splitJson(jsonParams)
 
 }
 
+var counter4 = 0;
 function looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number)
 {
     var action = "postdata";
@@ -151,8 +153,8 @@ function looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonet
                     success: function(data)
                     {
                         document.getElementById("testresult").innerHTML += data;
-                        counter+=1000;
-                        if(counter > document.getElementById('totaljsondata').innerHTML)
+                        counter4+=1000;
+                        if(counter4 > document.getElementById('totaljsondata').innerHTML)
                         {
                             synccustomer();
                         }
@@ -336,7 +338,7 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
                 },
                 success: function(data)
                 {
-                    alert(counter3);
+                    //alert(counter3);
                     counter3 = counter3 + 1000;
                     if(data=="")
                     {

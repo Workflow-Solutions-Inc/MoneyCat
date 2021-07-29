@@ -88,8 +88,7 @@ function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $c
   
   try
   {
-    $currentcount = $_POST['counter'];
-    $currentcount++;
+    $startofcount = $_POST['counter'];
     $messagealert = "";
     $contact_array = new \XeroAPI\XeroPHP\Models\Accounting\Contacts;
     $contactlines = [];
@@ -101,8 +100,8 @@ function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $c
     $custTaxNumarray = explode("|",$custTaxNum);
     $phonetypearray = explode("|",$phonetype);
     $phone_numberarray = explode("|",$phone_number);
-    for($i = 0; $i < count($custnamearray) - 1; $i++){
-      
+    for($i = 0; $i < count($custnamearray) - 1; $i++)
+    {
       $contact = new \XeroAPI\XeroPHP\Models\Accounting\Contact;
       $address = new \XeroAPI\XeroPHP\Models\Accounting\Address;
       $phone = new \XeroAPI\XeroPHP\Models\Accounting\Phone;
@@ -119,25 +118,26 @@ function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $c
       array_push($arr_lineitems2, $phone);
       $contact->setAddresses($arr_lineitems);
       $contact->setPhones($arr_lineitems2);
-      $currentcount++;
-      if(validateContactId($custidarray[$i]) != 1){
+      $startofcount++;
+      if(validateContactId($custidarray[$i]) != 1)
+      {
         array_push($contactlines, $contact);
         $contact_array ->setContacts($contactlines);
         //$messagealert .= '</div><br><div><h5 style="color:green;">ID: '.$custidarray[$i].' Successfully uploaded!</h5></div>'; 
-        $messagealert .= '<dt>Line no: '.$currentcount.'</dt>
+        $messagealert .= '<dt>Line no: '.$startofcount.'</dt>
               <dd style="margin : 0;">- Contact ID: '.$custidarray[$i].'</dd>
               <dd style="margin : 0;">- Name: '.$custnamearray[$i].'</dd>
               <dd style="color:green;margin : 0">- Successfully Uploaded.</dd><hr>';
         syncContacts($custnamearray[$i], $custidarray[$i]);
-      }else{
-        '<dt>Line no: '.$currentcount.'</dt>
+      }
+      else
+      {
+        '<dt>Line no: '.$startofcount.'</dt>
               <dd style="margin : 0;">- Contact ID: '.$custidarray[$i].'</dd>
               <dd style="margin : 0;">- Name: '.$custnamearray[$i].'</dd>
               <dd style="color:red;margin : 0">- Contact ID already exist.</dd><hr>';
         //$messagealert .= '</div><br><div><h5 style="color:red;">ID: '.$custidarray[$i].' Already exist!</h5></div>';
       }
-      
-      
     }
 
    $apiInstance->createContacts($xeroTenantId, $contact_array, true);

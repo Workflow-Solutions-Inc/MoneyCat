@@ -99,15 +99,15 @@ function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $c
     $custTaxNumarray = explode("|",$custTaxNum);
     $phonetypearray = explode("|",$phonetype);
     $phone_numberarray = explode("|",$phone_number);
-    for($i = 0; $i < count($custnamearray) - 1; $i++){
-
+    for($i = 0; $i < count($custnamearray) - 1; $i++)
+    {
       $startofcount++;
       if(validateContactId($custidarray[$i]) != 1)
       {
-        $messagealert .= '<dt>Line no: '.$startofcount.'</dt>
+        /*$messagealert .= '<dt>Line no: '.$startofcount.'</dt>
               <dd>- Contact ID: '.$custidarray[$i].'</dd>
               <dd>- Name: '.$custnamearray[$i].'</dd>
-              <dd style="color:green;">- Contact ID validation OK.</dd><hr>';
+              <dd style="color:green;">- Contact ID validation OK.</dd><hr>';*/
       }
       else
       {
@@ -116,8 +116,6 @@ function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $c
               <dd>- Name: '.$custnamearray[$i].'</dd>
               <dd style="color:red;">- Contact ID already exist.</dd><hr>';
       }
-      
-      
     }
 
    echo $messagealert;
