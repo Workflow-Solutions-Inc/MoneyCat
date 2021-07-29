@@ -87,7 +87,7 @@ function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $c
   
   try
   {
-    $startofcount = $_POST["counter2"];
+    $startofcount = $_POST['counter2'];
     $messagealert = "";
     $contact_array = new \XeroAPI\XeroPHP\Models\Accounting\Contacts;
     $contactlines = [];

@@ -322,13 +322,15 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
                 data:
                 {
                     action:action, custName:custName,custEmail:custEmail,
-                    AddressLine:AddressLine,custTaxNum:custTaxNum, custId:custId, phonetype:phonetype, phone_number:phone_number,counter2:counter2},
-                    beforeSend:function(){
+                    AddressLine:AddressLine,custTaxNum:custTaxNum, custId:custId, phonetype:phonetype, phone_number:phone_number,counter2:counter2
+                },
+                beforeSend:function()
+                {
 
                 },
                 success: function(data)
                 {
-                    counter2+=1000;
+                    counter2 = counter2 + 1000;
                     if(data=="")
                     {
                         
