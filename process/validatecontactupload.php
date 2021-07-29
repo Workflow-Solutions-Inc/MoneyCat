@@ -17,8 +17,9 @@ if ($_POST['action'] == "postdata")
   $custTaxNum = getValue($_POST['custTaxNum']);
   $phonetype = getValue($_POST['phonetype']);
   $phone_number = getValue($_POST['phone_number']);
+  $startofcount = getValue($_POST['counter2']);
   
-  insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $custEmail, $AddressLine, $custTaxNum, $phonetype, $phone_number);
+  insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $custEmail, $AddressLine, $custTaxNum, $phonetype, $phone_number, $startofcount);
   //syncContacts($custName);
   
 }
@@ -45,7 +46,7 @@ function validateContactId($custId){
   return $errormessage;
 }
 
-function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $custEmail, $AddressLine, $custTaxNum, $phonetype, $phone_number){
+function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $custEmail, $AddressLine, $custTaxNum, $phonetype, $phone_number, $startofcount){
   // Storage Classe uses sessions for storing token > extend to your DB of choice
   try{
     $storage = new StorageClass();
@@ -87,7 +88,6 @@ function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $c
   
   try
   {
-    $startofcount = $_POST['counter2'];
     $messagealert = "";
     $contact_array = new \XeroAPI\XeroPHP\Models\Accounting\Contacts;
     $contactlines = [];
