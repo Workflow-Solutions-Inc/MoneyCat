@@ -154,9 +154,10 @@ function looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonet
                     {
                         document.getElementById("testresult").innerHTML += data;
                         counter4+=2000;
-                        if(counter4 > document.getElementById('totaljsondata').innerHTML)
+                        if(counter4 >= document.getElementById('totaljsondata').innerHTML)
                         {
-                            synccustomer();
+                            //synccustomer();
+                            hidePleaseWait();
                         }
                         //document.getElementById('progresslabel').innerHTML = "Finalizing..";
                     }

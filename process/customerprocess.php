@@ -24,16 +24,22 @@ if ($_POST['action'] == "postdata")
   
 }
 
-function getValue($fieldname){
-  if(isset($fieldname)){
-  $value = $fieldname;
-  }else{
-  $value = "";
+function getValue($fieldname)
+{
+  if(isset($fieldname))
+  {
+    $value = $fieldname;
   }
+  else
+  {
+    $value = "";
+  }
+
   return $value;
 }
 
-function validateContactId($custId){
+function validateContactId($custId)
+{
   include('controllers/config/dbconn.php');
   $errormessage = "";
   $query = "SELECT * FROM customer_bridge where cust_id = '".$custId."'";
@@ -46,14 +52,17 @@ function validateContactId($custId){
   return $errormessage;
 }
 
-function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $custEmail, $AddressLine, $custTaxNum, $phonetype, $phone_number){
+function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $custEmail, $AddressLine, $custTaxNum, $phonetype, $phone_number)
+{
   // Storage Classe uses sessions for storing token > extend to your DB of choice
-  try{
+  try
+  {
     $storage = new StorageClass();
     $xeroTenantId = (string)$storage->getSession()['tenant_id'];
     //session_start();
 
-    $provider = new \League\OAuth2\Client\Provider\GenericProvider([
+    $provider = new \League\OAuth2\Client\Provider\GenericProvider
+    ([
       'clientId'                => $clientid,   
       'clientSecret'            => $clientsecret,
       'redirectUri'             => $callback,
@@ -81,7 +90,9 @@ function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $c
         new GuzzleHttp\Client(),
         $config
     );
-  }catch (\XeroAPI\XeroPHP\ApiException $e) {
+  }
+  catch (\XeroAPI\XeroPHP\ApiException $e)
+  {
       header("location: ../uploader.php?invalid=0");
   }
   
@@ -140,11 +151,12 @@ function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $c
       }
     }
 
-   $apiInstance->createContacts($xeroTenantId, $contact_array, true);
+   //$apiInstance->createContacts($xeroTenantId, $contact_array, true);
    echo $messagealert;
 
   }
-  catch (\XeroAPI\XeroPHP\ApiException $e) {
+  catch (\XeroAPI\XeroPHP\ApiException $e)
+  {
       $error = AccountingObjectSerializer::deserialize(
           $e->getResponseBody(),
           '\XeroAPI\XeroPHP\Models\Accounting\Error',
@@ -156,7 +168,8 @@ function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $c
   }
 }
 
-function syncContacts($custName,$custId){
+function syncContacts($custName,$custId)
+{
   include_once('controllers/customer.php');
   $cust = new CUSTOMER();
   $cust->putcustomer($custId,$custName);
