@@ -110,7 +110,7 @@ function splitJson(jsonParams)
         phonetype += res[prop].phone_type+ "|";
         phone_number += res[prop].phone_number+ "|";
         count++;
-        if(count % 5000 == 0)
+        if(count % 1000 == 0)
         {
             looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
             custName = "";
@@ -120,7 +120,7 @@ function splitJson(jsonParams)
             custTaxNum = "";
             phonetype = "";
             phone_number = "";
-            counter += 5000;
+            counter += 1000;
         }
 
     }
@@ -153,7 +153,7 @@ function looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonet
                     success: function(data)
                     {
                         document.getElementById("testresult").innerHTML += data;
-                        counter4+=5000;
+                        counter4+=1000;
                         if(counter4 >= document.getElementById('totaljsondata').innerHTML)
                         {
                             //synccustomer();
@@ -298,7 +298,7 @@ function validatecontactdata(jsonParams)
         phonetype += res[prop].phone_type+ "|";
         phone_number += res[prop].phone_number+ "|";
         count++;
-        if(count % 5000 == 0)
+        if(count % 10000 == 0)
         {
             contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
             custName = "";
@@ -308,7 +308,7 @@ function validatecontactdata(jsonParams)
             custTaxNum = "";
             phonetype = "";
             phone_number = "";
-            counter2 += 5000;
+            counter2 += 10000;
         }
 
     }
@@ -341,7 +341,7 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
                 success: function(data)
                 {
                     //alert(counter3);
-                    counter3 = counter3 + 5000;
+                    counter3 = counter3 + 10000;
                     if(data=="")
                     {
                         
