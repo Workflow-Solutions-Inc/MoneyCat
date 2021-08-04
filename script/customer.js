@@ -1,16 +1,19 @@
 var fileToRead = document.getElementById("myjson");
 var formatted = "";
 
-$(function () {
+$(function () 
+{
     var pleaseWait = $('#logsmodal'); 
 
-    showPleaseWait3 = function() {
+    showPleaseWait3 = function() 
+    {
         $('#logsmodal').modal({backdrop: 'static', keyboard: false}) 
         pleaseWait.modal('show');
 
     };
 
-    hidePleaseWait3 = function () {
+    hidePleaseWait3 = function () 
+    {
         pleaseWait.modal('hide');
     };
 
@@ -18,32 +21,38 @@ $(function () {
 });
 
 
-$(function () {
+$(function () 
+{
     var pleaseWait = $('#pleaseWaitDialog'); 
 
-    showPleaseWait = function() {
+    showPleaseWait = function() 
+    {
         $('#pleaseWaitDialog').modal({backdrop: 'static', keyboard: false}) 
         pleaseWait.modal('show');
 
     };
 
-    hidePleaseWait = function () {
+    hidePleaseWait = function () 
+    {
         pleaseWait.modal('hide');
     };
 
 //showPleaseWait();
 });
 
-$(function () {
+$(function () 
+{
     var pleaseWait = $('#pleasereconnectmodal'); 
 
-    showPleaseWait2 = function() {
+    showPleaseWait2 = function() 
+    {
         $('#pleasereconnectmodal').modal({backdrop: 'static', keyboard: false}) 
         pleaseWait.modal('show');
 
     };
 
-    hidePleaseWait2 = function () {
+    hidePleaseWait2 = function () 
+    {
         pleaseWait.modal('hide');
     };
 
@@ -110,7 +119,7 @@ function splitJson(jsonParams)
         phonetype += res[prop].phone_type+ "|";
         phone_number += res[prop].phone_number+ "|";
         count++;
-        if(count % 1000 == 0)
+        if(count % 500 == 0)
         {
             looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
             custName = "";
@@ -120,7 +129,7 @@ function splitJson(jsonParams)
             custTaxNum = "";
             phonetype = "";
             phone_number = "";
-            counter += 1000;
+            counter += 500;
         }
 
     }
@@ -128,6 +137,10 @@ function splitJson(jsonParams)
     if(custName != "")
     {
         looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
+    }
+    else
+    {
+        hidePleaseWait();
     }
 
     //synccustomer();
@@ -153,7 +166,7 @@ function looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonet
                     success: function(data)
                     {
                         document.getElementById("testresult").innerHTML += data;
-                        counter4+=1000;
+                        counter4+=500;
                         if(counter4 >= document.getElementById('totaljsondata').innerHTML)
                         {
                             //synccustomer();

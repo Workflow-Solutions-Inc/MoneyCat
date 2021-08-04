@@ -151,7 +151,7 @@ function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $c
       }
     }
 
-   $apiInstance->createContacts($xeroTenantId, $contact_array, true);
+   //$apiInstance->createContacts($xeroTenantId, $contact_array, true);
    echo $messagealert;
 
   }
