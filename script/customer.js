@@ -92,6 +92,7 @@ fileToRead.addEventListener("change", function(event)
 
 var timerdate = new Date();
 var counter = 0;
+var counter4 = 0;
 var totalnouploaded = 0;
 function splitJson(jsonParams)
 {
@@ -106,7 +107,7 @@ function splitJson(jsonParams)
     var phonetype = "";
     var phone_number = "";
     var count = 0;
-    const res = JSON.parse(jsonParams);   
+    const res = JSON.parse(jsonParams);
     for(var prop in res)
     {
     //alert(res[prop].id);
@@ -119,7 +120,7 @@ function splitJson(jsonParams)
         phonetype += res[prop].phone_type+ "|";
         phone_number += res[prop].phone_number+ "|";
         count++;
-        if(count % 500 == 0)
+        if(count % 50 == 0)
         {
             looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
             custName = "";
@@ -129,7 +130,7 @@ function splitJson(jsonParams)
             custTaxNum = "";
             phonetype = "";
             phone_number = "";
-            counter += 500;
+            counter += 50;
         }
 
     }
@@ -138,16 +139,11 @@ function splitJson(jsonParams)
     {
         looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
     }
-    else
-    {
-        hidePleaseWait();
-    }
 
-    //synccustomer();
+    synccustomer();
 
 }
 
-var counter4 = 0;
 function looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number)
 {
     var action = "postdata";
@@ -166,7 +162,7 @@ function looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonet
                     success: function(data)
                     {
                         document.getElementById("testresult").innerHTML += data;
-                        counter4+=500;
+                        counter4+=50;
                         if(counter4 >= document.getElementById('totaljsondata').innerHTML)
                         {
                             //synccustomer();

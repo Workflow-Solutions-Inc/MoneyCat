@@ -42,14 +42,14 @@ class CUSTOMER
 				FROM customer_bridge
 				where cust_id = '$custId'";
 		$result = $conn->query($sql);
-				if ($result->num_rows > 0)
-				{
-					while ($row = $result->fetch_assoc())
-					{
-						$custid = $row['cust_info'];
-					}
-				
-				}
+		if ($result->num_rows > 0)
+		{
+			while ($row = $result->fetch_assoc())
+			{
+				$custid = $row['cust_info'];
+			}
+		
+		}
 		return $custid;
 	
 	}
@@ -59,14 +59,14 @@ class CUSTOMER
  		$id = "";
 		$sql = "SELECT distinct id from invoices where Invoiceid = '$invid' and invoicestatus != 'VOIDED';";
 		$result = $conn->query($sql);
-				if ($result->num_rows > 0)
-				{
-					while ($row = $result->fetch_assoc())
-					{
-						$id = $row['id'];
-					}
-				
-				}
+		if ($result->num_rows > 0)
+		{
+			while ($row = $result->fetch_assoc())
+			{
+				$id = $row['id'];
+			}
+		
+		}
 		return $id;
 	
 	}
@@ -76,14 +76,14 @@ class CUSTOMER
  		$id = "";
 		$sql = "SELECT distinct accountID from accounts where accountcode = '$accid'";
 		$result = $conn->query($sql);
-				if ($result->num_rows > 0)
-				{
-					while ($row = $result->fetch_assoc())
-					{
-						$id = $row['accountID'];
-					}
-				
-				}
+		if ($result->num_rows > 0)
+		{
+			while ($row = $result->fetch_assoc())
+			{
+				$id = $row['accountID'];
+			}
+		
+		}
 		return $id;
 	
 	}

@@ -1,7 +1,8 @@
 <?php 
 session_start();
 $orgid = "";
-if(isset($_SESSION["organisationID"])){
+if(isset($_SESSION["organisationID"]))
+{
     $orgid = $_SESSION["organisationID"];
 }
 ini_set('display_errors', 'On');

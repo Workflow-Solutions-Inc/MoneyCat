@@ -71,7 +71,8 @@ function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $c
       'urlResourceOwnerDetails' => 'https://api.xero.com/api.xro/2.0/Organisation'
     ]);
 
-    $newAccessToken = $provider->getAccessToken('refresh_token', [
+    $newAccessToken = $provider->getAccessToken('refresh_token', 
+    [
       'refresh_token' => $storage->getRefreshToken()
     ]);
     
@@ -151,7 +152,7 @@ function insertCustomertoXero($clientid, $clientsecret, $callback, $custName, $c
       }
     }
 
-   //$apiInstance->createContacts($xeroTenantId, $contact_array, true);
+   $apiInstance->createContacts($xeroTenantId, $contact_array, true);
    echo $messagealert;
 
   }
