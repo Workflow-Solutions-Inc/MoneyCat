@@ -99,6 +99,8 @@ function splitJson(jsonParams)
     document.getElementById('progresslabel').innerHTML = "Processing...";
     showPleaseWait();
     console.log(timerdate.getDate());
+    counter = 0;
+    counter4 = 0;
     var custName = "";
     var custId = "";
     var custEmail = "";
@@ -140,7 +142,7 @@ function splitJson(jsonParams)
         looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number);
     }
 
-    synccustomer();
+    //synccustomer();
 
 }
 
@@ -165,7 +167,7 @@ function looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonet
                         counter4+=50;
                         if(counter4 >= document.getElementById('totaljsondata').innerHTML)
                         {
-                            //synccustomer();
+                            synccustomer();
                             hidePleaseWait();
                             showPleaseWait3();
                         }
