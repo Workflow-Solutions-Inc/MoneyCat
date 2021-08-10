@@ -91,6 +91,7 @@ fileToRead.addEventListener("change", function(event)
 
 
 var timerdate = new Date();
+var count = 0;
 var counter = 0;
 var counter4 = 0;
 var totalnouploaded = 0;
@@ -99,6 +100,7 @@ function splitJson(jsonParams)
     document.getElementById('progresslabel').innerHTML = "Processing...";
     showPleaseWait();
     console.log(timerdate.getDate());
+    count = 0;
     counter = 0;
     counter4 = 0;
     var custName = "";
@@ -108,7 +110,6 @@ function splitJson(jsonParams)
     var custTaxNum = "";
     var phonetype = "";
     var phone_number = "";
-    var count = 0;
     const res = JSON.parse(jsonParams);
     for(var prop in res)
     {
@@ -167,10 +168,10 @@ function looperdata(custName, custId, custEmail, AddressLine, custTaxNum, phonet
                         counter4+=50;
                         if(counter4 >= document.getElementById('totaljsondata').innerHTML)
                         {
-                            hidePleaseWait();
-                            showPleaseWait3();
+                            document.getElementById("testresult").innerHTML += 'Total number of records uploaded: ' + count + '.';
                             synccustomer();
-                            hidePleaseWait3();
+                            //hidePleaseWait();
+                            //showPleaseWait3();
                         }
                         //document.getElementById('progresslabel').innerHTML = "Finalizing..";
                     }
@@ -283,12 +284,16 @@ function validateconnectiontoapi2()
 
 var flag1 = true;
 var counter2 = 0;
+var counter3 = 0;
 function validatecontactdata(jsonParams)
 {
     //var counter2 = 1;
     document.getElementById('progresslabel').innerHTML = "Validating...";
     showPleaseWait();
     console.log(timerdate.getDate());
+    count = 0;
+    counter2 = 0;
+    counter3 = 0;
     var custName = "";
     var custId = "";
     var custEmail = "";
@@ -296,7 +301,6 @@ function validatecontactdata(jsonParams)
     var custTaxNum = "";
     var phonetype = "";
     var phone_number = "";
-    var count = 0;
     const res = JSON.parse(jsonParams);   
     for(var prop in res)
     {
@@ -332,7 +336,6 @@ function validatecontactdata(jsonParams)
     
 }
 
-var counter3 = 0;
 function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, phonetype, phone_number)
 {
     var action = "postdata";
@@ -376,6 +379,7 @@ function contactvalidator(custName, custId, custEmail, AddressLine, custTaxNum, 
                     console.log(counter3);
                     if(counter3 >= document.getElementById('totaljsondata').innerHTML)
                     {
+                        document.getElementById("testresult").innerHTML += 'Total number of records validated: ' + count + '.';
                         hidePleaseWait();
                         showPleaseWait3();
                     }
